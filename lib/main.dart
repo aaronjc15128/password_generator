@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'dart:math';
+
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +17,34 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   
-  double _lengthSliderValue = 20;
-  bool _capitalsSwitchValue = true;
-  bool _numbersSwitchValue = true;
-  bool _symbolsSwitchValue = true;
+  String password = "password will generate here";
+
+  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  List symbols = const ["!", """, "#", "%", "&", """, "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
+
+  void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
+    List allowedCharacters = [];
+    allowedCharacters += lowercase;
+    if (allowedCapitals) {allowedCharacters += uppercase;}
+    if (allowedNumbers) {allowedCharacters += numbers;}
+    if (allowedSymbols) {allowedCharacters += symbols;}
+
+    password = "";
+    for (var i = 0; i < numberCharacters; i++) {
+      final random = Random();
+      setState(() {
+        password += allowedCharacters[random.nextInt(allowedCharacters.length)];
+      });  
+    }
+  }
+
+  double lengthSliderValue = 20;
+  bool capitalsSwitchValue = true;
+  bool numbersSwitchValue = true;
+  bool symbolsSwitchValue = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text("Password Generator"),
           centerTitle: true,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.teal,
         ),
 
         body: Column(
@@ -39,85 +67,125 @@ class _MyAppState extends State<MyApp> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.all(60.0),
-              padding: const EdgeInsets.all(30.0),
+            /* Box     */ Container(
+              margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+              padding: const EdgeInsets.all(30),
               decoration: BoxDecoration(
                 border: Border.all(color: const Color.fromARGB(255, 128, 128, 128))
               ),
-              child: const Text("PASSWORD", textAlign: TextAlign.center),
+              child: Text(password, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
             ),
-            Row(
+            /* Button  */ Container(
+              margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  textStyle: const TextStyle(fontSize: 16)
+                ),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: password));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    Icon(Icons.copy_all),
+                    Text(" Copy to Clipboard")
+                  ]
+                ),
+              ),
+            ),
+            /* Slider  */ Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Icon(Icons.arrow_forward, size: 36,),
                 const Text(" Length", style: TextStyle(fontSize: 18)),
                 Slider(
-                  value: _lengthSliderValue,
+                  value: lengthSliderValue,
                   min: 1,
                   max: 30,
                   divisions: 29,
-                  label: _lengthSliderValue.round().toString(),
+                  label: lengthSliderValue.round().toString(),
                   onChanged: (double value) {
                     setState(() {
-                      _lengthSliderValue = value;
+                      lengthSliderValue = value;
                     });
                   },
-                  activeColor: Colors.red,
+                  inactiveColor: Color.fromARGB(255, 128, 128, 128),
+                  activeColor: Colors.tealAccent,
+                  thumbColor: Colors.teal,
                 ),
               ]
             ),
-            Row(
+            /* Toggle  */ Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Icon(Icons.abc, size: 42),
                 const Text(" Capitals", style: TextStyle(fontSize: 18)),
                 Switch(
-                  value: _capitalsSwitchValue,
+                  value: capitalsSwitchValue,
                   onChanged: (value) {
                     setState(() {
-                      _capitalsSwitchValue = value;
+                      capitalsSwitchValue = value;
                     });
                   },
-                  activeTrackColor: Colors.redAccent,
-                  activeColor: Colors.red,
+                  activeTrackColor: Colors.tealAccent,
+                  activeColor: Colors.teal,
                 )
               ]
             ),
-            Row(
+            /* Toggle  */ Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Icon(Icons.numbers, size: 36),
                 const Text(" Numbers", style: TextStyle(fontSize: 18)),
                 Switch(
-                  value: _numbersSwitchValue,
+                  value: numbersSwitchValue,
                   onChanged: (value) {
                     setState(() {
-                      _numbersSwitchValue = value;
+                      numbersSwitchValue = value;
                     });
                   },
-                  activeTrackColor: Colors.redAccent,
-                  activeColor: Colors.red,
+                  activeTrackColor: Colors.tealAccent,
+                  activeColor: Colors.teal,
                 )
               ]
             ),
-            Row(
+            /* Toggle  */ Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Icon(Icons.emoji_symbols, size: 32),
                 const Text(" Symbols", style: TextStyle(fontSize: 18)),
                 Switch(
-                  value: _symbolsSwitchValue,
+                  value: symbolsSwitchValue,
                   onChanged: (value) {
                     setState(() {
-                      _symbolsSwitchValue = value;
+                      symbolsSwitchValue = value;
                     });
                   },
-                  activeTrackColor: Colors.redAccent,
-                  activeColor: Colors.red,
+                  activeTrackColor: Colors.tealAccent,
+                  activeColor: Colors.teal,
                 )
               ]
             ),
+            /* Button  */ Container(
+              margin: const EdgeInsets.fromLTRB(90, 20, 90, 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  textStyle: const TextStyle(fontSize: 16)
+                ),
+                onPressed: () {
+                  generatePassword(lengthSliderValue.toInt(), capitalsSwitchValue, numbersSwitchValue, symbolsSwitchValue);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.get_app_rounded),
+                    Text(" Generate")
+                  ],
+                )
+              ),
+            )
           ],
         ),
       ),
