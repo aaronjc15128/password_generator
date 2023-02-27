@@ -17,12 +17,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   
+  int navBarIndex = 0;
+
+  void navBarTap(int index) {
+    setState(() {
+      navBarIndex = index;
+    });
+  }
+
+  
   String password = "password will generate here";
 
   List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
   List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  List symbols = const ["!", """, "#", "%", "&", """, "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
+  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
 
   void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
     List allowedCharacters = [];
@@ -60,6 +69,25 @@ class _MyAppState extends State<MyApp> {
           title: const Text("Password Generator"),
           centerTitle: true,
           backgroundColor: Colors.teal,
+        ),
+
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.get_app_rounded),
+              label: "Generator",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.check_circle_outline_rounded),
+              label: "Strength Checker",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.question_mark_rounded),
+              label: "???",
+            ),
+          ],
+          currentIndex: navBarIndex,
+          onTap: navBarTap,
         ),
 
         body: Column(
@@ -110,7 +138,7 @@ class _MyAppState extends State<MyApp> {
                       lengthSliderValue = value;
                     });
                   },
-                  inactiveColor: Color.fromARGB(255, 128, 128, 128),
+                  inactiveColor: const Color.fromARGB(255, 128, 128, 128),
                   activeColor: Colors.tealAccent,
                   thumbColor: Colors.teal,
                 ),
