@@ -13,12 +13,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: const App(),
+    return const MaterialApp(
+      home: App(),
     );
   }
 }
@@ -32,6 +28,136 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   
+  late List<Widget> pages = <Widget>[
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      
+      children: <Widget>[
+        /* Box     */ Container(
+          margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color.fromARGB(255, 128, 128, 128))
+          ),
+          child: Text(password, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
+        ),
+        /* Button  */ Container(
+          margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: password));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Icon(Icons.copy_all),
+                Text(" Copy to Clipboard")
+              ]
+            ),
+          ),
+        ),
+        /* Slider  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(Icons.arrow_forward, size: 36,),
+            const Text(" Length", style: TextStyle(fontSize: 18)),
+            Slider(
+              value: lengthSliderValue,
+              min: 1,
+              max: 30,
+              divisions: 29,
+              label: lengthSliderValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  lengthSliderValue = value;
+                });
+              },
+              inactiveColor: const Color.fromARGB(255, 128, 128, 128),
+              activeColor: Colors.tealAccent,
+              thumbColor: Colors.teal,
+            ),
+          ]
+        ),
+        /* Toggle  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(Icons.abc, size: 42),
+            const Text(" Capitals", style: TextStyle(fontSize: 18)),
+            Switch(
+              value: capitalsSwitchValue,
+              onChanged: (value) {
+                setState(() {
+                  capitalsSwitchValue = value;
+                });
+              },
+              activeTrackColor: Colors.tealAccent,
+              activeColor: Colors.teal,
+            )
+          ]
+        ),
+        /* Toggle  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(Icons.numbers, size: 36),
+            const Text(" Numbers", style: TextStyle(fontSize: 18)),
+            Switch(
+              value: numbersSwitchValue,
+              onChanged: (value) {
+                setState(() {
+                  numbersSwitchValue = value;
+                });
+              },
+              activeTrackColor: Colors.tealAccent,
+              activeColor: Colors.teal,
+            )
+          ]
+        ),
+        /* Toggle  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(Icons.emoji_symbols, size: 32),
+            const Text(" Symbols", style: TextStyle(fontSize: 18)),
+            Switch(
+              value: symbolsSwitchValue,
+              onChanged: (value) {
+                setState(() {
+                  symbolsSwitchValue = value;
+                });
+              },
+              activeTrackColor: Colors.tealAccent,
+              activeColor: Colors.teal,
+            )
+          ]
+        ),
+        /* Button  */ Container(
+          margin: const EdgeInsets.fromLTRB(90, 20, 90, 20),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              generatePassword(lengthSliderValue.toInt(), capitalsSwitchValue, numbersSwitchValue, symbolsSwitchValue);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(Icons.get_app_rounded),
+                Text(" Generate")
+              ],
+            )
+          ),
+        )
+      ],
+    ),
+    const Icon(Icons.check_circle_outline_rounded)
+  ];
+
   int navBarIndex = 0;
 
   void navBarTap(int index) {
@@ -74,11 +200,10 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Password Generator",
-
       darkTheme: ThemeData(brightness: Brightness.dark),
       theme: ThemeData(brightness: Brightness.light),
       themeMode: ThemeMode.system,
-
+      
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Password Generator"),
@@ -101,132 +226,7 @@ class _AppState extends State<App> {
           onTap: navBarTap,
         ),
 
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          
-          children: <Widget>[
-            /* Box     */ Container(
-              margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
-              padding: const EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color.fromARGB(255, 128, 128, 128))
-              ),
-              child: Text(password, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
-            ),
-            /* Button  */ Container(
-              margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  textStyle: const TextStyle(fontSize: 16)
-                ),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: password));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    Icon(Icons.copy_all),
-                    Text(" Copy to Clipboard")
-                  ]
-                ),
-              ),
-            ),
-            /* Slider  */ Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Icon(Icons.arrow_forward, size: 36,),
-                const Text(" Length", style: TextStyle(fontSize: 18)),
-                Slider(
-                  value: lengthSliderValue,
-                  min: 1,
-                  max: 30,
-                  divisions: 29,
-                  label: lengthSliderValue.round().toString(),
-                  onChanged: (double value) {
-                    setState(() {
-                      lengthSliderValue = value;
-                    });
-                  },
-                  inactiveColor: const Color.fromARGB(255, 128, 128, 128),
-                  activeColor: Colors.tealAccent,
-                  thumbColor: Colors.teal,
-                ),
-              ]
-            ),
-            /* Toggle  */ Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Icon(Icons.abc, size: 42),
-                const Text(" Capitals", style: TextStyle(fontSize: 18)),
-                Switch(
-                  value: capitalsSwitchValue,
-                  onChanged: (value) {
-                    setState(() {
-                      capitalsSwitchValue = value;
-                    });
-                  },
-                  activeTrackColor: Colors.tealAccent,
-                  activeColor: Colors.teal,
-                )
-              ]
-            ),
-            /* Toggle  */ Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Icon(Icons.numbers, size: 36),
-                const Text(" Numbers", style: TextStyle(fontSize: 18)),
-                Switch(
-                  value: numbersSwitchValue,
-                  onChanged: (value) {
-                    setState(() {
-                      numbersSwitchValue = value;
-                    });
-                  },
-                  activeTrackColor: Colors.tealAccent,
-                  activeColor: Colors.teal,
-                )
-              ]
-            ),
-            /* Toggle  */ Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Icon(Icons.emoji_symbols, size: 32),
-                const Text(" Symbols", style: TextStyle(fontSize: 18)),
-                Switch(
-                  value: symbolsSwitchValue,
-                  onChanged: (value) {
-                    setState(() {
-                      symbolsSwitchValue = value;
-                    });
-                  },
-                  activeTrackColor: Colors.tealAccent,
-                  activeColor: Colors.teal,
-                )
-              ]
-            ),
-            /* Button  */ Container(
-              margin: const EdgeInsets.fromLTRB(90, 20, 90, 20),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  textStyle: const TextStyle(fontSize: 16)
-                ),
-                onPressed: () {
-                  generatePassword(lengthSliderValue.toInt(), capitalsSwitchValue, numbersSwitchValue, symbolsSwitchValue);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.get_app_rounded),
-                    Text(" Generate")
-                  ],
-                )
-              ),
-            )
-          ],
-        ),
+        body: pages[navBarIndex]
       ),
     );
   }
