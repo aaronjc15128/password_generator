@@ -13,12 +13,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: const App(),
+    return const MaterialApp(
+      home: App(),
     );
   }
 }
@@ -74,11 +70,10 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Password Generator",
-
       darkTheme: ThemeData(brightness: Brightness.dark),
       theme: ThemeData(brightness: Brightness.light),
       themeMode: ThemeMode.system,
-
+      
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Password Generator"),
