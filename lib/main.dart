@@ -107,7 +107,7 @@ class _AppState extends State<App> {
 
         Refer to the following table for values:
 
-        Consecutive same characters: -0.08
+        Consecutive same characters: -0.08 (-0.11 total)
         Consecutive same types     : -0.03
 
 
@@ -137,7 +137,7 @@ class _AppState extends State<App> {
       if (char == prevChar) {
         passwordScore -= 0.08;
       }
-      else if (uppercase.contains(char)) {
+      if (uppercase.contains(char)) {
         if (uppercase.contains(prevChar)) {
           passwordScore -= 0.03;
         }
