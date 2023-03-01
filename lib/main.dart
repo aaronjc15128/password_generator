@@ -305,6 +305,25 @@ class _AppState extends State<App> {
             },
           )
         ),
+        /* Button  */ Container(
+          margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: passwordInput));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Icon(Icons.copy_all),
+                Text(" Copy to Clipboard")
+              ]
+            ),
+          ),
+        ),
       ],
     )
   ];
