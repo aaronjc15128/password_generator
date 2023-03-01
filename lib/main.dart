@@ -100,41 +100,86 @@ class _AppState extends State<App> {
 
   void checkPassword(String userpassword) {
     /*
-      Password score is calculated out of 3.0
-      You gain +0.1 score for every character
-      You gain +0.3 score if there is at least 1 capital
-      You gain +0.4 score if there is at least 1 number
-      You gain +0.5 score if there is at least 1 symbol
+      - Password score is calculated out of 3.0
+      - You gain +0.1 score for every character no matter the type
+      - You then gain extra depending on the types of characters,
+        and how many times they show up
+      
+      Refer to the following table for values:
 
-      The score is then multiplied by 33.33 and rounded
+      Lowercase:            /            /            / all = 0.0
+      Uppercase: 1st = +0.3 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
+      Numbers  : 1st = +0.4 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
+      Symbols  : 1st = +0.5 / 2nd = +0.3 / 3rd = +0.1 / all = 0.0
+
+      - The score is then multiplied by 33.33 and rounded to an integer
     */
     
     passwordScore = 0;
 
     passwordScore += (userpassword.length) / 10;    // Length
-    
-    for (var i = 0; i < userpassword.length; i++) { // Capital?
+
+    int countUppercase = 0;
+    int countNumbers = 0;
+    int countSymbols = 0;
+    for (var i = 0; i < userpassword.length; i++) {
       String char = userpassword[i];
       if (uppercase.contains(char)) {
-        passwordScore += 0.3;
-        break;
+        if (countUppercase == 0) {
+          countUppercase += 1;
+          passwordScore += 0.3;
+        }
+        else if (countUppercase == 1) {
+          countUppercase += 1;
+          passwordScore += 0.2;
+        }
+        else if (countUppercase == 2) {
+          countUppercase += 1;
+          passwordScore += 0.1;
+        }
+        else if (countUppercase == 3) {
+          countUppercase += 1;
+          passwordScore += 0.0;
+        }
+      }
+      else if (numbers.contains(char)) {
+        if (countNumbers == 0) {
+          countNumbers += 1;
+          passwordScore += 0.4;
+        }
+        else if (countNumbers == 1) {
+          countNumbers += 1;
+          passwordScore += 0.2;
+        }
+        else if (countNumbers == 2) {
+          countNumbers += 1;
+          passwordScore += 0.1;
+        }
+        else if (countNumbers == 3) {
+          countNumbers += 1;
+          passwordScore += 0.0;
+        }
+      }
+      else if (symbols.contains(char)) {
+        if (countSymbols == 0) {
+          countSymbols += 1;
+          passwordScore += 0.5;
+        }
+        else if (countSymbols == 1) {
+          countSymbols += 1;
+          passwordScore += 0.3;
+        }
+        else if (countSymbols == 2) {
+          countSymbols += 1;
+          passwordScore += 0.1;
+        }
+        else if (countSymbols == 3) {
+          countSymbols += 1;
+          passwordScore += 0.0;
+        }
       }
     }
-    for (var i = 0; i < userpassword.length; i++) { // Number?
-      String char = userpassword[i];
-      if (numbers.contains(char)) {
-        passwordScore += 0.4;
-        break;
-      }
-    }
-    for (var i = 0; i < userpassword.length; i++) { // Symbol?
-      String char = userpassword[i];
-      if (symbols.contains(char)) {
-        passwordScore += 0.5;
-        break;
-      }
-    }
-
+    
     if (passwordScore >= 3) {
       rankScore = "Strong";
       colorScore = Colors.teal;
