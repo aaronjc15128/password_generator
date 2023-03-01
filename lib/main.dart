@@ -28,8 +28,55 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   
-  late List<Widget> pages = <Widget>[
-    Column(
+  int navBarIndex = 0;
+
+  void navBarTap(int index) {
+    setState(() {
+      navBarIndex = index;
+
+      if (navBarIndex == 0) {
+        appBarText = const Text("Password Generator");
+      }
+      else if (navBarIndex == 1) {
+        appBarText = const Text("Password Strength Checker");
+      }
+    });
+  }
+
+  Widget appBarText = const Text("Password Generator");
+
+  
+  String password = "password will generate here";
+
+  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
+
+  void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
+    List allowedCharacters = [];
+    allowedCharacters += lowercase;
+    if (allowedCapitals) {allowedCharacters += uppercase;}
+    if (allowedNumbers) {allowedCharacters += numbers;}
+    if (allowedSymbols) {allowedCharacters += symbols;}
+
+    password = "";
+    for (var i = 0; i < numberCharacters; i++) {
+      final random = Random();
+      setState(() {
+        password += allowedCharacters[random.nextInt(allowedCharacters.length)];
+      });  
+    }
+  }
+
+  double lengthSliderValue = 20;
+  bool capitalsSwitchValue = true;
+  bool numbersSwitchValue = true;
+  bool symbolsSwitchValue = true;
+
+
+  List<Widget> pages() => <Widget>[
+    /* Generator        */ Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       
@@ -155,46 +202,15 @@ class _AppState extends State<App> {
         )
       ],
     ),
-    const Icon(Icons.check_circle_outline_rounded)
+    /* Strength Checker */ Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: const <Widget>[
+        Icon(Icons.check_circle_outline_rounded, size: 80)
+      ],
+    )
   ];
-
-  int navBarIndex = 0;
-
-  void navBarTap(int index) {
-    setState(() {
-      navBarIndex = index;
-    });
-  }
-
-  
-  String password = "password will generate here";
-
-  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
-
-  void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
-    List allowedCharacters = [];
-    allowedCharacters += lowercase;
-    if (allowedCapitals) {allowedCharacters += uppercase;}
-    if (allowedNumbers) {allowedCharacters += numbers;}
-    if (allowedSymbols) {allowedCharacters += symbols;}
-
-    password = "";
-    for (var i = 0; i < numberCharacters; i++) {
-      final random = Random();
-      setState(() {
-        password += allowedCharacters[random.nextInt(allowedCharacters.length)];
-      });  
-    }
-  }
-
-  double lengthSliderValue = 20;
-  bool capitalsSwitchValue = true;
-  bool numbersSwitchValue = true;
-  bool symbolsSwitchValue = true;
-
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +222,7 @@ class _AppState extends State<App> {
       
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Password Generator"),
+          title: appBarText,
           centerTitle: true,
           backgroundColor: Colors.teal,
         ),
@@ -226,7 +242,7 @@ class _AppState extends State<App> {
           onTap: navBarTap,
         ),
 
-        body: pages[navBarIndex]
+        body: pages()[navBarIndex]
       ),
     );
   }
