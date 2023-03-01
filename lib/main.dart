@@ -28,8 +28,122 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   
-  late List<Widget> pages = <Widget>[
-    Column(
+  int navBarIndex = 0;
+
+  void navBarTap(int index) {
+    setState(() {
+      navBarIndex = index;
+
+      if (navBarIndex == 0) {
+        appBarText = const Text("Password Generator");
+      }
+      else if (navBarIndex == 1) {
+        appBarText = const Text("Password Strength Checker");
+      }
+    });
+  }
+
+  Widget appBarText = const Text("Password Generator");
+
+  
+  String password = "password will generate here";
+
+  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
+
+  void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
+    List allowedCharacters = [];
+    allowedCharacters += lowercase;
+    if (allowedCapitals) {allowedCharacters += uppercase;}
+    if (allowedNumbers) {allowedCharacters += numbers;}
+    if (allowedSymbols) {allowedCharacters += symbols;}
+
+    password = "";
+    for (var i = 0; i < numberCharacters; i++) {
+      final random = Random();
+      setState(() {
+        password += allowedCharacters[random.nextInt(allowedCharacters.length)];
+      });  
+    }
+  }
+
+  double lengthSliderValue = 20;
+  bool capitalsSwitchValue = true;
+  bool numbersSwitchValue = true;
+  bool symbolsSwitchValue = true;
+
+
+  String passwordInput = "Password";
+  double passwordScore = 0;
+  String roundedScore = "0";
+  String rankScore = "Poor";
+  MaterialColor colorScore = Colors.red;
+
+  void checkPassword(String userpassword) {
+    /*
+      Password score is calculated out of 3.0
+      You gain +0.1 score for every character
+      You gain +0.3 score if there is at least 1 capital
+      You gain +0.4 score if there is at least 1 number
+      You gain +0.5 score if there is at least 1 symbol
+
+      The score is then multiplied by 33.33 and rounded
+    */
+    
+    passwordScore = 0;
+
+    passwordScore += (userpassword.length) / 10;    // Length
+    
+    for (var i = 0; i < userpassword.length; i++) { // Capital?
+      String char = userpassword[i];
+      if (uppercase.contains(char)) {
+        passwordScore += 0.3;
+        break;
+      }
+    }
+    for (var i = 0; i < userpassword.length; i++) { // Number?
+      String char = userpassword[i];
+      if (numbers.contains(char)) {
+        passwordScore += 0.4;
+        break;
+      }
+    }
+    for (var i = 0; i < userpassword.length; i++) { // Symbol?
+      String char = userpassword[i];
+      if (symbols.contains(char)) {
+        passwordScore += 0.5;
+        break;
+      }
+    }
+
+    if (passwordScore >= 3) {
+      rankScore = "Strong";
+      colorScore = Colors.teal;
+    }
+    else if (passwordScore >= 2) {
+      rankScore = "Good";
+      colorScore = Colors.green;
+    }
+    else if (passwordScore >= 1) {
+      rankScore = "Fair";
+      colorScore = Colors.orange;
+    }
+    else if (passwordScore >= 0) {
+      rankScore = "Poor";
+      colorScore = Colors.red;
+    }
+
+    setState(() {
+      if (passwordScore*33.33 > 100) {passwordScore = 3;}
+      roundedScore = (passwordScore*33.33).toStringAsFixed(0);
+    });
+  }
+
+
+  List<Widget> pages() => <Widget>[
+    /* Generator        */ Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       
@@ -64,7 +178,6 @@ class _AppState extends State<App> {
         /* Slider  */ Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Icon(Icons.arrow_forward, size: 36,),
             const Text(" Length", style: TextStyle(fontSize: 18)),
             Slider(
               value: lengthSliderValue,
@@ -86,7 +199,6 @@ class _AppState extends State<App> {
         /* Toggle  */ Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Icon(Icons.abc, size: 42),
             const Text(" Capitals", style: TextStyle(fontSize: 18)),
             Switch(
               value: capitalsSwitchValue,
@@ -103,7 +215,6 @@ class _AppState extends State<App> {
         /* Toggle  */ Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Icon(Icons.numbers, size: 36),
             const Text(" Numbers", style: TextStyle(fontSize: 18)),
             Switch(
               value: numbersSwitchValue,
@@ -120,7 +231,6 @@ class _AppState extends State<App> {
         /* Toggle  */ Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Icon(Icons.emoji_symbols, size: 32),
             const Text(" Symbols", style: TextStyle(fontSize: 18)),
             Switch(
               value: symbolsSwitchValue,
@@ -155,46 +265,49 @@ class _AppState extends State<App> {
         )
       ],
     ),
-    const Icon(Icons.check_circle_outline_rounded)
+    /* Strength Checker */ Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: <Widget>[
+        /* Score */ Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.fromLTRB(60, 10, 60, 0),
+              child: Text(" Score: $roundedScore", style: const TextStyle(fontSize: 22))
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(60, 10, 60, 20),
+              child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 22))
+            ),
+          ],
+        ),
+        /* Input */ Container(
+          margin: const EdgeInsets.fromLTRB(60, 50, 60, 0),
+
+          child: TextField(
+            autocorrect: false,
+            textAlign: TextAlign.center,
+            cursorColor: Colors.white,
+
+            decoration: const InputDecoration(
+              label: Center(child: Text("Password")),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 240, 240, 240)),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.teal)),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.tealAccent)),
+            ),
+
+            onChanged: (text) {
+              passwordInput = text;
+              checkPassword(passwordInput);
+            },
+          )
+        ),
+      ],
+    )
   ];
-
-  int navBarIndex = 0;
-
-  void navBarTap(int index) {
-    setState(() {
-      navBarIndex = index;
-    });
-  }
-
-  
-  String password = "password will generate here";
-
-  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
-
-  void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
-    List allowedCharacters = [];
-    allowedCharacters += lowercase;
-    if (allowedCapitals) {allowedCharacters += uppercase;}
-    if (allowedNumbers) {allowedCharacters += numbers;}
-    if (allowedSymbols) {allowedCharacters += symbols;}
-
-    password = "";
-    for (var i = 0; i < numberCharacters; i++) {
-      final random = Random();
-      setState(() {
-        password += allowedCharacters[random.nextInt(allowedCharacters.length)];
-      });  
-    }
-  }
-
-  double lengthSliderValue = 20;
-  bool capitalsSwitchValue = true;
-  bool numbersSwitchValue = true;
-  bool symbolsSwitchValue = true;
-
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +319,7 @@ class _AppState extends State<App> {
       
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Password Generator"),
+          title: appBarText,
           centerTitle: true,
           backgroundColor: Colors.teal,
         ),
@@ -215,10 +328,12 @@ class _AppState extends State<App> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.get_app_rounded),
+              activeIcon: Icon(Icons.get_app_rounded),
               label: "Generator",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.check_circle_outline_rounded),
+              activeIcon: Icon(Icons.check_circle_rounded),
               label: "Strength Checker",
             ),
           ],
@@ -226,7 +341,7 @@ class _AppState extends State<App> {
           onTap: navBarTap,
         ),
 
-        body: pages[navBarIndex]
+        body: pages()[navBarIndex]
       ),
     );
   }
