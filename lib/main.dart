@@ -107,8 +107,8 @@ class _AppState extends State<App> {
 
         Refer to the following table for values:
 
-        Repeated characters: -0.08
-        Repeated types     : -0.03
+        Consecutive same characters: -0.08
+        Consecutive same types     : -0.03
 
 
       - You then gain score depending on the types of characters,
@@ -138,6 +138,9 @@ class _AppState extends State<App> {
         passwordScore -= 0.08;
       }
       else if (uppercase.contains(char)) {
+        if (uppercase.contains(prevChar)) {
+          passwordScore -= 0.03;
+        }
         if (countUppercase == 0) {
           countUppercase += 1;
           passwordScore += 0.3;
@@ -156,6 +159,9 @@ class _AppState extends State<App> {
         }
       }
       else if (numbers.contains(char)) {
+        if (numbers.contains(prevChar)) {
+          passwordScore -= 0.03;
+        }
         if (countNumbers == 0) {
           countNumbers += 1;
           passwordScore += 0.4;
@@ -174,6 +180,9 @@ class _AppState extends State<App> {
         }
       }
       else if (symbols.contains(char)) {
+        if (symbols.contains(prevChar)) {
+          passwordScore -= 0.03;
+        }
         if (countSymbols == 0) {
           countSymbols += 1;
           passwordScore += 0.5;
@@ -213,7 +222,8 @@ class _AppState extends State<App> {
 
     setState(() {
       if (passwordScore > 3) {passwordScore = 3;}
-      roundedScore = (passwordScore*33.33).toStringAsFixed(0);
+      passwordScore *= 33.33;
+      roundedScore = passwordScore.toStringAsFixed(0);
     });
   }
 
@@ -352,7 +362,13 @@ class _AppState extends State<App> {
           children: <Widget>[
             Container(
               margin: const EdgeInsets.fromLTRB(60, 10, 60, 0),
-              child: Text(" Score: $roundedScore", style: const TextStyle(fontSize: 22))
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(" Score: ", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300)),
+                  Text(roundedScore, style: const TextStyle(fontSize: 22))
+                ]
+              )
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(60, 10, 60, 20),
