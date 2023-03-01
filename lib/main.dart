@@ -92,6 +92,7 @@ class _AppState extends State<App> {
       The score is then multiplied by 33.33 and rounded
     */
     
+    userpassword = userpassword.replaceAll(" ", "");
     passwordScore = 0;
 
     passwordScore += (userpassword.length) / 10;    // Length
