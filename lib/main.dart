@@ -78,12 +78,19 @@ class _AppState extends State<App> {
     if (allowedSymbols) {allowedCharacters += symbols;}
 
     password = "";
-    for (var i = 0; i < numberCharacters; i++) {
-      final random = Random();
-      setState(() {
-        password += allowedCharacters[random.nextInt(allowedCharacters.length)];
-      });  
-    }
+    String newchar = "";
+    final random = Random();
+
+    setState(() {
+      for (var i = 0; i < numberCharacters; i++) {
+        // generates char, if password contains char => generate another char, else => add it to password
+        newchar = allowedCharacters[random.nextInt(allowedCharacters.length)];
+        while (password.contains(newchar)) {
+          newchar = allowedCharacters[random.nextInt(allowedCharacters.length)];
+        }
+        password += newchar;
+      }
+    });
   }
 
   double lengthSliderValue = 20;
