@@ -28,6 +28,25 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   
+  String currentTheme = "Dark";
+  Icon iconTheme = const Icon(Icons.nightlight_rounded);
+
+  void changeTheme() {
+    setState(() {
+      if (currentTheme == "Dark") {
+        currentTheme = "Light";
+        iconTheme = const Icon(Icons.wb_sunny_rounded);
+      }
+      else if (currentTheme == "Light") {
+        currentTheme = "Dark";
+        iconTheme = const Icon(Icons.nightlight_rounded);
+      }
+    });
+  }
+
+
+  Widget appBarText = const Text("Password Generator");
+
   int navBarIndex = 0;
 
   void navBarTap(int index) {
@@ -42,8 +61,6 @@ class _AppState extends State<App> {
       }
     });
   }
-
-  Widget appBarText = const Text("Password Generator");
 
   
   String password = "password will generate here";
@@ -329,7 +346,7 @@ class _AppState extends State<App> {
           ),
         ),
       ],
-    )
+    ),
   ];
 
   @override
@@ -345,6 +362,39 @@ class _AppState extends State<App> {
           title: appBarText,
           centerTitle: true,
           backgroundColor: Colors.teal,
+        ),
+        
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Column(
+                  children: const [
+                    SizedBox(height: 12),
+                    Center(
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: AssetImage('assets/img.jpg'),
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    Text("Password Generator", style: TextStyle(fontSize: 22)),
+                    SizedBox(height: 2),
+                    Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: iconTheme,
+                title: Text("$currentTheme Theme"),
+                onTap: changeTheme,
+              ),
+              const ListTile(
+                leading: Icon(Icons.info_outline_rounded),
+                title: Text("About"),
+              ),
+            ],
+          ),
         ),
 
         bottomNavigationBar: BottomNavigationBar(
