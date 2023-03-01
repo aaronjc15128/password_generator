@@ -102,15 +102,22 @@ class _AppState extends State<App> {
     /*
       - Password score is calculated out of 3.0
       - You gain +0.1 score for every character no matter the type
-      - You then gain extra depending on the types of characters,
+      - You then lose score depening on certain parameters
+
+        Refer to the following table for values:
+
+        Repeated characters: -0.08
+
+
+      - You then gain score depending on the types of characters,
         and how many times they show up
       
-      Refer to the following table for values:
+        Refer to the following table for values:
 
-      Lowercase:            /            /            / all = 0.0
-      Uppercase: 1st = +0.3 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
-      Numbers  : 1st = +0.4 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
-      Symbols  : 1st = +0.5 / 2nd = +0.3 / 3rd = +0.1 / all = 0.0
+        Lowercase:            /            /            / all = 0.0
+        Uppercase: 1st = +0.3 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
+        Numbers  : 1st = +0.4 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
+        Symbols  : 1st = +0.5 / 2nd = +0.3 / 3rd = +0.1 / all = 0.0
 
       - The score is then multiplied by 33.33 and rounded to an integer
     */
@@ -119,12 +126,16 @@ class _AppState extends State<App> {
 
     passwordScore += (userpassword.length) / 10;    // Length
 
+    String prevChar = "";
     int countUppercase = 0;
     int countNumbers = 0;
     int countSymbols = 0;
     for (var i = 0; i < userpassword.length; i++) {
       String char = userpassword[i];
-      if (uppercase.contains(char)) {
+      if (char == prevChar) {
+        passwordScore -= 0.08;
+      }
+      else if (uppercase.contains(char)) {
         if (countUppercase == 0) {
           countUppercase += 1;
           passwordScore += 0.3;
@@ -178,6 +189,7 @@ class _AppState extends State<App> {
           passwordScore += 0.0;
         }
       }
+      prevChar = char;
     }
     
     if (passwordScore >= 3) {
@@ -198,7 +210,7 @@ class _AppState extends State<App> {
     }
 
     setState(() {
-      if (passwordScore*33.33 > 100) {passwordScore = 3;}
+      if (passwordScore > 3) {passwordScore = 3;}
       roundedScore = (passwordScore*33.33).toStringAsFixed(0);
     });
   }
