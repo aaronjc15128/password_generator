@@ -92,7 +92,6 @@ class _AppState extends State<App> {
       The score is then multiplied by 33.33 and rounded
     */
     
-    userpassword = userpassword.replaceAll(" ", "");
     passwordScore = 0;
 
     passwordScore += (userpassword.length) / 10;    // Length
@@ -292,6 +291,10 @@ class _AppState extends State<App> {
             autocorrect: false,
             textAlign: TextAlign.center,
             cursorColor: Colors.white,
+
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r"\s"))
+            ],
 
             decoration: const InputDecoration(
               label: Center(child: Text("Password")),
