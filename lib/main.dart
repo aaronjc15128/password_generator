@@ -78,17 +78,11 @@ class _AppState extends State<App> {
     if (allowedSymbols) {allowedCharacters += symbols;}
 
     password = "";
-    String newchar = "";
     final random = Random();
 
     setState(() {
       for (var i = 0; i < numberCharacters; i++) {
-        // generates char, if password contains char => generate another char, else => add it to password
-        newchar = allowedCharacters[random.nextInt(allowedCharacters.length)];
-        while (password.contains(newchar)) {
-          newchar = allowedCharacters[random.nextInt(allowedCharacters.length)];
-        }
-        password += newchar;
+        password += allowedCharacters[random.nextInt(allowedCharacters.length)];
       }
     });
   }
@@ -114,6 +108,7 @@ class _AppState extends State<App> {
         Refer to the following table for values:
 
         Repeated characters: -0.08
+        Repeated types     : -0.03
 
 
       - You then gain score depending on the types of characters,
