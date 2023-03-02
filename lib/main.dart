@@ -449,7 +449,7 @@ class _AppState extends State<App> {
                     Center(
                       child: CircleAvatar(
                         radius: 30,
-                        backgroundImage: AssetImage('assets/img.jpg'),
+                        backgroundImage: AssetImage("assets\\simple_password_generator_icons\\android\\play_store-512.png"),
                       ),
                     ),
                     SizedBox(height: 12),
@@ -464,9 +464,14 @@ class _AppState extends State<App> {
                 title: Text("$currentTheme Theme"),
                 onTap: changeTheme,
               ),
-              const ListTile(
-                leading: Icon(Icons.info_outline_rounded),
-                title: Text("About"),
+              ListTile(
+                leading: const Icon(Icons.info_outline_rounded),
+                title: const Text("About"),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const AboutPage();
+                  }));
+                },
               ),
             ],
           ),
@@ -490,6 +495,87 @@ class _AppState extends State<App> {
         ),
 
         body: pages()[navBarIndex]
+      ),
+    );
+  }
+}
+
+class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Password Generator",
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      theme: ThemeData(brightness: Brightness.light),
+      themeMode: ThemeMode.system,
+      
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("About"),
+          centerTitle: true,
+          backgroundColor: Colors.teal,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            }, 
+            icon: const Icon(Icons.arrow_back_rounded)
+          ),
+        ),
+
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            /* Title   */ Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage("assets\\simple_password_generator_icons\\android\\play_store-512.png"),
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  children: const <Text>[
+                    Text("Password Generator", style: TextStyle(fontSize: 22)),
+                    Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
+                  ]
+                )
+              ],
+            ), const SizedBox(height: 50),
+            /* Desc    */ const Text(
+              "Description",
+              style: TextStyle(fontSize: 18)
+            ), const SizedBox(height: 50),
+            /* App     */ Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text("App:", style: TextStyle(fontSize: 16)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(onPressed: (){}, icon: const Icon(Icons.one_k_rounded)),
+                    IconButton(onPressed: (){}, icon: const Icon(Icons.two_k_rounded))
+                  ],
+                )
+              ]
+            ), const SizedBox(height: 30),
+            /* Socials */ Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text("Socials:", style: TextStyle(fontSize: 16)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(onPressed: (){}, icon: const Icon(Icons.one_k_rounded)),
+                    IconButton(onPressed: (){}, icon: const Icon(Icons.two_k_rounded)),
+                    IconButton(onPressed: (){}, icon: const Icon(Icons.three_k_rounded))
+                  ],
+                )
+              ]
+            )
+          ],
+        ),
       ),
     );
   }
