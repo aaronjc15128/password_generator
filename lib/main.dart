@@ -31,6 +31,27 @@ class _AppState extends State<App> {
   String currentTheme = "Dark";
   Icon iconTheme = const Icon(Icons.nightlight_rounded);
 
+  Widget appBarText = const Text("Password Generator");
+  int navBarIndex = 0;
+  String password = "password will generate here";
+
+  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
+
+  double lengthSliderValue = 20;
+  bool capitalsSwitchValue = true;
+  bool numbersSwitchValue = true;
+  bool symbolsSwitchValue = true;
+
+  String passwordInput = "Password";
+  double passwordScore = 0;
+  String roundedScore = "0";
+  String rankScore = "Poor";
+  MaterialColor colorScore = Colors.red;
+
+
   void changeTheme() {
     setState(() {
       if (currentTheme == "Dark") {
@@ -44,11 +65,6 @@ class _AppState extends State<App> {
     });
   }
 
-
-  Widget appBarText = const Text("Password Generator");
-
-  int navBarIndex = 0;
-
   void navBarTap(int index) {
     setState(() {
       navBarIndex = index;
@@ -61,14 +77,6 @@ class _AppState extends State<App> {
       }
     });
   }
-
-  
-  String password = "password will generate here";
-
-  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
 
   void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
     List allowedCharacters = [];
@@ -86,18 +94,6 @@ class _AppState extends State<App> {
       }
     });
   }
-
-  double lengthSliderValue = 20;
-  bool capitalsSwitchValue = true;
-  bool numbersSwitchValue = true;
-  bool symbolsSwitchValue = true;
-
-
-  String passwordInput = "Password";
-  double passwordScore = 0;
-  String roundedScore = "0";
-  String rankScore = "Poor";
-  MaterialColor colorScore = Colors.red;
 
   void checkPassword(String userpassword) {
     /*
@@ -423,6 +419,7 @@ class _AppState extends State<App> {
       ],
     ),
   ];
+
 
   @override
   Widget build(BuildContext context) {
