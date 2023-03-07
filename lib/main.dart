@@ -462,7 +462,7 @@ class _AppState extends State<App> {
         ),
         
         drawer: Drawer(
-          child: ListView(
+          child: Column(
             children: <Widget>[
               DrawerHeader(
                 child: Column(
@@ -480,7 +480,7 @@ class _AppState extends State<App> {
                     ),
                     const SizedBox(height: 12),
                     const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 3),
                     const Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
                   ],
                 ),
@@ -490,6 +490,7 @@ class _AppState extends State<App> {
                 title: Text("Remove Ads"),
                 //onTap: ,
               ),
+              const Spacer(),
               ListTile(
                 leading: iconThemeMode,
                 title: Text("$stringThemeMode Theme"),
@@ -499,14 +500,14 @@ class _AppState extends State<App> {
                 leading: const Icon(Icons.question_mark_rounded),
                 title: const Text("How It Works"),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HowItWorksPage( currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HowItWorksPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline_rounded),
                 title: const Text("About"),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage( currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
                 },
               ),
             ],
