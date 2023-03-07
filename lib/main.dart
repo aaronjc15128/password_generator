@@ -33,7 +33,7 @@ class _AppState extends State<App> {
   String stringThemeMode = "System";
 
   // navBarTap()
-  Widget appBarText = const Text("Password Generator");
+  Text appBarText = const Text("Password Generator");
   int navBarIndex = 0;
   
   // generatePassword()
