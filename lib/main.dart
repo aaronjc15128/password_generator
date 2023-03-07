@@ -29,7 +29,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   
   // changeTheme()
-  Icon iconThemeMode = const Icon(Icons.nightlight_rounded);
+  Icon iconThemeMode = const Icon(Icons.settings_system_daydream_outlined);
+  String stringThemeMode = "System";
 
   // navBarTap()
   Widget appBarText = const Text("Password Generator");
@@ -59,22 +60,31 @@ class _AppState extends State<App> {
 
   // build()
   ThemeMode currentThemeMode = ThemeMode.system;
+  ThemeData darkTheme = ThemeData(
+    brightness: Brightness.dark,
+  );
+  ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+  );
 
 
 
   void changeTheme() {
     setState(() {
-      if (currentThemeMode == ThemeMode.dark) {
+      if (currentThemeMode == ThemeMode.system) {
+        currentThemeMode = ThemeMode.dark;
+        iconThemeMode = const Icon(Icons.nightlight_outlined);
+        stringThemeMode = "Dark";
+      }
+      else if (currentThemeMode == ThemeMode.dark) {
         currentThemeMode = ThemeMode.light;
-        iconThemeMode = const Icon(Icons.wb_sunny_rounded);
+        iconThemeMode = const Icon(Icons.wb_sunny_outlined);
+        stringThemeMode = "Light";
       }
       else if (currentThemeMode == ThemeMode.light) {
         currentThemeMode = ThemeMode.system;
-        iconThemeMode = const Icon(Icons.nightlight_rounded);
-      }
-      else if (currentThemeMode == ThemeMode.system) {
-        currentThemeMode = ThemeMode.dark;
-        iconThemeMode = const Icon(Icons.nightlight_rounded);
+        iconThemeMode = const Icon(Icons.settings_system_daydream_outlined);
+        stringThemeMode = "System";
       }
     });
   }
@@ -439,9 +449,9 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Password Generator",
-      darkTheme: ThemeData(brightness: Brightness.dark),
-      theme: ThemeData(brightness: Brightness.light),
+      title: "Simple Password Utilities",
+      darkTheme: darkTheme,
+      theme: lightTheme,
       themeMode: currentThemeMode,
       
       home: Scaffold(
@@ -471,16 +481,28 @@ class _AppState extends State<App> {
                   ],
                 ),
               ),
+              const ListTile(
+                leading: Icon(Icons.remove_circle_outline_rounded),
+                title: Text("Remove Ads"),
+                //onTap: ,
+              ),
               ListTile(
                 leading: iconThemeMode,
-                title: Text("$currentThemeMode Theme"),
+                title: Text("$stringThemeMode Theme"),
                 onTap: changeTheme,
+              ),
+              ListTile(
+                leading: const Icon(Icons.question_mark_rounded),
+                title: const Text("How It Works"),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HowItWorksPage( currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline_rounded),
                 title: const Text("About"),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage( currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
                 },
               ),
             ],
@@ -510,16 +532,59 @@ class _AppState extends State<App> {
   }
 }
 
-class AboutPage extends StatelessWidget {
+class HowItWorksPage extends StatelessWidget {
   final ThemeMode currentThemeMode;
-  const AboutPage({Key? key, required this.currentThemeMode}) : super(key: key);
+  final ThemeData darkTheme;
+  final ThemeData lightTheme;
+  const HowItWorksPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Password Generator",
-      darkTheme: ThemeData(brightness: Brightness.dark),
-      theme: ThemeData(brightness: Brightness.light),
+      title: "Simple Password Utilities",
+      darkTheme: darkTheme,
+      theme: lightTheme,
+      themeMode: currentThemeMode,
+      
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("How It Works"),
+          centerTitle: true,
+          backgroundColor: Colors.teal,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            }, 
+            icon: const Icon(Icons.arrow_back_rounded)
+          ),
+        ),
+
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            /* Desc    */ Text(
+              "Description",
+              style: TextStyle(fontSize: 18)
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AboutPage extends StatelessWidget {
+  final ThemeMode currentThemeMode;
+  final ThemeData darkTheme;
+  final ThemeData lightTheme;
+  const AboutPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Simple Password Utilities",
+      darkTheme: darkTheme,
+      theme: lightTheme,
       themeMode: currentThemeMode,
       
       home: Scaffold(
