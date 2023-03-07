@@ -466,18 +466,22 @@ class _AppState extends State<App> {
             children: <Widget>[
               DrawerHeader(
                 child: Column(
-                  children: const [
-                    SizedBox(height: 12),
+                  children:  <Widget>[
+                    const SizedBox(height: 12),
                     Center(
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage("assets\\solid_icons\\android\\play_store_512.png"),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: const Image(
+                          image: AssetImage("assets/images/solid_icon_512.png"),
+                          height: 48,
+                          width: 48,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 12),
-                    Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
-                    SizedBox(height: 2),
-                    Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
+                    const SizedBox(height: 12),
+                    const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
+                    const SizedBox(height: 2),
+                    const Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
                   ],
                 ),
               ),
@@ -606,14 +610,19 @@ class AboutPage extends StatelessWidget {
             /* Title   */ Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage("assets\\solid_icons\\android\\play_store_512.png"),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                    child: const Image(
+                      image: AssetImage("assets/images/solid_icon_512.png"),
+                      height: 48,
+                      width: 48,
+                    ),
                 ),
                 const SizedBox(width: 12),
                 Column(
-                  children: const <Text>[
+                  children: const <Widget>[
                     Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
+                    SizedBox(height: 3),
                     Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
                   ]
                 )
