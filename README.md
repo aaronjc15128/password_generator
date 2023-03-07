@@ -1,3 +1,3 @@
-# simple_password_generator
+# simple_password_utilities
 
-A simple Flutter app that generates a strong password based on parameters.
+A simple Flutter app that generates a strong password based on parameters.s
