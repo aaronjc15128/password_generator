@@ -471,11 +471,11 @@ class _AppState extends State<App> {
                     Center(
                       child: CircleAvatar(
                         radius: 30,
-                        backgroundImage: AssetImage("assets\\simple_simple_password_utilities_icons\\android\\play_store-512.png"),
+                        backgroundImage: AssetImage("assets\\solid_icons\\android\\play_store_512.png"),
                       ),
                     ),
                     SizedBox(height: 12),
-                    Text("Password Generator", style: TextStyle(fontSize: 22)),
+                    Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
                     SizedBox(height: 2),
                     Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
                   ],
@@ -608,12 +608,12 @@ class AboutPage extends StatelessWidget {
               children: <Widget>[
                 const CircleAvatar(
                   radius: 30,
-                  backgroundImage: AssetImage("assets\\simple_simple_password_utilities_icons\\android\\play_store-512.png"),
+                  backgroundImage: AssetImage("assets\\solid_icons\\android\\play_store_512.png"),
                 ),
                 const SizedBox(width: 12),
                 Column(
                   children: const <Text>[
-                    Text("Password Generator", style: TextStyle(fontSize: 22)),
+                    Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
                     Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
                   ]
                 )
