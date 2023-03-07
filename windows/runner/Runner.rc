@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "password_generator" "\0"
+            VALUE "FileDescription", "simple_password_utilities" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "password_generator" "\0"
+            VALUE "InternalName", "simple_password_utilities" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "password_generator.exe" "\0"
-            VALUE "ProductName", "password_generator" "\0"
+            VALUE "OriginalFilename", "simple_password_utilities.exe" "\0"
+            VALUE "ProductName", "simple_password_utilities" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

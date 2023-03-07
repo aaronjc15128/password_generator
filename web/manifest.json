@@ -1,6 +1,6 @@
 {
-    "name": "password_generator",
-    "short_name": "password_generator",
+    "name": "simple_password_utilities",
+    "short_name": "simple_password_utilities",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -471,7 +471,7 @@ class _AppState extends State<App> {
                     Center(
                       child: CircleAvatar(
                         radius: 30,
-                        backgroundImage: AssetImage("assets\\simple_password_generator_icons\\android\\play_store-512.png"),
+                        backgroundImage: AssetImage("assets\\simple_simple_password_utilities_icons\\android\\play_store-512.png"),
                       ),
                     ),
                     SizedBox(height: 12),
@@ -608,7 +608,7 @@ class AboutPage extends StatelessWidget {
               children: <Widget>[
                 const CircleAvatar(
                   radius: 30,
-                  backgroundImage: AssetImage("assets\\simple_password_generator_icons\\android\\play_store-512.png"),
+                  backgroundImage: AssetImage("assets\\simple_simple_password_utilities_icons\\android\\play_store-512.png"),
                 ),
                 const SizedBox(width: 12),
                 Column(
