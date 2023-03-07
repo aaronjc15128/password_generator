@@ -1,3 +1,2 @@
 # simple_password_utilities
-
-A simple Flutter app that generates a strong password based on parameters.s
+<img src="assets/images/solid_banner_1280x680.png" width="480" height="255" alt="Python">
