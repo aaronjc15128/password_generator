@@ -122,24 +122,12 @@ class _AppState extends State<App> {
   void checkPassword(String userpassword) {
     /*
       - Password score is calculated out of 3.0
-      - You gain +0.1 score for every character no matter the type
-      - You then lose score depening on certain parameters
-
-        Refer to the following table for values:
-
-        Consecutive same characters: -0.08 (-0.11 total)
-        Consecutive same types     : -0.03
-
-
-      - You then gain score depending on the types of characters,
-        and how many times they show up
-      
-        Refer to the following table for values:
-
-        Lowercase:            /            /            / all = 0.0
-        Uppercase: 1st = +0.3 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
-        Numbers  : 1st = +0.4 / 2nd = +0.2 / 3rd = +0.1 / all = 0.0
-        Symbols  : 1st = +0.5 / 2nd = +0.3 / 3rd = +0.1 / all = 0.0
+      - You gain +0.10 score for every character no matter the type (lcns)
+      - You gain +0.15 score for every captial (c)
+      - You gain +0.20 score for every number (n)
+      - You gain +0.25 score for every symbol (s)
+      - You lose -0.15 score for consectitive types (cns)
+      - You lose -0.20 score for consectitive characters
 
       - The score is then multiplied by 33.33 and rounded to an integer
     */
@@ -149,78 +137,18 @@ class _AppState extends State<App> {
     passwordScore += (userpassword.length) / 10;    // Length
 
     String prevChar = "";
-    int countUppercase = 0;
-    int countNumbers = 0;
-    int countSymbols = 0;
-
     for (var i = 0; i < userpassword.length; i++) {
       String char = userpassword[i];
-      if (char == prevChar) {
-        passwordScore -= 0.08;
+
+      if (uppercase.contains(char)) {passwordScore += 0.15;}
+      else if (numbers.contains(char)) {passwordScore += 0.2;}
+      else if (symbols.contains(char)) {passwordScore += 0.25;}
+      
+      if (char == prevChar) {passwordScore -= 0.2;}
+      else if ((uppercase.contains(char) & uppercase.contains(char)) | (numbers.contains(char) & numbers.contains(char)) | (symbols.contains(char) & symbols.contains(char))) {
+        passwordScore -= 0.15;
       }
-      if (uppercase.contains(char)) {
-        if (uppercase.contains(prevChar)) {
-          passwordScore -= 0.03;
-        }
-        if (countUppercase == 0) {
-          countUppercase += 1;
-          passwordScore += 0.3;
-        }
-        else if (countUppercase == 1) {
-          countUppercase += 1;
-          passwordScore += 0.2;
-        }
-        else if (countUppercase == 2) {
-          countUppercase += 1;
-          passwordScore += 0.1;
-        }
-        else if (countUppercase == 3) {
-          countUppercase += 1;
-          passwordScore += 0.0;
-        }
-      }
-      else if (numbers.contains(char)) {
-        if (numbers.contains(prevChar)) {
-          passwordScore -= 0.03;
-        }
-        if (countNumbers == 0) {
-          countNumbers += 1;
-          passwordScore += 0.4;
-        }
-        else if (countNumbers == 1) {
-          countNumbers += 1;
-          passwordScore += 0.2;
-        }
-        else if (countNumbers == 2) {
-          countNumbers += 1;
-          passwordScore += 0.1;
-        }
-        else if (countNumbers == 3) {
-          countNumbers += 1;
-          passwordScore += 0.0;
-        }
-      }
-      else if (symbols.contains(char)) {
-        if (symbols.contains(prevChar)) {
-          passwordScore -= 0.03;
-        }
-        if (countSymbols == 0) {
-          countSymbols += 1;
-          passwordScore += 0.5;
-        }
-        else if (countSymbols == 1) {
-          countSymbols += 1;
-          passwordScore += 0.3;
-        }
-        else if (countSymbols == 2) {
-          countSymbols += 1;
-          passwordScore += 0.1;
-        }
-        else if (countSymbols == 3) {
-          countSymbols += 1;
-          passwordScore += 0.0;
-        }
-      }
+
       prevChar = char;
     }
     
