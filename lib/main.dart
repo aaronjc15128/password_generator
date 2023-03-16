@@ -99,6 +99,9 @@ class _AppState extends State<App> {
       else if (navBarIndex == 1) {
         appBarText = const Text("Password Strength Checker");
       }
+      else if (navBarIndex == 2) {
+        appBarText = const Text("Password History");
+      }
     });
   }
 
@@ -371,6 +374,7 @@ class _AppState extends State<App> {
         ),
       ],
     ),
+    /* History          */ const Text("History"),
   ];
 
 
@@ -446,13 +450,15 @@ class _AppState extends State<App> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.get_app_rounded),
-              activeIcon: Icon(Icons.get_app_rounded),
               label: "Generator",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.check_circle_outline_rounded),
-              activeIcon: Icon(Icons.check_circle_rounded),
               label: "Strength Checker",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history_outlined),
+              label: "History",
             ),
           ],
           currentIndex: navBarIndex,
