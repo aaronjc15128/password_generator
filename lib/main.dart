@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: unnecessary_import
 import 'package:flutter/services.dart';
 
 import 'dart:math';
@@ -33,7 +34,6 @@ class _AppState extends State<App> {
   String stringThemeMode = "System";
 
   // navBarTap()
-  Text appBarText = const Text("Password Generator");
   int navBarIndex = 0;
   
   // generatePassword()
@@ -62,9 +62,11 @@ class _AppState extends State<App> {
   ThemeMode currentThemeMode = ThemeMode.system;
   ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
+    fontFamily: "Inter",
   );
   ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
+    fontFamily: "Inter",
   );
 
 
@@ -92,16 +94,6 @@ class _AppState extends State<App> {
   void navBarTap(int index) {
     setState(() {
       navBarIndex = index;
-
-      if (navBarIndex == 0) {
-        appBarText = const Text("Password Generator");
-      }
-      else if (navBarIndex == 1) {
-        appBarText = const Text("Password Strength Checker");
-      }
-      else if (navBarIndex == 2) {
-        appBarText = const Text("Password History");
-      }
     });
   }
 
@@ -181,6 +173,7 @@ class _AppState extends State<App> {
 
 
   List<Widget> pages() => <Widget>[
+    /*
     /* Generator        */ Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -375,6 +368,57 @@ class _AppState extends State<App> {
       ],
     ),
     /* History          */ const Text("History"),
+    */
+  
+    // Generator
+    Column(
+      children: <Container>[
+        Container(
+          height: 80,
+          child: const Text("80px"),
+        ),
+        Container(
+          height: 80,
+          child: const Text("80px Box"),
+        ),
+        Container(
+          height: 80,
+          child: const Text("80px Button1"),
+        ),
+        Container(
+          height: 24,
+          child: const Text("24px Button1"),
+        ),
+        Container(
+          height: 48,
+          child: const Text("48px Slider1"),
+        ),
+        Container(
+          height: 48,
+          child: const Text("48px Toggle1"),
+        ),
+        Container(
+          height: 48,
+          child: const Text("48px Toggle2"),
+        ),
+        Container(
+          height: 48,
+          child: const Text("48px Toggle3"),
+        ),
+        Container(
+          height: 24,
+          child: const Text("24px"),
+        ),
+        Container(
+          height: 80,
+          child: const Text("80px Button2"),
+        ),
+        Container(
+          height: 80,
+          child: const Text("80px"),
+        ),
+      ],
+    )
   ];
 
 
@@ -387,10 +431,13 @@ class _AppState extends State<App> {
       themeMode: currentThemeMode,
       
       home: Scaffold(
-        appBar: AppBar(
-          title: appBarText,
-          centerTitle: true,
-          backgroundColor: Colors.teal,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            title: const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
+            centerTitle: true,
+          ),
         ),
         
         drawer: Drawer(
@@ -446,23 +493,27 @@ class _AppState extends State<App> {
           ),
         ),
 
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.get_app_rounded),
-              label: "Generator",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.check_circle_outline_rounded),
-              label: "Strength Checker",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history_outlined),
-              label: "History",
-            ),
-          ],
-          currentIndex: navBarIndex,
-          onTap: navBarTap,
+        bottomNavigationBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.get_app_rounded),
+                label: "Generator",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.check_circle_outline_rounded),
+                label: "Strength Checker",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history_outlined),
+                label: "History",
+              ),
+            ],
+            currentIndex: navBarIndex,
+            onTap: navBarTap,
+          ),
         ),
 
         body: pages()[navBarIndex]
