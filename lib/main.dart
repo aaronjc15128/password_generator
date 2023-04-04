@@ -85,7 +85,7 @@ class _AppState extends State<App> {
       }
       else if (currentThemeMode == ThemeMode.light) {
         currentThemeMode = ThemeMode.system;
-        iconThemeMode = const Icon(Icons.settings_system_daydream_outlined);
+        iconThemeMode = const Icon(Icons.wb_cloudy_outlined);
         stringThemeMode = "System";
       }
     });
@@ -372,51 +372,155 @@ class _AppState extends State<App> {
   
     // Generator
     Column(
-      children: <Container>[
-        Container(
-          height: 80,
-          child: const Text("80px"),
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: <Widget>[
+        const SizedBox(height: 80),
+        Container(height: 80,
+          margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+          padding: const EdgeInsets.all(30),
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            color: Color(0x33555555),
+            borderRadius: BorderRadius.all(Radius.circular(25))
+          ),
+          child: Text(password, style: const TextStyle(fontSize: 16)),
         ),
-        Container(
-          height: 80,
-          child: const Text("80px Box"),
+        Container(height: 80,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF009688),
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: password));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Icon(Icons.copy_rounded),
+                Text(" Copy to Clipboard")
+              ]
+            ),
+          ),
         ),
+        const SizedBox(height: 24),
         Container(
-          height: 80,
-          child: const Text("80px Button1"),
+          height: 192,
+          alignment: Alignment.center,
+          child: Column(
+            children: <Container>[
+              Container(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text("Length", style: TextStyle(fontSize: 16)),
+                    Slider(
+                      value: lengthSliderValue,
+                      min: 1,
+                      max: 30,
+                      divisions: 29,
+                      label: lengthSliderValue.round().toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          lengthSliderValue = value;
+                        });
+                      },
+                      inactiveColor: const Color(0xFF303030),
+                      activeColor: const Color(0xFF1DE2BF),
+                      thumbColor: const Color(0xFF009688),
+                    ),
+                  ]
+                )
+              ),
+              Container(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text("Capitals", style: TextStyle(fontSize: 16)),
+                    Switch(
+                      value: capitalsSwitchValue,
+                      onChanged: (value) {
+                        setState(() {
+                          capitalsSwitchValue = value;
+                        });
+                      },
+                      activeTrackColor: const Color(0xFF1DE2BF),
+                      activeColor: const Color(0xFF009688),
+                      inactiveTrackColor: const Color(0xFF303030),
+                      inactiveThumbColor: const Color(0xFF888888),
+                    ),
+                  ]
+                )
+              ),
+              Container(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text("Numbers", style: TextStyle(fontSize: 16)),
+                    Switch(
+                      value: numbersSwitchValue,
+                      onChanged: (value) {
+                        setState(() {
+                          numbersSwitchValue = value;
+                        });
+                      },
+                      activeTrackColor: const Color(0xFF1DE2BF),
+                      activeColor: const Color(0xFF009688),
+                      inactiveTrackColor: const Color(0xFF303030),
+                      inactiveThumbColor: const Color(0xFF888888),
+                    ),
+                  ]
+                )
+              ),
+              Container(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text("Symbols", style: TextStyle(fontSize: 16)),
+                    Switch(
+                      value: symbolsSwitchValue,
+                      onChanged: (value) {
+                        setState(() {
+                          symbolsSwitchValue = value;
+                        });
+                      },
+                      activeTrackColor: const Color(0xFF1DE2BF),
+                      activeColor: const Color(0xFF009688),
+                      inactiveTrackColor: const Color(0xFF303030),
+                      inactiveThumbColor: const Color(0xFF888888),
+                    ),
+                  ]
+                )
+              ),
+            ]
+          )
         ),
-        Container(
-          height: 24,
-          child: const Text("24px Button1"),
+        const SizedBox(height: 24),
+        Container(height: 80,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF009688),
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              generatePassword(lengthSliderValue.toInt(), capitalsSwitchValue, numbersSwitchValue, symbolsSwitchValue);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(Icons.file_download_outlined),
+                Text(" Generate")
+              ],
+            )
+          ),
         ),
-        Container(
-          height: 48,
-          child: const Text("48px Slider1"),
-        ),
-        Container(
-          height: 48,
-          child: const Text("48px Toggle1"),
-        ),
-        Container(
-          height: 48,
-          child: const Text("48px Toggle2"),
-        ),
-        Container(
-          height: 48,
-          child: const Text("48px Toggle3"),
-        ),
-        Container(
-          height: 24,
-          child: const Text("24px"),
-        ),
-        Container(
-          height: 80,
-          child: const Text("80px Button2"),
-        ),
-        Container(
-          height: 80,
-          child: const Text("80px"),
-        ),
+        const SizedBox(height: 80),
       ],
     )
   ];
@@ -465,8 +569,8 @@ class _AppState extends State<App> {
                 ),
               ),
               const ListTile(
-                leading: Icon(Icons.remove_circle_outline_rounded),
-                title: Text("Remove Ads"),
+                leading: Icon(Icons.trending_up_rounded),
+                title: Text("Get PRO"),
                 //onTap: ,
               ),
               const Spacer(),
@@ -499,7 +603,7 @@ class _AppState extends State<App> {
             backgroundColor: Colors.transparent,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.get_app_rounded),
+                icon: Icon(Icons.file_download_outlined),
                 label: "Generator",
               ),
               BottomNavigationBarItem(

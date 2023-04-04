@@ -1,0 +1,197 @@
+/*
+    /* Generator        */ Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      
+      children: <Widget>[
+        /* Box     */ Container(
+          margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color.fromARGB(255, 128, 128, 128))
+          ),
+          child: Text(password, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
+        ),
+        /* Button  */ Container(
+          margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: password));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Icon(Icons.copy_all),
+                Text(" Copy to Clipboard")
+              ]
+            ),
+          ),
+        ),
+        /* Slider  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(" Length", style: TextStyle(fontSize: 18)),
+            Slider(
+              value: lengthSliderValue,
+              min: 1,
+              max: 30,
+              divisions: 29,
+              label: lengthSliderValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  lengthSliderValue = value;
+                });
+              },
+              inactiveColor: const Color.fromARGB(255, 128, 128, 128),
+              activeColor: Colors.tealAccent,
+              thumbColor: Colors.teal,
+            ),
+          ]
+        ),
+        /* Toggle  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(" Capitals", style: TextStyle(fontSize: 18)),
+            Switch(
+              value: capitalsSwitchValue,
+              onChanged: (value) {
+                setState(() {
+                  capitalsSwitchValue = value;
+                });
+              },
+              activeTrackColor: Colors.tealAccent,
+              activeColor: Colors.teal,
+            )
+          ]
+        ),
+        /* Toggle  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(" Numbers", style: TextStyle(fontSize: 18)),
+            Switch(
+              value: numbersSwitchValue,
+              onChanged: (value) {
+                setState(() {
+                  numbersSwitchValue = value;
+                });
+              },
+              activeTrackColor: Colors.tealAccent,
+              activeColor: Colors.teal,
+            )
+          ]
+        ),
+        /* Toggle  */ Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(" Symbols", style: TextStyle(fontSize: 18)),
+            Switch(
+              value: symbolsSwitchValue,
+              onChanged: (value) {
+                setState(() {
+                  symbolsSwitchValue = value;
+                });
+              },
+              activeTrackColor: Colors.tealAccent,
+              activeColor: Colors.teal,
+            )
+          ]
+        ),
+        /* Button  */ Container(
+          margin: const EdgeInsets.fromLTRB(90, 20, 90, 20),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              generatePassword(lengthSliderValue.toInt(), capitalsSwitchValue, numbersSwitchValue, symbolsSwitchValue);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(Icons.get_app_rounded),
+                Text(" Generate")
+              ],
+            )
+          ),
+        )
+      ],
+    ),
+    /* Strength Checker */ Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: <Widget>[
+        /* Score */ Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.fromLTRB(60, 10, 60, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(" Score: ", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300)),
+                  Text(roundedScore, style: const TextStyle(fontSize: 22))
+                ]
+              )
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(60, 10, 60, 20),
+              child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 22))
+            ),
+          ],
+        ),
+        /* Input */ Container(
+          margin: const EdgeInsets.fromLTRB(60, 50, 60, 0),
+
+          child: TextField(
+            autocorrect: false,
+            textAlign: TextAlign.center,
+            cursorColor: Colors.white,
+
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r"\s"))
+            ],
+
+            decoration: const InputDecoration(
+              label: Center(child: Text("Password")),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 240, 240, 240)),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.teal)),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.tealAccent)),
+            ),
+
+            onChanged: (text) {
+              passwordInput = text;
+              checkPassword(passwordInput);
+            },
+          )
+        ),
+        /* Button  */ Container(
+          margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: passwordInput));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Icon(Icons.copy_all),
+                Text(" Copy to Clipboard")
+              ]
+            ),
+          ),
+        ),
+      ],
+    ),
+    /* History          */ const Text("History"),
+    */
+  
