@@ -33,7 +33,26 @@ class _AppState extends State<App> {
   Map<String, Color> themeColors = {};
 
   Map<String, Color> darkThemeColors = {
-    "Text" : const Color(0xFFFFFFFF)
+    "Text"                : const Color(0xFFFFFFFF),
+    "OffToggleHead"       : const Color(0xFF888888),
+    "GreyedIcon"          : const Color(0xFF666666),
+    "InputPlaceholder"    : const Color(0xFF666666),
+    "Box"                 : const Color(0x33555555),
+    "SliderBG"            : const Color(0xFF303030),
+    "OffToggleBG"         : const Color(0xFF303030),
+    "MeterBG"             : const Color(0xFF303030),
+    "DrawerOverlay"       : const Color(0x66000000),
+    "GoodText"            : const Color(0xFF9EFF8E),
+    "PoorText"            : const Color(0xFFFF8E8E),
+    "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
+    "SilderFG"            : const Color(0xFF1DE2BF),
+    "OnToggleBG"          : const Color(0xFF1DE2BF),
+    "Button"              : const Color(0xFF009688),
+    "Input"               : const Color(0xFF009688),
+    "SliderHead"          : const Color(0xFF009688),
+    "OnToggleHead"        : const Color(0xFF009688),
+    "DrawerBG"            : const Color(0xFF17201F),
+    "BG"                  : const Color(0xFF0B1817),
   };
 
   Map<String, Color> lightThemeColors = {
@@ -89,19 +108,19 @@ class _AppState extends State<App> {
         currentThemeMode = ThemeMode.dark;
         iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
         stringThemeMode = "Dark";
-        themeColors = darkThemeColors;
+        themeColors.addAll(darkThemeColors);
       }
       else if (currentThemeMode == ThemeMode.dark) {
         currentThemeMode = ThemeMode.light;
-        iconThemeMode = const Icon(Icons.wb_sunny_outlined, color: Color(0xFFFFFFFF));
+        iconThemeMode = const Icon(Icons.wb_sunny_outlined, color: Color(0xFF000000));
         stringThemeMode = "Light";
-        themeColors = lightThemeColors;
+        themeColors.addAll(lightThemeColors);
       }
       else if (currentThemeMode == ThemeMode.light) {
         currentThemeMode = ThemeMode.system;
         iconThemeMode = const Icon(Icons.wb_cloudy_outlined, color: Color(0xFFFFFFFF));
         stringThemeMode = "System";
-        themeColors = darkThemeColors;
+        themeColors.addAll(darkThemeColors);
       }
     });
   }
@@ -417,7 +436,7 @@ class _AppState extends State<App> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const <Widget>[
                 Icon(Icons.copy_rounded),
-                Text("  Copy to Clipboard")
+                Text("  Copy to Clipboard", style: TextStyle(color: Color(0xFFFFFFFF)))
               ]
             ),
           ),
