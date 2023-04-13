@@ -29,8 +29,20 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   
+  // pages() => THEMES
+  Map<String, Color> themeColors = {};
+
+  Map<String, Color> darkThemeColors = {
+    "Text" : const Color(0xFFFFFFFF)
+  };
+
+  Map<String, Color> lightThemeColors = {
+    "Text" : const Color(0xFF000000)
+  };
+  
+
   // changeTheme()
-  Icon iconThemeMode = const Icon(Icons.settings_system_daydream_outlined);
+  Icon iconThemeMode = const Icon(Icons.wb_cloudy_outlined, color: Color(0xFFFFFFFF));
   String stringThemeMode = "System";
 
   // navBarTap()
@@ -61,12 +73,10 @@ class _AppState extends State<App> {
   // build()
   ThemeMode currentThemeMode = ThemeMode.system;
   ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
     fontFamily: "Inter",
     scaffoldBackgroundColor: const Color(0xFF0B1817),
   );
   ThemeData lightTheme = ThemeData(
-    brightness: Brightness.light,
     fontFamily: "Inter",
     scaffoldBackgroundColor: const Color(0xFFDCEFED),
   );
@@ -77,18 +87,21 @@ class _AppState extends State<App> {
     setState(() {
       if (currentThemeMode == ThemeMode.system) {
         currentThemeMode = ThemeMode.dark;
-        iconThemeMode = const Icon(Icons.nightlight_outlined);
+        iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
         stringThemeMode = "Dark";
+        themeColors = darkThemeColors;
       }
       else if (currentThemeMode == ThemeMode.dark) {
         currentThemeMode = ThemeMode.light;
-        iconThemeMode = const Icon(Icons.wb_sunny_outlined);
+        iconThemeMode = const Icon(Icons.wb_sunny_outlined, color: Color(0xFFFFFFFF));
         stringThemeMode = "Light";
+        themeColors = lightThemeColors;
       }
       else if (currentThemeMode == ThemeMode.light) {
         currentThemeMode = ThemeMode.system;
-        iconThemeMode = const Icon(Icons.wb_cloudy_outlined);
+        iconThemeMode = const Icon(Icons.wb_cloudy_outlined, color: Color(0xFFFFFFFF));
         stringThemeMode = "System";
+        themeColors = darkThemeColors;
       }
     });
   }
@@ -387,7 +400,7 @@ class _AppState extends State<App> {
             color: Color(0x33555555),
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
-          child: Text(password, style: const TextStyle(fontSize: 16)),
+          child: Text(password, style: const TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
         ),
         Container(height: 80,
           alignment: Alignment.center,
@@ -419,7 +432,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Length", style: TextStyle(fontSize: 16)),
+                    const Text("Length", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
                     Slider(
                       value: lengthSliderValue,
                       min: 1,
@@ -442,7 +455,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Capitals", style: TextStyle(fontSize: 16)),
+                    const Text("Capitals", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
                     Switch(
                       value: capitalsSwitchValue,
                       onChanged: (value) {
@@ -462,7 +475,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Numbers", style: TextStyle(fontSize: 16)),
+                    const Text("Numbers", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
                     Switch(
                       value: numbersSwitchValue,
                       onChanged: (value) {
@@ -482,7 +495,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Symbols", style: TextStyle(fontSize: 16)),
+                    const Text("Symbols", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
                     Switch(
                       value: symbolsSwitchValue,
                       onChanged: (value) {
@@ -543,6 +556,7 @@ class _AppState extends State<App> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
+            elevation: 0,
             backgroundColor: const Color(0xFF0B1817),
             title: const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
             centerTitle: true,
@@ -550,15 +564,16 @@ class _AppState extends State<App> {
         ),
         
         drawer: Drawer(
+          backgroundColor: const Color(0xFF17201F),
           child: Column(
             children: <Widget>[
               DrawerHeader(
                 child: Column(
-                  children:  <Widget>[
+                  children: <Widget>[
                     const SizedBox(height: 12),
                     Center(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(10),
                         child: const Image(
                           image: AssetImage("assets/images/solid_icon_512.png"),
                           height: 48,
@@ -567,33 +582,33 @@ class _AppState extends State<App> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
+                    const Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: Color(0xFFFFFFFF))),
                     const SizedBox(height: 3),
-                    const Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
+                    const Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
                   ],
                 ),
               ),
               const ListTile(
-                leading: Icon(Icons.trending_up_rounded),
-                title: Text("Get PRO"),
+                leading: Icon(Icons.trending_up_rounded, color: Color(0xFFFFFFFF)),
+                title: Text("Get PRO", style: TextStyle(color: Color(0xFFFFFFFF))),
                 //onTap: ,
               ),
               const Spacer(),
               ListTile(
                 leading: iconThemeMode,
-                title: Text("$stringThemeMode Theme"),
+                title: Text("$stringThemeMode Theme", style: TextStyle(color: themeColors["Text"])),
                 onTap: changeTheme,
               ),
               ListTile(
-                leading: const Icon(Icons.question_mark_rounded),
-                title: const Text("How It Works"),
+                leading: const Icon(Icons.question_mark_rounded, color: Color(0xFFFFFFFF)),
+                title: const Text("How It Works", style: TextStyle(color: Color(0xFFFFFFFF))),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => HowItWorksPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.info_outline_rounded),
-                title: const Text("About"),
+                leading: const Icon(Icons.info_outline_rounded, color: Color(0xFFFFFFFF)),
+                title: const Text("About", style: TextStyle(color: Color(0xFFFFFFFF))),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
                 },
@@ -605,14 +620,13 @@ class _AppState extends State<App> {
         bottomNavigationBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),
           child: BottomNavigationBar(
-            elevation: 0.0,
+            elevation: 0,
             backgroundColor: Colors.transparent,
             selectedItemColor: const Color(0xFF1DE2BF),
             unselectedItemColor: const Color(0xFFFFFFFF),
             selectedFontSize: 16,
             unselectedFontSize: 12,
             iconSize: 32,
-            
             
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
