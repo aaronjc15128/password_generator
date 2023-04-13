@@ -63,10 +63,12 @@ class _AppState extends State<App> {
   ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     fontFamily: "Inter",
+    scaffoldBackgroundColor: const Color(0xFF0B1817),
   );
   ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     fontFamily: "Inter",
+    scaffoldBackgroundColor: const Color(0xFFDCEFED),
   );
 
 
@@ -376,7 +378,7 @@ class _AppState extends State<App> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
 
       children: <Widget>[
-        const SizedBox(height: 80),
+        const SizedBox(height: 130),
         Container(height: 80,
           margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
           padding: const EdgeInsets.all(30),
@@ -402,7 +404,7 @@ class _AppState extends State<App> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const <Widget>[
                 Icon(Icons.copy_rounded),
-                Text(" Copy to Clipboard")
+                Text("  Copy to Clipboard")
               ]
             ),
           ),
@@ -412,8 +414,8 @@ class _AppState extends State<App> {
           height: 192,
           alignment: Alignment.center,
           child: Column(
-            children: <Container>[
-              Container(height: 48,
+            children: <SizedBox>[
+              SizedBox(height: 48,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -436,7 +438,7 @@ class _AppState extends State<App> {
                   ]
                 )
               ),
-              Container(height: 48,
+              SizedBox(height: 48,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -456,7 +458,7 @@ class _AppState extends State<App> {
                   ]
                 )
               ),
-              Container(height: 48,
+              SizedBox(height: 48,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -476,7 +478,7 @@ class _AppState extends State<App> {
                   ]
                 )
               ),
-              Container(height: 48,
+              SizedBox(height: 48,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -515,7 +517,7 @@ class _AppState extends State<App> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Icon(Icons.file_download_outlined),
-                Text(" Generate")
+                Text("  Generate")
               ],
             )
           ),
@@ -535,10 +537,13 @@ class _AppState extends State<App> {
       themeMode: currentThemeMode,
       
       home: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: const Color(0xFF0B1817),
             title: const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
             centerTitle: true,
           ),
@@ -600,7 +605,15 @@ class _AppState extends State<App> {
         bottomNavigationBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),
           child: BottomNavigationBar(
+            elevation: 0.0,
             backgroundColor: Colors.transparent,
+            selectedItemColor: const Color(0xFF1DE2BF),
+            unselectedItemColor: const Color(0xFFFFFFFF),
+            selectedFontSize: 16,
+            unselectedFontSize: 12,
+            iconSize: 32,
+            
+            
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.file_download_outlined),
@@ -615,12 +628,22 @@ class _AppState extends State<App> {
                 label: "History",
               ),
             ],
+
             currentIndex: navBarIndex,
             onTap: navBarTap,
           ),
         ),
 
-        body: pages()[navBarIndex]
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0x00333333), Color(0xFF009688)],
+              begin: Alignment.center,
+              end: Alignment.bottomCenter,
+            )
+          ),
+          child: pages()[navBarIndex]
+        )
       ),
     );
   }
