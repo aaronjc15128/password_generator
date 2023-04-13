@@ -615,7 +615,7 @@ class _AppState extends State<App> {
               const Spacer(),
               ListTile(
                 leading: iconThemeMode,
-                title: Text("$stringThemeMode Theme", style: TextStyle(color: themeColors["Text"])),
+                title: Text("$stringThemeMode Theme", style: const TextStyle(color: Color(0xFFFFFFFF))),
                 onTap: changeTheme,
               ),
               ListTile(
