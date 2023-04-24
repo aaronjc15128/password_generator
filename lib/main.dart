@@ -6,6 +6,13 @@ import 'dart:math';
 
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Color(0xFF009688),
+      systemNavigationBarIconBrightness: Brightness.light,
+    )
+  );
   runApp(const MyApp());
 }
 
@@ -56,8 +63,8 @@ class _AppState extends State<App> {
   };
 
   Map<String, Color> lightThemeColors = {
-    "Text" : const Color(0xFF000000)
-  };
+    "Text"                : const Color(0xFF000000)
+  };  
   
 
   // changeTheme()
@@ -99,7 +106,6 @@ class _AppState extends State<App> {
     fontFamily: "Inter",
     scaffoldBackgroundColor: const Color(0xFFDCEFED),
   );
-
 
 
   void changeTheme() {
@@ -567,10 +573,12 @@ class _AppState extends State<App> {
       darkTheme: darkTheme,
       theme: lightTheme,
       themeMode: currentThemeMode,
+      debugShowCheckedModeBanner: false,
       
       home: Scaffold(
         extendBodyBehindAppBar: true,
         extendBody: true,
+        resizeToAvoidBottomInset: false,
         
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),
@@ -579,6 +587,9 @@ class _AppState extends State<App> {
             backgroundColor: const Color(0xFF0B1817),
             title: const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
             centerTitle: true,
+            /*systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Color(0xFF0B1817), 
+            )*/
           ),
         ),
         
@@ -674,7 +685,7 @@ class _AppState extends State<App> {
               begin: Alignment.center,
               end: Alignment.bottomCenter,
             )
-          ),
+          ), 
           child: pages()[navBarIndex]
         )
       ),
@@ -695,6 +706,7 @@ class HowItWorksPage extends StatelessWidget {
       darkTheme: darkTheme,
       theme: lightTheme,
       themeMode: currentThemeMode,
+      debugShowCheckedModeBanner: false,
       
       home: Scaffold(
         appBar: AppBar(
@@ -736,6 +748,7 @@ class AboutPage extends StatelessWidget {
       darkTheme: darkTheme,
       theme: lightTheme,
       themeMode: currentThemeMode,
+      debugShowCheckedModeBanner: false,
       
       home: Scaffold(
         appBar: AppBar(
