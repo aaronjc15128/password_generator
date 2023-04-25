@@ -37,9 +37,11 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   
   // pages() => THEMES
-  Map<String, Color> themeColors = {};
+  Map themeColors = {};
 
-  Map<String, Color> darkThemeColors = {
+  Map darkThemeColors = {
+    "Black"               : const Color(0xFF000000),
+    "White"               : const Color(0xFFFFFFFF),
     "Text"                : const Color(0xFFFFFFFF),
     "OffToggleHead"       : const Color(0xFF888888),
     "GreyedIcon"          : const Color(0xFF666666),
@@ -62,14 +64,35 @@ class _AppState extends State<App> {
     "BG"                  : const Color(0xFF0B1817),
   };
 
-  Map<String, Color> lightThemeColors = {
-    "Text"                : const Color(0xFF000000)
-  };  
+  Map lightThemeColors = {
+    "Black"               : const Color(0xFF000000),
+    "White"               : const Color(0xFFFFFFFF),
+    "Text"                : const Color(0xFF000000),
+    "OffToggleHead"       : const Color(0xFF888888),
+    "GreyedIcon"          : const Color(0xFF999999),
+    "InputPlaceholder"    : const Color(0xFF999999),
+    "Box"                 : const Color(0x33999999),
+    "SliderBG"            : const Color(0xFFCCCCCC),
+    "OffToggleBG"         : const Color(0xFFCCCCCC),
+    "MeterBG"             : const Color(0xFFCCCCCC),
+    "DrawerOverlay"       : const Color(0x66000000),
+    "GoodText"            : const Color(0xFF17A300),
+    "PoorText"            : const Color(0xFFFF5C5C),
+    "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
+    "SilderFG"            : const Color(0xFF0E715F),
+    "OnToggleBG"          : const Color(0xFF0E715F),
+    "Button"              : const Color(0xFF00B2A2),
+    "Input"               : const Color(0xFF00B2A2),
+    "SliderHead"          : const Color(0xFF00B2A2),
+    "OnToggleHead"        : const Color(0xFF00B2A2),
+    "DrawerBG"            : const Color(0xFFDEE7E7),
+    "BG"                  : const Color(0xFFDCEFED),
+  };
   
 
   // changeTheme()
-  Icon iconThemeMode = const Icon(Icons.wb_cloudy_outlined, color: Color(0xFFFFFFFF));
-  String stringThemeMode = "System";
+  Icon iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+  String stringThemeMode = "Dark";
 
   // navBarTap()
   int navBarIndex = 0;
@@ -97,7 +120,7 @@ class _AppState extends State<App> {
   MaterialColor colorScore = Colors.red;
 
   // build()
-  ThemeMode currentThemeMode = ThemeMode.system;
+  ThemeMode currentThemeMode = ThemeMode.dark;
   ThemeData darkTheme = ThemeData(
     fontFamily: "Inter",
     scaffoldBackgroundColor: const Color(0xFF0B1817),
@@ -109,26 +132,24 @@ class _AppState extends State<App> {
 
 
   void changeTheme() {
-    setState(() {
-      if (currentThemeMode == ThemeMode.system) {
-        currentThemeMode = ThemeMode.dark;
-        iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
-        stringThemeMode = "Dark";
-        themeColors.addAll(darkThemeColors);
-      }
-      else if (currentThemeMode == ThemeMode.dark) {
-        currentThemeMode = ThemeMode.light;
-        iconThemeMode = const Icon(Icons.wb_sunny_outlined, color: Color(0xFF000000));
-        stringThemeMode = "Light";
-        themeColors.addAll(lightThemeColors);
+      if (currentThemeMode == ThemeMode.dark) {
+        setState(() {
+          currentThemeMode = ThemeMode.light;
+          iconThemeMode = const Icon(Icons.wb_sunny_outlined, color: Color(0xFF000000));
+          stringThemeMode = "Light";
+          themeColors.clear();
+          themeColors.addAll(lightThemeColors);
+        });
       }
       else if (currentThemeMode == ThemeMode.light) {
-        currentThemeMode = ThemeMode.system;
-        iconThemeMode = const Icon(Icons.wb_cloudy_outlined, color: Color(0xFFFFFFFF));
-        stringThemeMode = "System";
-        themeColors.addAll(darkThemeColors);
+        setState(() {
+          currentThemeMode = ThemeMode.dark;
+          iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+          stringThemeMode = "Dark";
+          themeColors.clear();
+          themeColors.addAll(darkThemeColors);
+        });
       }
-    });
   }
 
   void navBarTap(int index) {
@@ -421,18 +442,18 @@ class _AppState extends State<App> {
           margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
           padding: const EdgeInsets.all(30),
           alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            color: Color(0x33555555),
-            borderRadius: BorderRadius.all(Radius.circular(25))
+          decoration: BoxDecoration(
+            color: themeColors["Box"],
+            borderRadius: const BorderRadius.all(Radius.circular(25))
           ),
-          child: Text(password, style: const TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
+          child: Text(password, style: TextStyle(fontSize: 16, color: themeColors["Text"])),
         ),
         Container(height: 80,
           alignment: Alignment.center,
           margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF009688),
+              backgroundColor: themeColors["Button"],
               textStyle: const TextStyle(fontSize: 16)
             ),
             onPressed: () {
@@ -440,9 +461,9 @@ class _AppState extends State<App> {
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Icon(Icons.copy_rounded),
-                Text("  Copy to Clipboard", style: TextStyle(color: Color(0xFFFFFFFF)))
+              children: <Widget>[
+                Icon(Icons.copy_rounded, color: themeColors["White"]),
+                Text("  Copy to Clipboard", style: TextStyle(color: themeColors["White"]))
               ]
             ),
           ),
@@ -457,7 +478,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Length", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
+                    Text("Length", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
                     Slider(
                       value: lengthSliderValue,
                       min: 1,
@@ -469,9 +490,9 @@ class _AppState extends State<App> {
                           lengthSliderValue = value;
                         });
                       },
-                      inactiveColor: const Color(0xFF303030),
-                      activeColor: const Color(0xFF1DE2BF),
-                      thumbColor: const Color(0xFF009688),
+                      inactiveColor: themeColors["SliderBG"],
+                      activeColor: themeColors["SilderFG"],
+                      thumbColor: themeColors["SliderHead"],
                     ),
                   ]
                 )
@@ -480,7 +501,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Capitals", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
+                    Text("Capitals", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
                     Switch(
                       value: capitalsSwitchValue,
                       onChanged: (value) {
@@ -488,10 +509,10 @@ class _AppState extends State<App> {
                           capitalsSwitchValue = value;
                         });
                       },
-                      activeTrackColor: const Color(0xFF1DE2BF),
-                      activeColor: const Color(0xFF009688),
-                      inactiveTrackColor: const Color(0xFF303030),
-                      inactiveThumbColor: const Color(0xFF888888),
+                      activeTrackColor: themeColors["OnToggleBG"],
+                      activeColor: themeColors["OnToggleHead"],
+                      inactiveTrackColor: themeColors["OffToggleBG"],
+                      inactiveThumbColor: themeColors["OffToggleHead"],
                     ),
                   ]
                 )
@@ -500,7 +521,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Numbers", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
+                    Text("Numbers", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
                     Switch(
                       value: numbersSwitchValue,
                       onChanged: (value) {
@@ -508,10 +529,10 @@ class _AppState extends State<App> {
                           numbersSwitchValue = value;
                         });
                       },
-                      activeTrackColor: const Color(0xFF1DE2BF),
-                      activeColor: const Color(0xFF009688),
-                      inactiveTrackColor: const Color(0xFF303030),
-                      inactiveThumbColor: const Color(0xFF888888),
+                      activeTrackColor: themeColors["OnToggleBG"],
+                      activeColor: themeColors["OnToggleHead"],
+                      inactiveTrackColor: themeColors["OffToggleBG"],
+                      inactiveThumbColor: themeColors["OffToggleHead"],
                     ),
                   ]
                 )
@@ -520,7 +541,7 @@ class _AppState extends State<App> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Symbols", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
+                    Text("Symbols", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
                     Switch(
                       value: symbolsSwitchValue,
                       onChanged: (value) {
@@ -528,10 +549,10 @@ class _AppState extends State<App> {
                           symbolsSwitchValue = value;
                         });
                       },
-                      activeTrackColor: const Color(0xFF1DE2BF),
-                      activeColor: const Color(0xFF009688),
-                      inactiveTrackColor: const Color(0xFF303030),
-                      inactiveThumbColor: const Color(0xFF888888),
+                      activeTrackColor: themeColors["OnToggleBG"],
+                      activeColor: themeColors["OnToggleHead"],
+                      inactiveTrackColor: themeColors["OffToggleBG"],
+                      inactiveThumbColor: themeColors["OffToggleHead"],
                     ),
                   ]
                 )
@@ -545,7 +566,7 @@ class _AppState extends State<App> {
           margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF009688),
+              backgroundColor: themeColors["Button"],
               textStyle: const TextStyle(fontSize: 16)
             ),
             onPressed: () {
@@ -553,9 +574,9 @@ class _AppState extends State<App> {
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.file_download_outlined),
-                Text("  Generate")
+              children: [
+                Icon(Icons.file_download_outlined, color: themeColors["White"]),
+                Text("  Generate", style: TextStyle(color: themeColors["White"]))
               ],
             )
           ),
@@ -565,6 +586,16 @@ class _AppState extends State<App> {
     )
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    
+    setState(() {
+      iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+      stringThemeMode = "Dark";
+      themeColors.addAll(darkThemeColors);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -584,12 +615,9 @@ class _AppState extends State<App> {
           preferredSize: const Size.fromHeight(80),
           child: AppBar(
             elevation: 0,
-            backgroundColor: const Color(0xFF0B1817),
-            title: const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
+            backgroundColor: themeColors["BG"],
+            title: Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
             centerTitle: true,
-            /*systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Color(0xFF0B1817), 
-            )*/
           ),
         ),
         
@@ -652,8 +680,8 @@ class _AppState extends State<App> {
           child: BottomNavigationBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
-            selectedItemColor: const Color(0xFF1DE2BF),
-            unselectedItemColor: const Color(0xFFFFFFFF),
+            selectedItemColor: themeColors["NavBarSelectedItem"],
+            unselectedItemColor: themeColors["White"],
             selectedFontSize: 16,
             unselectedFontSize: 12,
             iconSize: 32,
@@ -682,6 +710,7 @@ class _AppState extends State<App> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [Color(0x00333333), Color(0xFF009688)],
+
               begin: Alignment.center,
               end: Alignment.bottomCenter,
             )
