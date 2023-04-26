@@ -176,7 +176,7 @@ class _AppState extends State<App> {
       - You gain +0.15 score for every captial (c)
       - You gain +0.20 score for every number (n)
       - You gain +0.25 score for every symbol (s)
-      - You lose -0.15 score for consectitive types (cns)
+      - You lose -0.10 score for consectitive types (cns)
       - You lose -0.20 score for consectitive characters
 
       - The score is then multiplied by 33.33 and rounded to an integer
@@ -196,7 +196,7 @@ class _AppState extends State<App> {
       
       if (char == prevChar) {passwordScore -= 0.2;}
       else if ((uppercase.contains(char) & uppercase.contains(char)) | (numbers.contains(char) & numbers.contains(char)) | (symbols.contains(char) & symbols.contains(char))) {
-        passwordScore -= 0.15;
+        passwordScore -= 0.1;
       }
 
       prevChar = char;
