@@ -6,13 +6,7 @@ import 'dart:math';
 
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Color(0xFF009688),
-      systemNavigationBarIconBrightness: Brightness.light,
-    )
-  );
+  
   runApp(const MyApp());
 }
 
@@ -79,8 +73,8 @@ class _AppState extends State<App> {
     "GoodText"            : const Color(0xFF17A300),
     "PoorText"            : const Color(0xFFFF5C5C),
     "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
-    "SilderFG"            : const Color(0xFF0E715F),
-    "OnToggleBG"          : const Color(0xFF0E715F),
+    "SilderFG"            : const Color(0xFF008878),
+    "OnToggleBG"          : const Color(0xFF008878),
     "Button"              : const Color(0xFF00B2A2),
     "Input"               : const Color(0xFF00B2A2),
     "SliderHead"          : const Color(0xFF00B2A2),
@@ -589,6 +583,14 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Color(0xFF009688),
+        systemNavigationBarIconBrightness: Brightness.light,
+      )
+    );
     
     setState(() {
       iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
@@ -616,13 +618,14 @@ class _AppState extends State<App> {
           child: AppBar(
             elevation: 0,
             backgroundColor: themeColors["BG"],
+            iconTheme: IconThemeData(color: themeColors["Text"]),
             title: Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
             centerTitle: true,
           ),
         ),
         
         drawer: Drawer(
-          backgroundColor: const Color(0xFF17201F),
+          backgroundColor: themeColors["DrawerBG"],
           child: Column(
             children: <Widget>[
               DrawerHeader(
@@ -640,35 +643,28 @@ class _AppState extends State<App> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: Color(0xFFFFFFFF))),
+                    Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
                     const SizedBox(height: 3),
-                    const Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, color: Color(0xFFFFFFFF))),
+                    Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
                   ],
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.trending_up_rounded, color: Color(0xFFFFFFFF)),
-                title: Text("Get PRO", style: TextStyle(color: Color(0xFFFFFFFF))),
+              ListTile(
+                leading: Icon(Icons.trending_up_rounded, color: themeColors["Text"]),
+                title: Text("Get PRO", style: TextStyle(color: themeColors["Text"])),
                 //onTap: ,
               ),
               const Spacer(),
               ListTile(
                 leading: iconThemeMode,
-                title: Text("$stringThemeMode Theme", style: const TextStyle(color: Color(0xFFFFFFFF))),
+                title: Text("$stringThemeMode Theme", style: TextStyle(color: themeColors["Text"])),
                 onTap: changeTheme,
               ),
               ListTile(
-                leading: const Icon(Icons.question_mark_rounded, color: Color(0xFFFFFFFF)),
-                title: const Text("How It Works", style: TextStyle(color: Color(0xFFFFFFFF))),
+                leading: Icon(Icons.info_outline_rounded, color: themeColors["Text"]),
+                title: Text("About", style: TextStyle(color: themeColors["Text"])),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HowItWorksPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outline_rounded, color: Color(0xFFFFFFFF)),
-                title: const Text("About", style: TextStyle(color: Color(0xFFFFFFFF))),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme, themeColors: themeColors)));
                 },
               ),
             ],
@@ -710,55 +706,12 @@ class _AppState extends State<App> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [Color(0x00333333), Color(0xFF009688)],
-
               begin: Alignment.center,
               end: Alignment.bottomCenter,
             )
-          ), 
+          ),
           child: pages()[navBarIndex]
         )
-      ),
-    );
-  }
-}
-
-class HowItWorksPage extends StatelessWidget {
-  final ThemeMode currentThemeMode;
-  final ThemeData darkTheme;
-  final ThemeData lightTheme;
-  const HowItWorksPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Simple Password Utilities",
-      darkTheme: darkTheme,
-      theme: lightTheme,
-      themeMode: currentThemeMode,
-      debugShowCheckedModeBanner: false,
-      
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("How It Works"),
-          centerTitle: true,
-          backgroundColor: Colors.teal,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            }, 
-            icon: const Icon(Icons.arrow_back_rounded)
-          ),
-        ),
-
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            /* Desc    */ Text(
-              "Description",
-              style: TextStyle(fontSize: 18)
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -768,7 +721,8 @@ class AboutPage extends StatelessWidget {
   final ThemeMode currentThemeMode;
   final ThemeData darkTheme;
   final ThemeData lightTheme;
-  const AboutPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme}) : super(key: key);
+  final Map themeColors;
+  const AboutPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme, required this.themeColors}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -781,9 +735,11 @@ class AboutPage extends StatelessWidget {
       
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("About"),
+          elevation: 0,
+          backgroundColor: themeColors["BG"],
+          iconTheme: IconThemeData(color: themeColors["Text"]),
+          title: Text("About", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
           centerTitle: true,
-          backgroundColor: Colors.teal,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -792,62 +748,71 @@ class AboutPage extends StatelessWidget {
           ),
         ),
 
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            /* Title   */ Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                    child: const Image(
-                      image: AssetImage("assets/images/solid_icon_512.png"),
-                      height: 48,
-                      width: 48,
-                    ),
-                ),
-                const SizedBox(width: 12),
-                Column(
-                  children: const <Widget>[
-                    Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
-                    SizedBox(height: 3),
-                    Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
-                  ]
-                )
-              ],
-            ), const SizedBox(height: 50),
-            /* Desc    */ const Text(
-              "Description",
-              style: TextStyle(fontSize: 18)
-            ), const SizedBox(height: 50),
-            /* App     */ Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("App:", style: TextStyle(fontSize: 16)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.one_k_rounded)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.two_k_rounded))
-                  ],
-                )
-              ]
-            ), const SizedBox(height: 30),
-            /* Socials */ Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("Socials:", style: TextStyle(fontSize: 16)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.one_k_rounded)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.two_k_rounded)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.three_k_rounded))
-                  ],
-                )
-              ]
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0x00333333), Color(0xFF009688)],
+              begin: Alignment.center,
+              end: Alignment.bottomCenter,
             )
-          ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                      child: const Image(
+                        image: AssetImage("assets/images/solid_icon_512.png"),
+                        height: 48,
+                        width: 48,
+                      ),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    children: <Widget>[
+                      Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
+                      const SizedBox(height: 3),
+                      Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: themeColors["Text"])),
+                    ]
+                  )
+                ],
+              ), const SizedBox(height: 50),
+              Text(
+                "Description",
+                style: TextStyle(fontSize: 18, color: themeColors["Text"])
+              ), const SizedBox(height: 50),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("App:", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(onPressed: (){}, icon: Icon(Icons.one_k_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.two_k_rounded, color: themeColors["Text"]))
+                    ],
+                  )
+                ]
+              ), const SizedBox(height: 30),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Socials:", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(onPressed: (){}, icon: Icon(Icons.one_k_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.two_k_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.three_k_rounded, color: themeColors["Text"]))
+                    ],
+                  )
+                ]
+              )
+            ],
+          ),
         ),
       ),
     );
