@@ -108,10 +108,11 @@ class _AppState extends State<App> {
 
   // pages() => Strength Checker
   String passwordInput = "Password";
-  double passwordScore = 0;
-  String roundedScore = "0";
-  String rankScore = "Poor";
-  MaterialColor colorScore = Colors.red;
+  late double passwordScore;
+  late String roundedScore;
+  late String rankScore;
+  late Color colorScore;
+  double meterSliderValue = 1;
 
   // build()
   ThemeMode currentThemeMode = ThemeMode.dark;
@@ -208,7 +209,7 @@ class _AppState extends State<App> {
     }
     else if (passwordScore >= 2) {
       rankScore = "Good";
-      colorScore = Colors.green;
+      colorScore = themeColors["GoodText"];
     }
     else if (passwordScore >= 1) {
       rankScore = "Fair";
@@ -216,7 +217,7 @@ class _AppState extends State<App> {
     }
     else if (passwordScore >= 0) {
       rankScore = "Poor";
-      colorScore = Colors.red;
+      colorScore = themeColors["PoorText"];
     }
 
     setState(() {
@@ -577,6 +578,62 @@ class _AppState extends State<App> {
         ),
         const SizedBox(height: 80),
       ],
+    ),
+
+    // Strength Checker
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: <Widget>[
+        const SizedBox(height: 130),
+        Container(height: 80,
+          margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 30,
+                child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 26))
+              ),
+              SizedBox(height: 30,
+                child: Slider(
+                  value: meterSliderValue,
+                  min: 0,
+                  max: 4,
+                  divisions: 4,
+                  label: meterSliderValue.round().toString(),
+                  onChanged: (double value) {
+                    setState(() {
+                      meterSliderValue = value;
+                    });
+                  },
+                  inactiveColor: themeColors["SliderBG"],
+                  activeColor: themeColors["SilderFG"],
+                  thumbColor: themeColors["SliderHead"],
+                ),
+              ),
+              SizedBox(height: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(" Score: ", style: TextStyle(fontSize: 18, color: themeColors["Text"])),
+                    Text(roundedScore, style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                  ]
+                ),
+              ),
+            ],
+          )
+        ),
+        Container(height: 200,
+        
+        ),
+        Container(height: 120,
+        
+        ),
+        Container(height: 80,
+        
+        ),
+        const SizedBox(height: 80),
+      ],
     )
   ];
 
@@ -596,6 +653,7 @@ class _AppState extends State<App> {
       iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
       stringThemeMode = "Dark";
       themeColors.addAll(darkThemeColors);
+      checkPassword("Password");
     });
   }
 
