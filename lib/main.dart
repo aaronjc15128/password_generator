@@ -112,6 +112,8 @@ class _AppState extends State<App> {
   late String roundedScore;
   late String rankScore;
   late Color colorScore;
+  late double passwordTime;
+  late String roundedTime;
   double meterSliderValue = 1;
 
   // build()
@@ -181,6 +183,10 @@ class _AppState extends State<App> {
       - You lose -0.20 score for consectitive characters
 
       - The score is then multiplied by 33.33 and rounded to an integer
+
+
+      Then the time it takes to crack the password is calculated using the formula:
+      timeInSeconds = (possibleCharacters ^ passwordLength) / attemptsPerSecond
     */
     
     passwordScore = 0;
@@ -224,6 +230,9 @@ class _AppState extends State<App> {
       if (passwordScore > 3) {passwordScore = 3;}
       passwordScore *= 33.33;
       roundedScore = passwordScore.toStringAsFixed(0);
+
+      passwordTime = pow((lowercase.length+uppercase.length+numbers.length+symbols.length), userpassword.length) / 1000000000;
+      roundedTime = "$passwordTime seconds";
     });
   }
 
@@ -586,15 +595,16 @@ class _AppState extends State<App> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
 
       children: <Widget>[
-        const SizedBox(height: 130),
-        Container(height: 80,
+        const SizedBox(height: 110),
+        Container(height: 100,
           margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
           child: Column(
-            children: <Widget>[
+            children: <SizedBox>[
               SizedBox(height: 30,
-                child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 26))
+                child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 28))
               ),
-              SizedBox(height: 30,
+              const SizedBox(height: 10),
+              SizedBox(height: 20,
                 child: Slider(
                   value: meterSliderValue,
                   min: 0,
@@ -611,21 +621,46 @@ class _AppState extends State<App> {
                   thumbColor: themeColors["SliderHead"],
                 ),
               ),
-              SizedBox(height: 20,
+              const SizedBox(height: 10),
+              SizedBox(height: 30,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(" Score: ", style: TextStyle(fontSize: 18, color: themeColors["Text"])),
-                    Text(roundedScore, style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                    Text(" Score: ", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                    Text(roundedScore, style: TextStyle(fontSize: 16, color: themeColors["Text"]))
                   ]
                 ),
               ),
             ],
           )
         ),
-        Container(height: 200,
-        
+        const SizedBox(height: 50),
+        Container(height: 100,
+          margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+          padding: const EdgeInsets.all(6),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: themeColors["Box"],
+            borderRadius: const BorderRadius.all(Radius.circular(25))
+          ),
+          child: Column(
+            children: <Container>[
+              Container(height: 26,
+                alignment: Alignment.center,
+                child: Text("it would take", style: TextStyle(fontSize: 15, color: themeColors["Text"]))
+              ),
+              Container(height: 36,
+                alignment: Alignment.center,
+                child: Text(passwordTime.toString(), style: TextStyle(fontSize: 23, color: themeColors["Text"]))
+              ),
+              Container(height: 26,
+                alignment: Alignment.center,
+                child: Text("to crack this password", style: TextStyle(fontSize: 15, color: themeColors["Text"]))
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 50),
         Container(height: 120,
         
         ),
@@ -653,7 +688,7 @@ class _AppState extends State<App> {
       iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
       stringThemeMode = "Dark";
       themeColors.addAll(darkThemeColors);
-      checkPassword("Password");
+      checkPassword("");
     });
   }
 
@@ -737,7 +772,7 @@ class _AppState extends State<App> {
             selectedItemColor: themeColors["NavBarSelectedItem"],
             unselectedItemColor: themeColors["White"],
             selectedFontSize: 16,
-            unselectedFontSize: 12,
+            unselectedFontSize: 14,
             iconSize: 32,
             
             items: const <BottomNavigationBarItem>[
