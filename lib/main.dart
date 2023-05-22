@@ -50,8 +50,9 @@ class _AppState extends State<App> {
     "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
     "SilderFG"            : const Color(0xFF1DE2BF),
     "OnToggleBG"          : const Color(0xFF1DE2BF),
+    "FocusedInput"        : const Color(0xFF1DE2BF),
     "Button"              : const Color(0xFF009688),
-    "Input"               : const Color(0xFF009688),
+    "EnabledInput"        : const Color(0xFF009688),
     "SliderHead"          : const Color(0xFF009688),
     "OnToggleHead"        : const Color(0xFF009688),
     "DrawerBG"            : const Color(0xFF17201F),
@@ -75,8 +76,9 @@ class _AppState extends State<App> {
     "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
     "SilderFG"            : const Color(0xFF008878),
     "OnToggleBG"          : const Color(0xFF008878),
+    "FocusedInput"        : const Color(0xFF008878),
     "Button"              : const Color(0xFF00B2A2),
-    "Input"               : const Color(0xFF00B2A2),
+    "EnabledInput"               : const Color(0xFF00B2A2),
     "SliderHead"          : const Color(0xFF00B2A2),
     "OnToggleHead"        : const Color(0xFF00B2A2),
     "DrawerBG"            : const Color(0xFFDEE7E7),
@@ -441,8 +443,8 @@ class _AppState extends State<App> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
 
       children: <Widget>[
-        const SizedBox(height: 130),
-        Container(height: 80,
+        const SizedBox(height: 120),
+        Container(height: 100,
           margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
           padding: const EdgeInsets.all(30),
           alignment: Alignment.center,
@@ -634,7 +636,36 @@ class _AppState extends State<App> {
             ],
           )
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 55),
+        Container(height: 50,
+          margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+
+          child: TextField(
+            autocorrect: false,
+            textAlign: TextAlign.center,
+            cursorColor: themeColors["Text"],
+
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r"\s"))
+            ],
+
+            style: TextStyle(color: themeColors["Text"]),
+
+            decoration: InputDecoration(
+              alignLabelWithHint: true,
+              label: const Center(child: Text("Password")),
+              labelStyle: TextStyle(color: themeColors["InputPlaceholder"]),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColors["EnabledInput"])),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColors["FocusedInput"])),
+            ),
+
+            onChanged: (text) {
+              passwordInput = text;
+              checkPassword(passwordInput);
+            },
+          )
+        ),
+        const SizedBox(height: 75),
         Container(height: 100,
           margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
           padding: const EdgeInsets.all(6),
@@ -660,17 +691,32 @@ class _AppState extends State<App> {
             ],
           ),
         ),
-        const SizedBox(height: 50),
-        Container(height: 120,
-        
-        ),
+        const SizedBox(height: 15),
         Container(height: 80,
-        
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: themeColors["Button"],
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: password));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.copy_rounded, color: themeColors["White"]),
+                Text("  Copy to Clipboard", style: TextStyle(color: themeColors["White"]))
+              ]
+            ),
+          ),
         ),
         const SizedBox(height: 80),
       ],
     )
   ];
+
 
   @override
   void initState() {
@@ -688,7 +734,7 @@ class _AppState extends State<App> {
       iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
       stringThemeMode = "Dark";
       themeColors.addAll(darkThemeColors);
-      checkPassword("");
+      checkPassword("Password");
     });
   }
 
