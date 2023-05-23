@@ -57,6 +57,11 @@ class _AppState extends State<App> {
     "OnToggleHead"        : const Color(0xFF009688),
     "DrawerBG"            : const Color(0xFF17201F),
     "BG"                  : const Color(0xFF0B1817),
+
+    "GoodMeterGlow"       : const [Color(0xFF9EFF8E), Color(0x00CAFFC2)],
+    "GoodMeterFG"         : const [Color(0xFFCAFFC2), Color(0xFF9EFF8E)],
+    "PoorMeterGlow"       : const [Color(0x80FF3535), Color(0x00FF6666)],
+    "PoorMeterFG"         : const [Color(0xFFFF6666), Color(0xFFFF3535)],
   };
 
   Map lightThemeColors = {
@@ -78,7 +83,7 @@ class _AppState extends State<App> {
     "OnToggleBG"          : const Color(0xFF008878),
     "FocusedInput"        : const Color(0xFF008878),
     "Button"              : const Color(0xFF00B2A2),
-    "EnabledInput"               : const Color(0xFF00B2A2),
+    "EnabledInput"        : const Color(0xFF00B2A2),
     "SliderHead"          : const Color(0xFF00B2A2),
     "OnToggleHead"        : const Color(0xFF00B2A2),
     "DrawerBG"            : const Color(0xFFDEE7E7),
@@ -616,6 +621,7 @@ class _AppState extends State<App> {
                   value: meterValue,
                   minValue: 0,
                   maxValue: 100,
+                  themeColors: themeColors
                 ),
               ),
               const SizedBox(height: 10),
@@ -963,8 +969,9 @@ class AJCMeter extends StatelessWidget {
   final double value;
   final double minValue;
   final double maxValue;
+  final Map themeColors;
 
-  const AJCMeter({super.key, required this.value, required this.minValue, required this.maxValue});
+  const AJCMeter({super.key, required this.value, required this.minValue, required this.maxValue, required this.themeColors});
 
   @override
   Widget build(BuildContext context) {
@@ -972,7 +979,7 @@ class AJCMeter extends StatelessWidget {
       width: 200,
       height: double.infinity,
       child: CustomPaint(
-        painter: AJCMeterPainter(value: value, minValue: minValue, maxValue: maxValue),
+        painter: AJCMeterPainter(value: value, minValue: minValue, maxValue: maxValue, themeColors: themeColors),
       ),
     );
   }
@@ -982,13 +989,28 @@ class AJCMeterPainter extends CustomPainter {
   final double value;
   final double minValue;
   final double maxValue;
+  final Map themeColors;
 
-  AJCMeterPainter({required this.value, required this.minValue, required this.maxValue});
+  AJCMeterPainter({required this.value, required this.minValue, required this.maxValue, required this.themeColors});
 
   @override
   void paint(Canvas canvas, Size size) {
     final double width = size.width;
     final double height = size.height;
+
+    // Create the meter glow gradient
+    final glowGradient = LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: themeColors["PoorMeterGlow"], // Adjust the colors as needed
+    );
+
+    // Create the meter indicator gradient
+    final indicatorGradient = LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: themeColors["PoorMeterFG"], // Adjust the colors as needed
+    );
     
     // Calculate the percentage of the value within the range
     final double percentage = (value - minValue) / (maxValue - minValue);
@@ -997,11 +1019,15 @@ class AJCMeterPainter extends CustomPainter {
     final double indicatorX = width * percentage;
 
     // Draw the meter background
-    final backgroundPaint = Paint()..color = const Color(0xFF303030);
+    final backgroundPaint = Paint()..color = themeColors["MeterBG"];
     canvas.drawRRect(RRect.fromLTRBR(0, 0, width, height, const Radius.circular(10)), backgroundPaint);
 
+    // Draw the meter glow
+    final glowPaint = Paint()..shader = glowGradient.createShader(Rect.fromLTRB(0, 0, width, height));
+    canvas.drawRRect(RRect.fromLTRBR(0, 0, width, height, const Radius.circular(10)), glowPaint);
+
     // Draw the meter indicator
-    final indicatorPaint = Paint()..color = Colors.teal;
+    final indicatorPaint = Paint()..shader = indicatorGradient.createShader(Rect.fromLTRB(0, 0, indicatorX, height));
     canvas.drawRRect(RRect.fromLTRBR(0, 0, indicatorX, height, const Radius.circular(10)), indicatorPaint);
   }
 
