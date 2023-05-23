@@ -550,7 +550,43 @@ class _AppState extends State<App> {
         ),
         const SizedBox(height: 80),
       ],
-    )
+    ),
+  
+    // History
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: <Widget>[
+        const SizedBox(height: 60),
+        SizedBox(height: 30,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: [
+              Container(
+                width: 150,
+                alignment: Alignment.center,
+                child: Text("Parameters", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: themeColors["Text"]))
+              ),
+              Container(
+                width: 150,
+                alignment: Alignment.center,
+                child: Text("Password", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: themeColors["Text"]))
+              ),
+              Container(
+                width: 100,
+                alignment: Alignment.center,
+                child: Text("Copy", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: themeColors["Text"]))
+              ),
+            ]
+          )
+        ),
+        Container(height: 48),
+
+        const SizedBox(height: 70),
+      ],
+    ),
   ];
 
 
