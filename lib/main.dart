@@ -177,6 +177,8 @@ class _AppState extends State<App> {
 
   void navBarTap(int index) {
     setState(() {
+      checkPassword("");
+      
       navBarIndex = index;
     });
   }
@@ -643,7 +645,7 @@ class _AppState extends State<App> {
                 child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 28))
               ),
               const SizedBox(height: 10),
-              SizedBox(height: 12,
+              SizedBox(height: 11,
                 width: 280,
                 child: AJCMeter(
                   value: meterValue,
@@ -765,7 +767,7 @@ class _AppState extends State<App> {
       iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
       stringThemeMode = "Dark";
       themeColors.addAll(darkThemeColors);
-      checkPassword("Password");
+      checkPassword("");
     });
   }
 
