@@ -45,7 +45,9 @@ class _AppState extends State<App> {
     "OffToggleBG"         : const Color(0xFF303030),
     "MeterBG"             : const Color(0xFF303030),
     "DrawerOverlay"       : const Color(0x66000000),
+    "StrongText"          : const Color(0xFF0DB8A7),
     "GoodText"            : const Color(0xFF9EFF8E),
+    "FairText"            : const Color(0xFFFCA015),
     "PoorText"            : const Color(0xFFFF8E8E),
     "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
     "SilderFG"            : const Color(0xFF1DE2BF),
@@ -58,10 +60,14 @@ class _AppState extends State<App> {
     "DrawerBG"            : const Color(0xFF17201F),
     "BG"                  : const Color(0xFF0B1817),
 
-    "GoodMeterGlow"       : const [Color(0xFF9EFF8E), Color(0x00CAFFC2)],
-    "GoodMeterFG"         : const [Color(0xFFCAFFC2), Color(0xFF9EFF8E)],
-    "PoorMeterGlow"       : const [Color(0x80FF3535), Color(0x00FF6666)],
-    "PoorMeterFG"         : const [Color(0xFFFF6666), Color(0xFFFF3535)],
+    "StrongMeterGlow"     : const <Color>[Color(0xFF0DB8A7), Color(0x007BFFF2)],
+    "StrongMeterFG"       : const <Color>[Color(0xFF7BFFF2), Color(0xFF0DB8A7)],
+    "GoodMeterGlow"       : const <Color>[Color(0xFF9EFF8E), Color(0x00CAFFC2)],
+    "GoodMeterFG"         : const <Color>[Color(0xFFCAFFC2), Color(0xFF9EFF8E)],
+    "FairMeterGlow"       : const <Color>[Color(0x80FCA015), Color(0x00FFD381)],
+    "FairMeterFG"         : const <Color>[Color(0xFFFFD381), Color(0xFFFCA015)],
+    "PoorMeterGlow"       : const <Color>[Color(0x80FF3535), Color(0x00FD7777)],
+    "PoorMeterFG"         : const <Color>[Color(0xFFFD7777), Color(0xFFFF3535)],
   };
 
   Map lightThemeColors = {
@@ -119,6 +125,8 @@ class _AppState extends State<App> {
   late String roundedScore;
   late String rankScore;
   late Color colorScore;
+  late List<Color> glowColor;
+  late List<Color> indicatorColor;
   late double passwordTime;
   late String roundedTime;
   double meterValue = 25;
@@ -218,22 +226,30 @@ class _AppState extends State<App> {
     
     if (passwordScore >= 3) {
       rankScore = "Strong";
-      colorScore = Colors.teal;
+      colorScore = themeColors["StrongText"];
+      glowColor = themeColors["StrongMeterGlow"];
+      indicatorColor = themeColors["StrongMeterFG"];
       meterValue = 100;
     }
     else if (passwordScore >= 2) {
       rankScore = "Good";
       colorScore = themeColors["GoodText"];
+      glowColor = themeColors["GoodMeterGlow"];
+      indicatorColor = themeColors["GoodMeterFG"];
       meterValue = 75;
     }
     else if (passwordScore >= 1) {
       rankScore = "Fair";
-      colorScore = Colors.orange;
+      colorScore = themeColors["FairText"];
+      glowColor = themeColors["FairMeterGlow"];
+      indicatorColor = themeColors["FairMeterFG"];
       meterValue = 50;
     }
     else if (passwordScore >= 0) {
       rankScore = "Poor";
       colorScore = themeColors["PoorText"];
+      glowColor = themeColors["PoorMeterGlow"];
+      indicatorColor = themeColors["PoorMeterFG"];
       meterValue = 25;
     }
 
@@ -621,7 +637,9 @@ class _AppState extends State<App> {
                   value: meterValue,
                   minValue: 0,
                   maxValue: 100,
-                  themeColors: themeColors
+                  themeColors: themeColors,
+                  glowColor: glowColor,
+                  indicatorColor: indicatorColor,
                 ),
               ),
               const SizedBox(height: 10),
@@ -970,8 +988,10 @@ class AJCMeter extends StatelessWidget {
   final double minValue;
   final double maxValue;
   final Map themeColors;
+  final List<Color> glowColor;
+  final List<Color> indicatorColor;  
 
-  const AJCMeter({super.key, required this.value, required this.minValue, required this.maxValue, required this.themeColors});
+  const AJCMeter({super.key, required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.glowColor, required this.indicatorColor});
 
   @override
   Widget build(BuildContext context) {
@@ -979,7 +999,7 @@ class AJCMeter extends StatelessWidget {
       width: 200,
       height: double.infinity,
       child: CustomPaint(
-        painter: AJCMeterPainter(value: value, minValue: minValue, maxValue: maxValue, themeColors: themeColors),
+        painter: AJCMeterPainter(value: value, minValue: minValue, maxValue: maxValue, themeColors: themeColors, glowColor: glowColor, indicatorColor: indicatorColor),
       ),
     );
   }
@@ -990,8 +1010,10 @@ class AJCMeterPainter extends CustomPainter {
   final double minValue;
   final double maxValue;
   final Map themeColors;
+  final List<Color> glowColor;
+  final List<Color> indicatorColor; 
 
-  AJCMeterPainter({required this.value, required this.minValue, required this.maxValue, required this.themeColors});
+  AJCMeterPainter({required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.glowColor, required this.indicatorColor});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -1002,14 +1024,14 @@ class AJCMeterPainter extends CustomPainter {
     final glowGradient = LinearGradient(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
-      colors: themeColors["PoorMeterGlow"], // Adjust the colors as needed
+      colors: glowColor, // Adjust the colors as needed
     );
 
     // Create the meter indicator gradient
     final indicatorGradient = LinearGradient(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
-      colors: themeColors["PoorMeterFG"], // Adjust the colors as needed
+      colors: indicatorColor, // Adjust the colors as needed
     );
     
     // Calculate the percentage of the value within the range
