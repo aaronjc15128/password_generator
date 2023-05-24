@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: unnecessary_import
 import 'package:flutter/services.dart';
 
 import 'dart:math';
@@ -139,8 +138,26 @@ class _AppState extends State<App> {
   late List<Color> glowColor;
   late List<Color> indicatorColor;
   late double passwordTime;
-  late String roundedTime;
+  late int roundedTime;
+  late String roundedUnit;
+  late String roundedString;
   double meterValue = 25;
+
+  Map<double, String> timeConversions = {
+    87660000 : "millenium",
+    876600 : "century",
+    87660 : "decade",
+    8766 : "year",
+    730.5 : "month",
+    168 : "week",
+    24 : "day",
+    1 : "hour",
+    0.0167 : "minute",
+    0.000278 : "second",
+    0.000000278 : "millisecond",
+    0.000000000278 : "microsecond",
+    0.000000000000278 : "nanosecond",
+  };
 
   // build()
   ThemeMode currentThemeMode = ThemeMode.dark;
@@ -267,13 +284,35 @@ class _AppState extends State<App> {
         meterValue = 25;
       }
 
-    
       if (passwordScore > 3) {passwordScore = 3;}
       passwordScore *= 33.33;
       roundedScore = passwordScore.toStringAsFixed(0);
 
-      passwordTime = pow((lowercase.length+uppercase.length+numbers.length+symbols.length), userpassword.length) / 1000000000;
-      roundedTime = "$passwordTime seconds";
+      // passwordTimeInHours = (possibleCharacters ^ passwordLength) / (2 * hashRateInHours)
+      passwordTime = pow((lowercase.length+uppercase.length+numbers.length+symbols.length), userpassword.length) / (2 * 36000000000000); // H/h = 36 000 000 000 000 (36 trillion)
+      
+      for (double key in timeConversions.keys) {
+        if (passwordTime >= key) {
+          roundedTime = (passwordTime / key).round();
+          
+          if (roundedTime == 1) {
+            roundedUnit = (timeConversions[key]).toString();
+          }
+          else if (timeConversions[key] == "century") {
+            roundedUnit = "centuries";
+          }
+          else {
+            roundedUnit = "${timeConversions[key]}s";
+          }
+
+          roundedString = "${roundedTime.toString()} $roundedUnit";
+          // roundedString = "$passwordTime";
+          return;
+        }
+      }
+
+      roundedString = "no time at all";
+      // roundedString = "$passwordTime";
     });
   }
 
@@ -518,7 +557,7 @@ class _AppState extends State<App> {
               ),
               Container(height: 36,
                 alignment: Alignment.center,
-                child: Text(passwordTime.toString(), style: TextStyle(fontSize: 23, color: themeColors["Text"]))
+                child: Text(roundedString, style: TextStyle(fontSize: 23, color: themeColors["Text"]))
               ),
               Container(height: 26,
                 alignment: Alignment.center,
@@ -606,7 +645,7 @@ class _AppState extends State<App> {
       iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
       stringThemeMode = "Dark";
       themeColors.addAll(darkThemeColors);
-      checkPassword("");
+      checkPassword("password");
     });
   }
 
