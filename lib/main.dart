@@ -137,26 +137,26 @@ class _AppState extends State<App> {
   late Color colorScore;
   late List<Color> glowColor;
   late List<Color> indicatorColor;
-  late double passwordTime;
+  late BigInt passwordTime;
   late int roundedTime;
   late String roundedUnit;
   late String roundedString;
   double meterValue = 25;
 
-  Map<double, String> timeConversions = {
-    87660000 : "millenium",
-    876600 : "century",
-    87660 : "decade",
-    8766 : "year",
-    730.5 : "month",
-    168 : "week",
-    24 : "day",
-    1 : "hour",
-    0.0167 : "minute",
-    0.000278 : "second",
-    0.000000278 : "millisecond",
-    0.000000000278 : "microsecond",
-    0.000000000000278 : "nanosecond",
+  Map<BigInt, String> timeConversions = {
+    BigInt.from(87660000) : "millenium",
+    BigInt.from(876600) : "century",
+    BigInt.from(87660) : "decade",
+    BigInt.from(8766) : "year",
+    BigInt.from(730.5) : "month",
+    BigInt.from(168) : "week",
+    BigInt.from(24) : "day",
+    BigInt.from(1) : "hour",
+    BigInt.from(0.0167) : "minute",
+    BigInt.from(0.000278) : "second",
+    BigInt.from(0.000000278) : "millisecond",
+    BigInt.from(0.000000000278) : "microsecond",
+    BigInt.from(0.000000000000278) : "nanosecond",
   };
 
   // build()
@@ -289,7 +289,8 @@ class _AppState extends State<App> {
       roundedScore = passwordScore.toStringAsFixed(0);
 
       // passwordTimeInHours = (possibleCharacters ^ passwordLength) / (2 * hashRateInHours)
-      passwordTime = pow((lowercase.length+uppercase.length+numbers.length+symbols.length), userpassword.length) / (2 * 36000000000000); // H/h = 36 000 000 000 000 (36 trillion)
+      passwordTime = BigInt.from(pow((lowercase.length + uppercase.length + numbers.length + symbols.length).toDouble(), userpassword.length.toDouble())) ~/ BigInt.from(2 * 36000000000000);
+      // H/h = 36 000 000 000 000 (36 trillion)
       
       for (double key in timeConversions.keys) {
         if (passwordTime >= key) {
