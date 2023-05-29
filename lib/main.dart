@@ -289,7 +289,7 @@ class _AppState extends State<App> {
       roundedScore = passwordScore.toStringAsFixed(0);
 
       // passwordTimeInHours = (possibleCharacters ^ passwordLength) / (2 * hashRateInHours)
-      passwordTime = double.parse(pow((lowercase.length + uppercase.length + numbers.length + symbols.length), userpassword.length).toStringAsFixed(10)) / 2 * 36000000000000;
+      passwordTime = pow((lowercase.length + uppercase.length + numbers.length + symbols.length), userpassword.length) ~/ 2 * 36000000000000;
       // H/h = 36 000 000 000 000 (36 trillion)
       
       for (double key in timeConversions.keys) {
