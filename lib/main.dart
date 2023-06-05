@@ -116,6 +116,9 @@ class _AppState extends State<App> {
   
   // generatePassword()
   String password = "password will generate here";
+  String acIcon = "GreyedIcon";
+  String anIcon = "GreyedIcon";
+  String asIcon = "GreyedIcon";
 
   // generatePassword() checkPassword()
   List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -158,6 +161,13 @@ class _AppState extends State<App> {
     0.000000000278 : "microsecond",
     0.000000000000278 : "nanosecond",
   };
+
+  // pages() => History
+  List history = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"];
+  List historyParameters = [
+    [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false],
+    [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false]
+  ];
 
   // build()
   ThemeMode currentThemeMode = ThemeMode.dark;
@@ -214,6 +224,16 @@ class _AppState extends State<App> {
       for (var i = 0; i < numberCharacters; i++) {
         password += allowedCharacters[random.nextInt(allowedCharacters.length)];
       }
+
+      history.insert(0, password);
+      history.removeLast();
+
+      if (allowedCapitals) {acIcon = "Text";} else {acIcon = "GreyedIcon";}
+      if (allowedNumbers) {anIcon = "Text";} else {acIcon = "GreyedIcon";}
+      if (allowedSymbols) {asIcon = "Text";} else {acIcon = "GreyedIcon";}
+
+      historyParameters.insert(0, [numberCharacters, acIcon, anIcon, asIcon]);
+      historyParameters.removeLast();
     });
   }
 
@@ -597,30 +617,231 @@ class _AppState extends State<App> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
 
       children: <Widget>[
-        const SizedBox(height: 60),
-        SizedBox(height: 30,
+        const SizedBox(height: 120),
+
+        SizedBox(height: 510,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              Container(
-                width: 150,
-                alignment: Alignment.center,
-                child: Text("Parameters", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: themeColors["Text"]))
-              ),
-              Container(
-                width: 150,
-                alignment: Alignment.center,
-                child: Text("Password", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: themeColors["Text"]))
-              ),
+            children: <Container>[
               Container(
                 width: 100,
                 alignment: Alignment.center,
-                child: Text("Copy", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: themeColors["Text"]))
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 30,
+                      child: Text("Parameters", style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[0][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[0][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[0][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[0][3]]),
+                        ]
+                      ),
+                    ),
+                  ],
+                )
+              ),
+              Container(
+                width: 180,
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 30,
+                      child: Text("Password", style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[0]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[1]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[2]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[3]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[4]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[5]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[6]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[7]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[8]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[9]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                  ],
+                )
+              ),
+              Container(
+                width: 80,
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 30,
+                      child: Text("Copy", style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[0]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[1]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[2]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[3]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[4]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[5]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[6]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[7]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[8]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[9]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                  ],
+                )
               ),
             ]
           )
         ),
+
         Container(height: 48),
 
         const SizedBox(height: 70),
