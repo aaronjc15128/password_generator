@@ -116,6 +116,7 @@ class _AppState extends State<App> {
   
   // generatePassword()
   String password = "password will generate here";
+  String nCint = " 0";
   String acIcon = "GreyedIcon";
   String anIcon = "GreyedIcon";
   String asIcon = "GreyedIcon";
@@ -163,11 +164,10 @@ class _AppState extends State<App> {
   };
 
   // pages() => History
-  List history = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"];
-  List historyParameters = [
-    [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false],
-    [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false], [0, false, false, false]
-  ];
+  List history = [];
+  List defaultHistory = List.filled(10, "-");
+  List historyParameters = [];
+  List defaultHistoryParameters = [List.filled(10, [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"])];
 
   // build()
   ThemeMode currentThemeMode = ThemeMode.dark;
@@ -213,9 +213,37 @@ class _AppState extends State<App> {
   void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
     List allowedCharacters = [];
     allowedCharacters += lowercase;
-    if (allowedCapitals) {allowedCharacters += uppercase;}
-    if (allowedNumbers) {allowedCharacters += numbers;}
-    if (allowedSymbols) {allowedCharacters += symbols;}
+    
+    if (allowedCapitals) {
+      allowedCharacters += uppercase;
+      acIcon = "Text";
+    } 
+    else {
+      acIcon = "GreyedIcon";
+    }
+   
+    if (allowedNumbers) {
+      allowedCharacters += numbers;
+      anIcon = "Text";
+    }
+    else {
+      anIcon = "GreyedIcon";
+    }
+    
+    if (allowedSymbols) {
+      allowedCharacters += symbols;
+      asIcon = "Text";
+    } 
+    else {
+      asIcon = "GreyedIcon";
+    }
+
+    if (numberCharacters.toString().length == 1) {
+      nCint = " ""$numberCharacters"" ";
+    } 
+    else {
+      nCint = "$numberCharacters";
+    }
 
     password = "";
     final random = Random();
@@ -228,11 +256,7 @@ class _AppState extends State<App> {
       history.insert(0, password);
       history.removeLast();
 
-      if (allowedCapitals) {acIcon = "Text";} else {acIcon = "GreyedIcon";}
-      if (allowedNumbers) {anIcon = "Text";} else {acIcon = "GreyedIcon";}
-      if (allowedSymbols) {asIcon = "Text";} else {acIcon = "GreyedIcon";}
-
-      historyParameters.insert(0, [numberCharacters, acIcon, anIcon, asIcon]);
+      historyParameters.insert(0, [nCint, acIcon, anIcon, asIcon]);
       historyParameters.removeLast();
     });
   }
@@ -336,6 +360,14 @@ class _AppState extends State<App> {
     });
   }
 
+  void clearHistory() {
+    setState(() {
+      history.clear();
+      historyParameters.clear();
+      history.addAll(defaultHistory);
+      historyParameters.addAll(defaultHistoryParameters);
+    });
+  }
 
   List<Widget> pages() => <Widget>[
     // Generator
@@ -617,7 +649,7 @@ class _AppState extends State<App> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
 
       children: <Widget>[
-        const SizedBox(height: 120),
+        const SizedBox(height: 80),
 
         SizedBox(height: 510,
           child: Row(
@@ -625,7 +657,7 @@ class _AppState extends State<App> {
 
             children: <Container>[
               Container(
-                width: 100,
+                width: 110,
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[
@@ -643,11 +675,110 @@ class _AppState extends State<App> {
                         ]
                       ),
                     ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[1][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[1][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[1][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[1][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[2][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[2][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[2][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[2][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[3][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[3][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[3][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[3][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[4][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[4][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[4][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[4][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[5][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[5][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[5][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[5][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[6][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[6][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[6][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[6][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[7][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[7][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[7][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[7][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[8][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[8][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[8][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[8][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[8][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[8][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[8][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[8][3]]),
+                        ]
+                      ),
+                    ),
                   ],
                 )
               ),
               Container(
-                width: 180,
+                width: 220,
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[
@@ -708,7 +839,7 @@ class _AppState extends State<App> {
                 )
               ),
               Container(
-                width: 80,
+                width: 50,
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[
@@ -717,9 +848,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[0]));
@@ -729,9 +863,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[1]));
@@ -741,9 +878,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[2]));
@@ -753,9 +893,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[3]));
@@ -765,9 +908,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[4]));
@@ -777,9 +923,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[5]));
@@ -789,9 +938,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[6]));
@@ -801,9 +953,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[7]));
@@ -813,9 +968,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[8]));
@@ -825,9 +983,12 @@ class _AppState extends State<App> {
                     ),
                     Container(height: 48,
                       alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
                         ),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: history[9]));
@@ -835,6 +996,7 @@ class _AppState extends State<App> {
                         child: Icon(Icons.copy_rounded, color: themeColors["White"]),
                       ),
                     ),
+                    
                   ],
                 )
               ),
@@ -842,9 +1004,30 @@ class _AppState extends State<App> {
           )
         ),
 
-        Container(height: 48),
+        const SizedBox(height: 30),
 
-        const SizedBox(height: 70),
+        Container(height: 40,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: themeColors["Button"],
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              clearHistory();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.delete_forever_rounded, color: themeColors["White"]),
+                Text("  Clear", style: TextStyle(color: themeColors["White"]))
+              ],
+            )
+          ),
+        ),
+
+        const SizedBox(height: 30),
       ],
     ),
   ];
@@ -866,6 +1049,8 @@ class _AppState extends State<App> {
       iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
       stringThemeMode = "Dark";
       themeColors.addAll(darkThemeColors);
+      history.addAll(defaultHistory);
+      historyParameters.addAll(defaultHistoryParameters);
       checkPassword("password");
     });
   }
