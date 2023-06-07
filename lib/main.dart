@@ -5,6 +5,7 @@ import 'dart:math';
 
 
 void main() {
+  
   runApp(const MyApp());
 }
 
@@ -28,16 +29,101 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   
+  // pages() => THEMES
+  Map themeColors = {};
+
+  Map darkThemeColors = {
+    "Black"               : const Color(0xFF000000),
+    "White"               : const Color(0xFFFFFFFF),
+    "Text"                : const Color(0xFFFFFFFF),
+    "OffToggleHead"       : const Color(0xFF888888),
+    "GreyedIcon"          : const Color(0xFF666666),
+    "InputPlaceholder"    : const Color(0xFF666666),
+    "Box"                 : const Color(0x33555555),
+    "SliderBG"            : const Color(0xFF303030),
+    "OffToggleBG"         : const Color(0xFF303030),
+    "MeterBG"             : const Color(0xFF303030),
+    "DrawerOverlay"       : const Color(0x66000000),
+    "StrongText"          : const Color(0xFF0DB8A7),
+    "GoodText"            : const Color(0xFF9EFF8E),
+    "FairText"            : const Color(0xFFFCA015),
+    "PoorText"            : const Color(0xFFFF8E8E),
+    "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
+    "SilderFG"            : const Color(0xFF1DE2BF),
+    "OnToggleBG"          : const Color(0xFF1DE2BF),
+    "FocusedInput"        : const Color(0xFF1DE2BF),
+    "Button"              : const Color(0xFF009688),
+    "EnabledInput"        : const Color(0xFF009688),
+    "SliderHead"          : const Color(0xFF009688),
+    "OnToggleHead"        : const Color(0xFF009688),
+    "DrawerBG"            : const Color(0xFF17201F),
+    "BG"                  : const Color(0xFF0B1817),
+
+    "Gradient"            : const <Color>[Color(0x00333333), Color(0xFF009688)],
+
+    "StrongMeterGlow"     : const <Color>[Color(0xFF0DB8A7), Color(0x007BFFF2)],
+    "StrongMeterFG"       : const <Color>[Color(0xFF7BFFF2), Color(0xFF0DB8A7)],
+    "GoodMeterGlow"       : const <Color>[Color(0xFF9EFF8E), Color(0x00CAFFC2)],
+    "GoodMeterFG"         : const <Color>[Color(0xFFCAFFC2), Color(0xFF9EFF8E)],
+    "FairMeterGlow"       : const <Color>[Color(0x80FCA015), Color(0x00FFD381)],
+    "FairMeterFG"         : const <Color>[Color(0xFFFFD381), Color(0xFFFCA015)],
+    "PoorMeterGlow"       : const <Color>[Color(0x80FF3535), Color(0x00FD7777)],
+    "PoorMeterFG"         : const <Color>[Color(0xFFFD7777), Color(0xFFFF3535)],
+  };
+
+  Map lightThemeColors = {
+    "Black"               : const Color(0xFF000000),
+    "White"               : const Color(0xFFFFFFFF),
+    "Text"                : const Color(0xFF000000),
+    "OffToggleHead"       : const Color(0xFF888888),
+    "GreyedIcon"          : const Color(0xFFA8A8A8),
+    "InputPlaceholder"    : const Color(0xFF999999),
+    "Box"                 : const Color(0x33999999),
+    "SliderBG"            : const Color(0xFFCCCCCC),
+    "OffToggleBG"         : const Color(0xFFCCCCCC),
+    "MeterBG"             : const Color(0xFFCCCCCC),
+    "DrawerOverlay"       : const Color(0x66000000),
+    "StrongText"          : const Color(0xFF0BAF9F),
+    "GoodText"            : const Color(0xFF3DB92A),
+    "FairText"            : const Color(0xFFC07607),
+    "PoorText"            : const Color(0xFFFF4747),
+    "NavBarSelectedItem"  : const Color(0xFF1DE2BF),
+    "SilderFG"            : const Color(0xFF008878),
+    "OnToggleBG"          : const Color(0xFF008878),
+    "FocusedInput"        : const Color(0xFF008878),
+    "Button"              : const Color(0xFF00B2A2),
+    "EnabledInput"        : const Color(0xFF00B2A2),
+    "SliderHead"          : const Color(0xFF00B2A2),
+    "OnToggleHead"        : const Color(0xFF00B2A2),
+    "DrawerBG"            : const Color(0xFFDEE7E7),
+    "BG"                  : const Color(0xFFDCEFED),
+
+    "Gradient"            : const <Color>[Color(0x00CCCCCC), Color(0xFF009688)],
+
+    "StrongMeterGlow"     : const <Color>[Color(0xFF0BAF9F), Color(0x0032DDCC)],
+    "StrongMeterFG"       : const <Color>[Color(0xFF32DDCC), Color(0xFF0BAF9F)],
+    "GoodMeterGlow"       : const <Color>[Color(0xFF3DB92A), Color(0x0081F56F)],
+    "GoodMeterFG"         : const <Color>[Color(0xFF81F56F), Color(0xFF3DB92A)],
+    "FairMeterGlow"       : const <Color>[Color(0x80C07607), Color(0x00ECA130)],
+    "FairMeterFG"         : const <Color>[Color(0xFFECA130), Color(0xFFC07607)],
+    "PoorMeterGlow"       : const <Color>[Color(0x80FF4747), Color(0x00FF7B7B)],
+    "PoorMeterFG"         : const <Color>[Color(0xFFFF7B7B), Color(0xFFFF4747)],
+  };
+  
+
   // changeTheme()
-  Icon iconThemeMode = const Icon(Icons.settings_system_daydream_outlined);
-  String stringThemeMode = "System";
+  Icon iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+  String stringThemeMode = "Dark";
 
   // navBarTap()
-  Text appBarText = const Text("Password Generator");
   int navBarIndex = 0;
   
   // generatePassword()
   String password = "password will generate here";
+  String nCint = " 0";
+  String acIcon = "GreyedIcon";
+  String anIcon = "GreyedIcon";
+  String asIcon = "GreyedIcon";
 
   // generatePassword() checkPassword()
   List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -53,64 +139,120 @@ class _AppState extends State<App> {
 
   // pages() => Strength Checker
   String passwordInput = "Password";
-  double passwordScore = 0;
-  String roundedScore = "0";
-  String rankScore = "Poor";
-  MaterialColor colorScore = Colors.red;
+  late double passwordScore;
+  late String roundedScore;
+  late String rankScore;
+  late Color colorScore;
+  late List<Color> glowColor;
+  late List<Color> indicatorColor;
+  late double passwordTime;
+  late int roundedTime;
+  late String roundedUnit;
+  late String roundedString;
+  double meterValue = 25;
+
+  Map<double, String> timeConversions = {
+    87660000 : "millenium",
+    876600 : "century",
+    87660 : "decade",
+    8766 : "year",
+    730.5 : "month",
+    168 : "week",
+    24 : "day",
+    1 : "hour",
+    0.0167 : "minute",
+    0.000278 : "second",
+    0.000000278 : "millisecond",
+    0.000000000278 : "microsecond",
+    0.000000000000278 : "nanosecond",
+  };
+
+  // pages() => History
+  List history = [];
+  List defaultHistory = List.filled(10, "-");
+  List historyParameters = [];
+  List defaultHistoryParameters = [
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"],
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"],
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"],
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"]
+  ];
 
   // build()
-  ThemeMode currentThemeMode = ThemeMode.system;
+  ThemeMode currentThemeMode = ThemeMode.dark;
   ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
+    fontFamily: "Inter",
+    scaffoldBackgroundColor: const Color(0xFF0B1817),
   );
   ThemeData lightTheme = ThemeData(
-    brightness: Brightness.light,
+    fontFamily: "Inter",
+    scaffoldBackgroundColor: const Color(0xFFDCEFED),
   );
-
 
 
   void changeTheme() {
-    setState(() {
-      if (currentThemeMode == ThemeMode.system) {
-        currentThemeMode = ThemeMode.dark;
-        iconThemeMode = const Icon(Icons.nightlight_outlined);
-        stringThemeMode = "Dark";
-      }
-      else if (currentThemeMode == ThemeMode.dark) {
-        currentThemeMode = ThemeMode.light;
-        iconThemeMode = const Icon(Icons.wb_sunny_outlined);
-        stringThemeMode = "Light";
+      if (currentThemeMode == ThemeMode.dark) {
+        setState(() {
+          currentThemeMode = ThemeMode.light;
+          iconThemeMode = const Icon(Icons.wb_sunny_outlined, color: Color(0xFF000000));
+          stringThemeMode = "Light";
+          themeColors.clear();
+          themeColors.addAll(lightThemeColors);
+        });
       }
       else if (currentThemeMode == ThemeMode.light) {
-        currentThemeMode = ThemeMode.system;
-        iconThemeMode = const Icon(Icons.settings_system_daydream_outlined);
-        stringThemeMode = "System";
+        setState(() {
+          currentThemeMode = ThemeMode.dark;
+          iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+          stringThemeMode = "Dark";
+          themeColors.clear();
+          themeColors.addAll(darkThemeColors);
+        });
       }
-    });
   }
 
   void navBarTap(int index) {
     setState(() {
+      checkPassword("");
+      
       navBarIndex = index;
-
-      if (navBarIndex == 0) {
-        appBarText = const Text("Password Generator");
-      }
-      else if (navBarIndex == 1) {
-        appBarText = const Text("Password Strength Checker");
-      }
-      else if (navBarIndex == 2) {
-        appBarText = const Text("Password History");
-      }
     });
   }
 
   void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
     List allowedCharacters = [];
     allowedCharacters += lowercase;
-    if (allowedCapitals) {allowedCharacters += uppercase;}
-    if (allowedNumbers) {allowedCharacters += numbers;}
-    if (allowedSymbols) {allowedCharacters += symbols;}
+    
+    if (allowedCapitals) {
+      allowedCharacters += uppercase;
+      acIcon = "Text";
+    } 
+    else {
+      acIcon = "GreyedIcon";
+    }
+   
+    if (allowedNumbers) {
+      allowedCharacters += numbers;
+      anIcon = "Text";
+    }
+    else {
+      anIcon = "GreyedIcon";
+    }
+    
+    if (allowedSymbols) {
+      allowedCharacters += symbols;
+      asIcon = "Text";
+    } 
+    else {
+      asIcon = "GreyedIcon";
+    }
+
+    if (numberCharacters.toString().length == 1) {
+      nCint = " ""$numberCharacters"" ";
+    } 
+    else {
+      nCint = "$numberCharacters";
+    }
 
     password = "";
     final random = Random();
@@ -119,6 +261,12 @@ class _AppState extends State<App> {
       for (var i = 0; i < numberCharacters; i++) {
         password += allowedCharacters[random.nextInt(allowedCharacters.length)];
       }
+
+      history.insert(0, password);
+      history.removeLast();
+
+      historyParameters.insert(0, [nCint, acIcon, anIcon, asIcon]);
+      historyParameters.removeLast();
     });
   }
 
@@ -129,10 +277,14 @@ class _AppState extends State<App> {
       - You gain +0.15 score for every captial (c)
       - You gain +0.20 score for every number (n)
       - You gain +0.25 score for every symbol (s)
-      - You lose -0.15 score for consectitive types (cns)
-      - You lose -0.20 score for consectitive characters
+      - You lose -0.05 score for consectitive types (cns)
+      - You lose -0.10 score for consectitive characters
 
       - The score is then multiplied by 33.33 and rounded to an integer
+
+
+      Then the time it takes to crack the password is calculated using the formula:
+      timeInSeconds = (possibleCharacters ^ passwordLength) / attemptsPerSecond
     */
     
     passwordScore = 0;
@@ -147,58 +299,109 @@ class _AppState extends State<App> {
       else if (numbers.contains(char)) {passwordScore += 0.2;}
       else if (symbols.contains(char)) {passwordScore += 0.25;}
       
-      if (char == prevChar) {passwordScore -= 0.2;}
+      if (char == prevChar) {passwordScore -= 0.1;}
       else if ((uppercase.contains(char) & uppercase.contains(char)) | (numbers.contains(char) & numbers.contains(char)) | (symbols.contains(char) & symbols.contains(char))) {
-        passwordScore -= 0.15;
+        passwordScore -= 0.05;
       }
 
       prevChar = char;
     }
     
-    if (passwordScore >= 3) {
-      rankScore = "Strong";
-      colorScore = Colors.teal;
-    }
-    else if (passwordScore >= 2) {
-      rankScore = "Good";
-      colorScore = Colors.green;
-    }
-    else if (passwordScore >= 1) {
-      rankScore = "Fair";
-      colorScore = Colors.orange;
-    }
-    else if (passwordScore >= 0) {
-      rankScore = "Poor";
-      colorScore = Colors.red;
-    }
-
     setState(() {
+      if (passwordScore >= 3) {
+        rankScore = "Strong";
+        colorScore = themeColors["StrongText"];
+        glowColor = themeColors["StrongMeterGlow"];
+        indicatorColor = themeColors["StrongMeterFG"];
+        meterValue = 100;
+      }
+      else if (passwordScore >= 2) {
+        rankScore = "Good";
+        colorScore = themeColors["GoodText"];
+        glowColor = themeColors["GoodMeterGlow"];
+        indicatorColor = themeColors["GoodMeterFG"];
+        meterValue = 75;
+      }
+      else if (passwordScore >= 1) {
+        rankScore = "Fair";
+        colorScore = themeColors["FairText"];
+        glowColor = themeColors["FairMeterGlow"];
+        indicatorColor = themeColors["FairMeterFG"];
+        meterValue = 50;
+      }
+      else if (passwordScore >= 0) {
+        rankScore = "Poor";
+        colorScore = themeColors["PoorText"];
+        glowColor = themeColors["PoorMeterGlow"];
+        indicatorColor = themeColors["PoorMeterFG"];
+        meterValue = 25;
+      }
+
       if (passwordScore > 3) {passwordScore = 3;}
       passwordScore *= 33.33;
       roundedScore = passwordScore.toStringAsFixed(0);
+
+      // passwordTimeInHours = (possibleCharacters ^ passwordLength) / (2 * hashRateInHours)
+      passwordTime = pow((lowercase.length+uppercase.length+numbers.length+symbols.length), userpassword.length) / (2 * 36000000000000); // H/h = 36 000 000 000 000 (36 trillion)
+      
+      for (double key in timeConversions.keys) {
+        if (passwordTime >= key) {
+          roundedTime = (passwordTime / key).round();
+          
+          if (roundedTime == 1) {
+            roundedUnit = (timeConversions[key]).toString();
+          }
+          else if (timeConversions[key] == "century") {
+            roundedUnit = "centuries";
+          }
+          else {
+            roundedUnit = "${timeConversions[key]}s";
+          }
+
+          roundedString = "${roundedTime.toString()} $roundedUnit";
+          // roundedString = "$passwordTime";
+          return;
+        }
+      }
+
+      roundedString = "no time at all";
+      // roundedString = "$passwordTime";
     });
   }
 
+  void clearHistory() {
+    setState(() {
+      history.clear();
+      historyParameters.clear();
+      history.addAll(defaultHistory);
+      historyParameters.addAll(defaultHistoryParameters);
+    });
+  }
 
   List<Widget> pages() => <Widget>[
-    /* Generator        */ Column(
+    // Generator
+    Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      
+
       children: <Widget>[
-        /* Box     */ Container(
+        const SizedBox(height: 120),
+        Container(height: 100,
           margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
           padding: const EdgeInsets.all(30),
+          alignment: Alignment.center,
           decoration: BoxDecoration(
-            border: Border.all(color: const Color.fromARGB(255, 128, 128, 128))
+            color: themeColors["Box"],
+            borderRadius: const BorderRadius.all(Radius.circular(25))
           ),
-          child: Text(password, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
+          child: Text(password, style: TextStyle(fontSize: 16, color: themeColors["Text"])),
         ),
-        /* Button  */ Container(
-          margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
+        Container(height: 80,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal,
+              backgroundColor: themeColors["Button"],
               textStyle: const TextStyle(fontSize: 16)
             ),
             onPressed: () {
@@ -206,87 +409,112 @@ class _AppState extends State<App> {
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Icon(Icons.copy_all),
-                Text(" Copy to Clipboard")
+              children: <Widget>[
+                Icon(Icons.copy_rounded, color: themeColors["White"]),
+                Text("  Copy to Clipboard", style: TextStyle(color: themeColors["White"]))
               ]
             ),
           ),
         ),
-        /* Slider  */ Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(" Length", style: TextStyle(fontSize: 18)),
-            Slider(
-              value: lengthSliderValue,
-              min: 1,
-              max: 30,
-              divisions: 29,
-              label: lengthSliderValue.round().toString(),
-              onChanged: (double value) {
-                setState(() {
-                  lengthSliderValue = value;
-                });
-              },
-              inactiveColor: const Color.fromARGB(255, 128, 128, 128),
-              activeColor: Colors.tealAccent,
-              thumbColor: Colors.teal,
-            ),
-          ]
+        const SizedBox(height: 24),
+        Container(
+          height: 192,
+          alignment: Alignment.center,
+          child: Column(
+            children: <SizedBox>[
+              SizedBox(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Length", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                    Slider(
+                      value: lengthSliderValue,
+                      min: 1,
+                      max: 30,
+                      divisions: 29,
+                      label: lengthSliderValue.round().toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          lengthSliderValue = value;
+                        });
+                      },
+                      inactiveColor: themeColors["SliderBG"],
+                      activeColor: themeColors["SilderFG"],
+                      thumbColor: themeColors["SliderHead"],
+                    ),
+                  ]
+                )
+              ),
+              SizedBox(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Capitals", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                    Switch(
+                      value: capitalsSwitchValue,
+                      onChanged: (value) {
+                        setState(() {
+                          capitalsSwitchValue = value;
+                        });
+                      },
+                      activeTrackColor: themeColors["OnToggleBG"],
+                      activeColor: themeColors["OnToggleHead"],
+                      inactiveTrackColor: themeColors["OffToggleBG"],
+                      inactiveThumbColor: themeColors["OffToggleHead"],
+                    ),
+                  ]
+                )
+              ),
+              SizedBox(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Numbers", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                    Switch(
+                      value: numbersSwitchValue,
+                      onChanged: (value) {
+                        setState(() {
+                          numbersSwitchValue = value;
+                        });
+                      },
+                      activeTrackColor: themeColors["OnToggleBG"],
+                      activeColor: themeColors["OnToggleHead"],
+                      inactiveTrackColor: themeColors["OffToggleBG"],
+                      inactiveThumbColor: themeColors["OffToggleHead"],
+                    ),
+                  ]
+                )
+              ),
+              SizedBox(height: 48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Symbols", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                    Switch(
+                      value: symbolsSwitchValue,
+                      onChanged: (value) {
+                        setState(() {
+                          symbolsSwitchValue = value;
+                        });
+                      },
+                      activeTrackColor: themeColors["OnToggleBG"],
+                      activeColor: themeColors["OnToggleHead"],
+                      inactiveTrackColor: themeColors["OffToggleBG"],
+                      inactiveThumbColor: themeColors["OffToggleHead"],
+                    ),
+                  ]
+                )
+              ),
+            ]
+          )
         ),
-        /* Toggle  */ Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(" Capitals", style: TextStyle(fontSize: 18)),
-            Switch(
-              value: capitalsSwitchValue,
-              onChanged: (value) {
-                setState(() {
-                  capitalsSwitchValue = value;
-                });
-              },
-              activeTrackColor: Colors.tealAccent,
-              activeColor: Colors.teal,
-            )
-          ]
-        ),
-        /* Toggle  */ Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(" Numbers", style: TextStyle(fontSize: 18)),
-            Switch(
-              value: numbersSwitchValue,
-              onChanged: (value) {
-                setState(() {
-                  numbersSwitchValue = value;
-                });
-              },
-              activeTrackColor: Colors.tealAccent,
-              activeColor: Colors.teal,
-            )
-          ]
-        ),
-        /* Toggle  */ Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(" Symbols", style: TextStyle(fontSize: 18)),
-            Switch(
-              value: symbolsSwitchValue,
-              onChanged: (value) {
-                setState(() {
-                  symbolsSwitchValue = value;
-                });
-              },
-              activeTrackColor: Colors.tealAccent,
-              activeColor: Colors.teal,
-            )
-          ]
-        ),
-        /* Button  */ Container(
-          margin: const EdgeInsets.fromLTRB(90, 20, 90, 20),
+        const SizedBox(height: 24),
+        Container(height: 80,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal,
+              backgroundColor: themeColors["Button"],
               textStyle: const TextStyle(fontSize: 16)
             ),
             onPressed: () {
@@ -294,57 +522,77 @@ class _AppState extends State<App> {
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.get_app_rounded),
-                Text(" Generate")
+              children: [
+                Icon(Icons.file_download_outlined, color: themeColors["White"]),
+                Text("  Generate", style: TextStyle(color: themeColors["White"]))
               ],
             )
           ),
-        )
+        ),
+        const SizedBox(height: 80),
       ],
     ),
-    /* Strength Checker */ Column(
+
+    // Strength Checker
+    Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
 
       children: <Widget>[
-        /* Score */ Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.fromLTRB(60, 10, 60, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(" Score: ", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300)),
-                  Text(roundedScore, style: const TextStyle(fontSize: 22))
-                ]
-              )
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(60, 10, 60, 20),
-              child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 22))
-            ),
-          ],
+        const SizedBox(height: 110),
+        Container(height: 100,
+          margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+          child: Column(
+            children: <SizedBox>[
+              SizedBox(height: 35,
+                child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 28))
+              ),
+              const SizedBox(height: 10),
+              SizedBox(height: 11,
+                width: 280,
+                child: AJCMeter(
+                  value: meterValue,
+                  minValue: 0,
+                  maxValue: 100,
+                  themeColors: themeColors,
+                  glowColor: glowColor,
+                  indicatorColor: indicatorColor,
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(height: 30,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(" Score: ", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                    Text(roundedScore, style: TextStyle(fontSize: 16, color: themeColors["Text"]))
+                  ]
+                ),
+              ),
+            ],
+          )
         ),
-        /* Input */ Container(
-          margin: const EdgeInsets.fromLTRB(60, 50, 60, 0),
+        const SizedBox(height: 55),
+        Container(height: 50,
+          margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
 
           child: TextField(
             autocorrect: false,
             textAlign: TextAlign.center,
-            cursorColor: Colors.white,
+            cursorColor: themeColors["Text"],
 
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r"\s"))
             ],
 
-            decoration: const InputDecoration(
-              label: Center(child: Text("Password")),
-              labelStyle: TextStyle(color: Color.fromARGB(255, 240, 240, 240)),
-              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.teal)),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.tealAccent)),
+            style: TextStyle(color: themeColors["Text"]),
+
+            decoration: InputDecoration(
+              alignLabelWithHint: true,
+              label: const Center(child: Text("Password")),
+              labelStyle: TextStyle(color: themeColors["InputPlaceholder"]),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColors["EnabledInput"])),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColors["FocusedInput"])),
             ),
 
             onChanged: (text) {
@@ -353,30 +601,468 @@ class _AppState extends State<App> {
             },
           )
         ),
-        /* Button  */ Container(
-          margin: const EdgeInsets.fromLTRB(90, 20, 90, 60),
+        const SizedBox(height: 75),
+        Container(height: 100,
+          margin: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+          padding: const EdgeInsets.all(6),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: themeColors["Box"],
+            borderRadius: const BorderRadius.all(Radius.circular(25))
+          ),
+          child: Column(
+            children: <Container>[
+              Container(height: 26,
+                alignment: Alignment.center,
+                child: Text("it would take", style: TextStyle(fontSize: 15, color: themeColors["Text"]))
+              ),
+              Container(height: 36,
+                alignment: Alignment.center,
+                child: Text(roundedString, style: TextStyle(fontSize: 23, color: themeColors["Text"]))
+              ),
+              Container(height: 26,
+                alignment: Alignment.center,
+                child: Text("to crack this password", style: TextStyle(fontSize: 15, color: themeColors["Text"]))
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 15),
+        Container(height: 80,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal,
+              backgroundColor: themeColors["Button"],
               textStyle: const TextStyle(fontSize: 16)
             ),
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: passwordInput));
+              Clipboard.setData(ClipboardData(text: password));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Icon(Icons.copy_all),
-                Text(" Copy to Clipboard")
+              children: <Widget>[
+                Icon(Icons.copy_rounded, color: themeColors["White"]),
+                Text("  Copy to Clipboard", style: TextStyle(color: themeColors["White"]))
               ]
             ),
           ),
         ),
+        const SizedBox(height: 80),
       ],
     ),
-    /* History          */ const Text("History"),
+  
+    // History
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: <Widget>[
+        const SizedBox(height: 75),
+
+        SizedBox(height: 510,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: <Container>[
+              Container(
+                width: 110,
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 30,
+                      child: Text("Parameters", style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[0][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[0][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[0][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[0][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[1][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[1][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[1][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[1][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[2][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[2][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[2][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[2][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[3][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[3][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[3][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[3][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[4][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[4][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[4][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[4][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[5][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[5][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[5][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[5][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[6][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[6][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[6][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[6][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[7][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[7][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[7][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[7][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[8][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[8][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[8][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[8][3]]),
+                        ]
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(historyParameters[8][0].toString(), style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                          Icon(Icons.keyboard_capslock_rounded, size: 30, color: themeColors[historyParameters[8][1]]),
+                          Icon(Icons.numbers_rounded, size: 28, color: themeColors[historyParameters[8][2]]),
+                          Icon(Icons.emoji_symbols_rounded, size: 26, color: themeColors[historyParameters[8][3]]),
+                        ]
+                      ),
+                    ),
+                  ],
+                )
+              ),
+              Container(
+                width: 220,
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 30,
+                      child: Text("Password", style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[0]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[1]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[2]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[3]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[4]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[5]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[6]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[7]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[8]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                      child: Text("${history[9]}", style: TextStyle(fontSize: 12, color: themeColors["Text"]))
+                    ),
+                  ],
+                )
+              ),
+              Container(
+                width: 50,
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 30,
+                      child: Text("Copy", style: TextStyle(fontSize: 18, color: themeColors["Text"]))
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[0]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[1]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[2]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[3]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[4]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[5]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[6]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[7]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[8]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    Container(height: 48,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColors["Button"],
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: history[9]));
+                        },
+                        child: Icon(Icons.copy_rounded, color: themeColors["White"]),
+                      ),
+                    ),
+                    
+                  ],
+                )
+              ),
+            ]
+          )
+        ),
+
+        const SizedBox(height: 30),
+
+        Container(height: 40,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: themeColors["Button"],
+              textStyle: const TextStyle(fontSize: 16)
+            ),
+            onPressed: () {
+              clearHistory();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.delete_forever_rounded, color: themeColors["White"]),
+                Text("  Clear", style: TextStyle(color: themeColors["White"]))
+              ],
+            )
+          ),
+        ),
+
+        const SizedBox(height: 35),
+      ],
+    ),
   ];
 
+
+  @override
+  void initState() {
+    super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Color(0xFF009688),
+        systemNavigationBarIconBrightness: Brightness.light,
+      )
+    );
+    
+    setState(() {
+      iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+      stringThemeMode = "Dark";
+      themeColors.addAll(darkThemeColors);
+      history.addAll(defaultHistory);
+      historyParameters.addAll(defaultHistoryParameters);
+      checkPassword("password");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -385,24 +1071,35 @@ class _AppState extends State<App> {
       darkTheme: darkTheme,
       theme: lightTheme,
       themeMode: currentThemeMode,
+      debugShowCheckedModeBanner: false,
       
       home: Scaffold(
-        appBar: AppBar(
-          title: appBarText,
-          centerTitle: true,
-          backgroundColor: Colors.teal,
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        resizeToAvoidBottomInset: false,
+        
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: AppBar(
+            elevation: 0,
+            backgroundColor: themeColors["BG"],
+            iconTheme: IconThemeData(color: themeColors["Text"]),
+            title: Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
+            centerTitle: true,
+          ),
         ),
         
         drawer: Drawer(
+          backgroundColor: themeColors["DrawerBG"],
           child: Column(
             children: <Widget>[
               DrawerHeader(
                 child: Column(
-                  children:  <Widget>[
+                  children: <Widget>[
                     const SizedBox(height: 12),
                     Center(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(10),
                         child: const Image(
                           image: AssetImage("assets/images/solid_icon_512.png"),
                           height: 48,
@@ -411,102 +1108,76 @@ class _AppState extends State<App> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
+                    Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
                     const SizedBox(height: 3),
-                    const Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
+                    Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
                   ],
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.remove_circle_outline_rounded),
-                title: Text("Remove Ads"),
+              ListTile(
+                leading: Icon(Icons.trending_up_rounded, color: themeColors["Text"]),
+                title: Text("Get PRO", style: TextStyle(color: themeColors["Text"])),
                 //onTap: ,
               ),
               const Spacer(),
               ListTile(
                 leading: iconThemeMode,
-                title: Text("$stringThemeMode Theme"),
+                title: Text("$stringThemeMode Theme", style: TextStyle(color: themeColors["Text"])),
                 onTap: changeTheme,
               ),
               ListTile(
-                leading: const Icon(Icons.question_mark_rounded),
-                title: const Text("How It Works"),
+                leading: Icon(Icons.info_outline_rounded, color: themeColors["Text"]),
+                title: Text("About", style: TextStyle(color: themeColors["Text"])),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HowItWorksPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outline_rounded),
-                title: const Text("About"),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme, themeColors: themeColors)));
                 },
               ),
             ],
           ),
         ),
 
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.get_app_rounded),
-              label: "Generator",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.check_circle_outline_rounded),
-              label: "Strength Checker",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history_outlined),
-              label: "History",
-            ),
-          ],
-          currentIndex: navBarIndex,
-          onTap: navBarTap,
-        ),
+        bottomNavigationBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: BottomNavigationBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            selectedItemColor: themeColors["NavBarSelectedItem"],
+            unselectedItemColor: themeColors["White"],
+            selectedFontSize: 16,
+            unselectedFontSize: 14,
+            iconSize: 32,
+            
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.file_download_outlined),
+                label: "Generator",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.check_circle_outline_rounded),
+                label: "Strength Checker",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history_outlined),
+                label: "History",
+              ),
+            ],
 
-        body: pages()[navBarIndex]
-      ),
-    );
-  }
-}
-
-class HowItWorksPage extends StatelessWidget {
-  final ThemeMode currentThemeMode;
-  final ThemeData darkTheme;
-  final ThemeData lightTheme;
-  const HowItWorksPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Simple Password Utilities",
-      darkTheme: darkTheme,
-      theme: lightTheme,
-      themeMode: currentThemeMode,
-      
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("How It Works"),
-          centerTitle: true,
-          backgroundColor: Colors.teal,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            }, 
-            icon: const Icon(Icons.arrow_back_rounded)
+            currentIndex: navBarIndex,
+            onTap: navBarTap,
           ),
         ),
 
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            /* Desc    */ Text(
-              "Description",
-              style: TextStyle(fontSize: 18)
-            ),
-          ],
-        ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              //colors: [Color(0x00333333), Color(0xFF009688)],
+              colors: themeColors["Gradient"],
+              begin: Alignment.center,
+              end: Alignment.bottomCenter,
+            )
+          ),
+          child: pages()[navBarIndex]
+        )
       ),
     );
   }
@@ -516,7 +1187,8 @@ class AboutPage extends StatelessWidget {
   final ThemeMode currentThemeMode;
   final ThemeData darkTheme;
   final ThemeData lightTheme;
-  const AboutPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme}) : super(key: key);
+  final Map themeColors;
+  const AboutPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme, required this.themeColors}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -525,12 +1197,15 @@ class AboutPage extends StatelessWidget {
       darkTheme: darkTheme,
       theme: lightTheme,
       themeMode: currentThemeMode,
+      debugShowCheckedModeBanner: false,
       
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("About"),
+          elevation: 0,
+          backgroundColor: themeColors["BG"],
+          iconTheme: IconThemeData(color: themeColors["Text"]),
+          title: Text("About", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
           centerTitle: true,
-          backgroundColor: Colors.teal,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -539,64 +1214,179 @@ class AboutPage extends StatelessWidget {
           ),
         ),
 
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            /* Title   */ Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                    child: const Image(
-                      image: AssetImage("assets/images/solid_icon_512.png"),
-                      height: 48,
-                      width: 48,
-                    ),
-                ),
-                const SizedBox(width: 12),
-                Column(
-                  children: const <Widget>[
-                    Text("Simple Password Utilities", style: TextStyle(fontSize: 22)),
-                    SizedBox(height: 3),
-                    Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
-                  ]
-                )
-              ],
-            ), const SizedBox(height: 50),
-            /* Desc    */ const Text(
-              "Description",
-              style: TextStyle(fontSize: 18)
-            ), const SizedBox(height: 50),
-            /* App     */ Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("App:", style: TextStyle(fontSize: 16)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.one_k_rounded)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.two_k_rounded))
-                  ],
-                )
-              ]
-            ), const SizedBox(height: 30),
-            /* Socials */ Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("Socials:", style: TextStyle(fontSize: 16)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.one_k_rounded)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.two_k_rounded)),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.three_k_rounded))
-                  ],
-                )
-              ]
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0x00333333), Color(0xFF009688)],
+              begin: Alignment.center,
+              end: Alignment.bottomCenter,
             )
-          ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                      child: const Image(
+                        image: AssetImage("assets/images/solid_icon_512.png"),
+                        height: 48,
+                        width: 48,
+                      ),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    children: <Widget>[
+                      Text("Simple Password Utilities", style: TextStyle(fontSize: 22, color: themeColors["Text"])),
+                      const SizedBox(height: 3),
+                      Text("Created by Aaron Chauhan", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: themeColors["Text"])),
+                    ]
+                  )
+                ],
+              ), const SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                child: Text(
+                  " • Simple Password Utilities offers a password generator with customizable parameters for length, capitals, numbers, and symbols",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15,  color: themeColors["Text"])
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                child: Text(
+                  " • It also includes a strength checker with a visual strength meter and a brute force time-to-crack calculator",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: themeColors["Text"])
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                child: Text(
+                  " • The app keeps a history of the last 10 generated passwords, displaying relevant parameters for each password",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: themeColors["Text"])
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Text(
+                  " • It's a convenient tool for creating strong passwords, evaluating their strength, and managing your password history",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: themeColors["Text"])
+                ),
+              ), const SizedBox(height: 50),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("App:", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(onPressed: (){}, icon: Icon(Icons.one_k_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.two_k_rounded, color: themeColors["Text"]))
+                    ],
+                  )
+                ]
+              ), const SizedBox(height: 30),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Socials:", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(onPressed: (){}, icon: Icon(Icons.one_k_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.two_k_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.three_k_rounded, color: themeColors["Text"]))
+                    ],
+                  )
+                ]
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
+class AJCMeter extends StatelessWidget {
+  final double value;
+  final double minValue;
+  final double maxValue;
+  final Map themeColors;
+  final List<Color> glowColor;
+  final List<Color> indicatorColor;  
+
+  const AJCMeter({super.key, required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.glowColor, required this.indicatorColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 200,
+      height: double.infinity,
+      child: CustomPaint(
+        painter: AJCMeterPainter(value: value, minValue: minValue, maxValue: maxValue, themeColors: themeColors, glowColor: glowColor, indicatorColor: indicatorColor),
+      ),
+    );
+  }
+}
+
+class AJCMeterPainter extends CustomPainter {
+  final double value;
+  final double minValue;
+  final double maxValue;
+  final Map themeColors;
+  final List<Color> glowColor;
+  final List<Color> indicatorColor; 
+
+  AJCMeterPainter({required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.glowColor, required this.indicatorColor});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double width = size.width;
+    final double height = size.height;
+
+    // Create the meter glow gradient
+    final glowGradient = LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: glowColor, // Adjust the colors as needed
+    );
+
+    // Create the meter indicator gradient
+    final indicatorGradient = LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: indicatorColor, // Adjust the colors as needed
+    );
+    
+    // Calculate the percentage of the value within the range
+    final double percentage = (value - minValue) / (maxValue - minValue);
+    
+    // Calculate the indicator position based on the percentage
+    final double indicatorX = width * percentage;
+
+    // Draw the meter background
+    final backgroundPaint = Paint()..color = themeColors["MeterBG"];
+    canvas.drawRRect(RRect.fromLTRBR(0, 0, width, height, const Radius.circular(10)), backgroundPaint);
+
+    // Draw the meter glow
+    final glowPaint = Paint()..shader = glowGradient.createShader(Rect.fromLTRB(0, 0, width, height));
+    canvas.drawRRect(RRect.fromLTRBR(0, 0, width, height, const Radius.circular(10)), glowPaint);
+
+    // Draw the meter indicator
+    final indicatorPaint = Paint()..shader = indicatorGradient.createShader(Rect.fromLTRB(0, 0, indicatorX, height));
+    canvas.drawRRect(RRect.fromLTRBR(0, 0, indicatorX, height, const Radius.circular(10)), indicatorPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
