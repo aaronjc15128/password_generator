@@ -1241,9 +1241,37 @@ class AboutPage extends StatelessWidget {
                   )
                 ],
               ), const SizedBox(height: 50),
-              Text(
-                "Description",
-                style: TextStyle(fontSize: 18, color: themeColors["Text"])
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                child: Text(
+                  " • Simple Password Utilities offers a password generator with customizable parameters for length, capitals, numbers, and symbols",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15,  color: themeColors["Text"])
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                child: Text(
+                  " • It also includes a strength checker with a visual strength meter and a brute force time-to-crack calculator",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: themeColors["Text"])
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                child: Text(
+                  " • The app keeps a history of the last 10 generated passwords, displaying relevant parameters for each password",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: themeColors["Text"])
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Text(
+                  " • It's a convenient tool for creating strong passwords, evaluating their strength, and managing your password history",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: themeColors["Text"])
+                ),
               ), const SizedBox(height: 50),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
