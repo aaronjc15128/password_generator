@@ -1225,6 +1225,7 @@ class AboutPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -1245,11 +1246,12 @@ class AboutPage extends StatelessWidget {
                     ]
                   )
                 ],
-              ), const SizedBox(height: 50),
+              ),
+              const SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
                 child: Text(
-                  " • Simple Password Utilities offers a password generator with customizable parameters for length, capitals, numbers, and symbols",
+                  "Simple Password Utilities offers a password generator with customizable parameters for length, capitals, numbers, and symbols",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15,  color: themeColors["Text"])
                 ),
@@ -1257,7 +1259,7 @@ class AboutPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
                 child: Text(
-                  " • It also includes a strength checker with a visual strength meter and a brute force time-to-crack calculator",
+                  "It also includes a strength checker with a visual strength meter and a brute force time-to-crack calculator",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15, color: themeColors["Text"])
                 ),
@@ -1265,7 +1267,7 @@ class AboutPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
                 child: Text(
-                  " • The app keeps a history of the last 10 generated passwords, displaying relevant parameters for each password",
+                  "The app keeps a history of the last 10 generated passwords, displaying relevant parameters for each password",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15, color: themeColors["Text"])
                 ),
@@ -1273,11 +1275,12 @@ class AboutPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                 child: Text(
-                  " • It's a convenient tool for creating strong passwords, evaluating their strength, and managing your password history",
+                  "It's a convenient tool for creating strong passwords, evaluating their strength, and managing your password history",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15, color: themeColors["Text"])
                 ),
-              ), const SizedBox(height: 50),
+              ),
+              const SizedBox(height: 50),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -1285,12 +1288,13 @@ class AboutPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(onPressed: (){}, icon: Icon(Icons.one_k_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.two_k_rounded, color: themeColors["Text"]))
+                      IconButton(onPressed: (){}, icon: Icon(Icons.store_mall_directory_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.store_mall_directory_rounded, color: themeColors["Text"]))
                     ],
                   )
                 ]
-              ), const SizedBox(height: 30),
+              ),
+              const SizedBox(height: 30),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -1298,13 +1302,15 @@ class AboutPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(onPressed: (){}, icon: Icon(Icons.one_k_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.two_k_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.three_k_rounded, color: themeColors["Text"]))
+                      IconButton(onPressed: (){}, icon: Icon(Icons.phone_android_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.phone_android_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.phone_android_rounded, color: themeColors["Text"]))
                     ],
                   )
                 ]
-              )
+              ),
+              const SizedBox(height: 70),
+              Text("v0.0.0", style: TextStyle(fontSize: 12, color: themeColors["Text"])),
             ],
           ),
         ),
