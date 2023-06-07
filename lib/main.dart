@@ -59,6 +59,8 @@ class _AppState extends State<App> {
     "DrawerBG"            : const Color(0xFF17201F),
     "BG"                  : const Color(0xFF0B1817),
 
+    "Gradient"            : const <Color>[Color(0x00333333), Color(0xFF009688)],
+
     "StrongMeterGlow"     : const <Color>[Color(0xFF0DB8A7), Color(0x007BFFF2)],
     "StrongMeterFG"       : const <Color>[Color(0xFF7BFFF2), Color(0xFF0DB8A7)],
     "GoodMeterGlow"       : const <Color>[Color(0xFF9EFF8E), Color(0x00CAFFC2)],
@@ -74,7 +76,7 @@ class _AppState extends State<App> {
     "White"               : const Color(0xFFFFFFFF),
     "Text"                : const Color(0xFF000000),
     "OffToggleHead"       : const Color(0xFF888888),
-    "GreyedIcon"          : const Color(0xFF999999),
+    "GreyedIcon"          : const Color(0xFFA8A8A8),
     "InputPlaceholder"    : const Color(0xFF999999),
     "Box"                 : const Color(0x33999999),
     "SliderBG"            : const Color(0xFFCCCCCC),
@@ -95,6 +97,8 @@ class _AppState extends State<App> {
     "OnToggleHead"        : const Color(0xFF00B2A2),
     "DrawerBG"            : const Color(0xFFDEE7E7),
     "BG"                  : const Color(0xFFDCEFED),
+
+    "Gradient"            : const <Color>[Color(0x00CCCCCC), Color(0xFF009688)],
 
     "StrongMeterGlow"     : const <Color>[Color(0xFF0BAF9F), Color(0x0032DDCC)],
     "StrongMeterFG"       : const <Color>[Color(0xFF32DDCC), Color(0xFF0BAF9F)],
@@ -1164,9 +1168,10 @@ class _AppState extends State<App> {
         ),
 
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0x00333333), Color(0xFF009688)],
+              //colors: [Color(0x00333333), Color(0xFF009688)],
+              colors: themeColors["Gradient"],
               begin: Alignment.center,
               end: Alignment.bottomCenter,
             )
