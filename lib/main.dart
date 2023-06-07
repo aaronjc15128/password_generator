@@ -654,7 +654,7 @@ class _AppState extends State<App> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
 
       children: <Widget>[
-        const SizedBox(height: 80),
+        const SizedBox(height: 75),
 
         SizedBox(height: 510,
           child: Row(
@@ -1032,7 +1032,7 @@ class _AppState extends State<App> {
           ),
         ),
 
-        const SizedBox(height: 30),
+        const SizedBox(height: 35),
       ],
     ),
   ];
