@@ -167,7 +167,12 @@ class _AppState extends State<App> {
   List history = [];
   List defaultHistory = List.filled(10, "-");
   List historyParameters = [];
-  List defaultHistoryParameters = [List.filled(10, [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"])];
+  List defaultHistoryParameters = [
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"],
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"],
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"], [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"],
+    [" ""0"" ", "GreyedIcon", "GreyedIcon", "GreyedIcon"]
+  ];
 
   // build()
   ThemeMode currentThemeMode = ThemeMode.dark;
