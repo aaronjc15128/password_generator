@@ -1165,7 +1165,6 @@ class _AppState extends State<App> {
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              //colors: [Color(0x00333333), Color(0xFF009688)],
               colors: themeColors["Gradient"],
               begin: Alignment.center,
               end: Alignment.bottomCenter,
@@ -1210,9 +1209,9 @@ class AboutPage extends StatelessWidget {
         ),
 
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0x00333333), Color(0xFF009688)],
+              colors: themeColors["Gradient"],
               begin: Alignment.center,
               end: Alignment.bottomCenter,
             )
