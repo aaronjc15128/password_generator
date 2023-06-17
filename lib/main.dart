@@ -1114,11 +1114,6 @@ class _AppState extends State<App> {
                   ],
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.trending_up_rounded, color: themeColors["Text"]),
-                title: Text("Get PRO", style: TextStyle(color: themeColors["Text"])),
-                //onTap: ,
-              ),
               const Spacer(),
               ListTile(
                 leading: iconThemeMode,
