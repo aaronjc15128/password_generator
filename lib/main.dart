@@ -136,9 +136,21 @@ class _AppState extends State<App> {
 
   // checkPassword()  ~  pages() => Strength Checker
   late String passwordTime;
+  late int passwordTimeInSeconds;
+  late int passwordTimeInUnits;
   late String passwordTimeUnits;
   late int totalCharacters;
-  int attemptsPerSecond = 1000;
+  int attemptsPerSecond = 100000;
+  Map<int, String> secondsToUnit = {
+    315360000 : "decades",
+    31536000 : "years",
+    2592000 : "months",
+    604800 : "weeks",
+    86400 : "days",
+    3600 : "hours",
+    60 : "minutes",
+    1 : "seconds",
+  };
 
   // pages() => Generator
   double lengthSliderValue = 20;
@@ -331,9 +343,20 @@ class _AppState extends State<App> {
       roundedScore = passwordScore.toStringAsFixed(0);
 
       
-      // totalCharacters (double) ^ userPasswordLength (double)  ~  converted to BigInt  ~  / attemptsPerSecond   ~  converted to String   ~  appended to passwordTimeUnits;
-      passwordTimeUnits = " ""seconds";
-      passwordTime = (BigInt.from(pow(totalCharacters.toDouble(), userpassword.length.toDouble())) ~/ BigInt.from(attemptsPerSecond)).toString() + passwordTimeUnits;
+      // totalCharacters (double) ^ userPasswordLength (double)  ~  converted to BigInt  ~  / attemptsPerSecond  ~  converted to int;
+      passwordTimeInSeconds = (BigInt.from(pow(totalCharacters.toDouble(), userpassword.length.toDouble())) ~/ BigInt.from(attemptsPerSecond)).toInt();
+      
+      for (var i = 0; i < secondsToUnit.keys.toList().length; i++) {
+        int key = secondsToUnit.keys.toList()[i];
+
+        if (passwordTimeInSeconds >= key) {
+          passwordTimeUnits = secondsToUnit.values.toList()[i];
+          passwordTimeInUnits = passwordTimeInSeconds ~/ secondsToUnit.keys.toList()[i];
+          break;
+        }
+      }
+
+      passwordTime = "$passwordTimeInUnits $passwordTimeUnits";
     });
   }
 
