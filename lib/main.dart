@@ -128,11 +128,17 @@ class _AppState extends State<App> {
   String anIcon = "GreyedIcon";
   String asIcon = "GreyedIcon";
 
-  // generatePassword() checkPassword()
+  // generatePassword()  ~  checkPassword()
   List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
   List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
+
+  // checkPassword()  ~  pages() => Strength Checker
+  late String passwordTime;
+  late String passwordTimeUnits;
+  late int totalCharacters;
+  int attemptsPerSecond = 1000;
 
   // pages() => Generator
   double lengthSliderValue = 20;
@@ -148,27 +154,7 @@ class _AppState extends State<App> {
   late Color colorScore;
   late List<Color> glowColor;
   late List<Color> indicatorColor;
-  late double passwordTime;
-  late int roundedTime;
-  late String roundedUnit;
-  late String roundedString;
   double meterValue = 25;
-
-  Map<double, String> timeConversions = {
-    87660000 : "millenium",
-    876600 : "century",
-    87660 : "decade",
-    8766 : "year",
-    730.5 : "month",
-    168 : "week",
-    24 : "day",
-    1 : "hour",
-    0.0167 : "minute",
-    0.000278 : "second",
-    0.000000278 : "millisecond",
-    0.000000000278 : "microsecond",
-    0.000000000000278 : "nanosecond",
-  };
 
   // pages() => History
   List history = [];
@@ -344,31 +330,10 @@ class _AppState extends State<App> {
       passwordScore *= 33.33;
       roundedScore = passwordScore.toStringAsFixed(0);
 
-      // passwordTimeInHours = (possibleCharacters ^ passwordLength) / (2 * hashRateInHours)
-      passwordTime = pow((lowercase.length+uppercase.length+numbers.length+symbols.length), userpassword.length) / (2 * 36000000000000); // H/h = 36 000 000 000 000 (36 trillion)
       
-      for (double key in timeConversions.keys) {
-        if (passwordTime >= key) {
-          roundedTime = (passwordTime / key).round();
-          
-          if (roundedTime == 1) {
-            roundedUnit = (timeConversions[key]).toString();
-          }
-          else if (timeConversions[key] == "century") {
-            roundedUnit = "centuries";
-          }
-          else {
-            roundedUnit = "${timeConversions[key]}s";
-          }
-
-          roundedString = "${roundedTime.toString()} $roundedUnit";
-          // roundedString = "$passwordTime";
-          return;
-        }
-      }
-
-      roundedString = "no time at all";
-      // roundedString = "$passwordTime";
+      // totalCharacters (double) ^ userPasswordLength (double)  ~  converted to BigInt  ~  / attemptsPerSecond   ~  converted to String   ~  appended to passwordTimeUnits;
+      passwordTimeUnits = " ""seconds";
+      passwordTime = (BigInt.from(pow(totalCharacters.toDouble(), userpassword.length.toDouble())) ~/ BigInt.from(attemptsPerSecond)).toString() + passwordTimeUnits;
     });
   }
 
@@ -621,7 +586,7 @@ class _AppState extends State<App> {
               ),
               Container(height: 36,
                 alignment: Alignment.center,
-                child: Text(roundedString, style: TextStyle(fontSize: 23, color: themeColors["Text"]))
+                child: Text(passwordTime, style: TextStyle(fontSize: 23, color: themeColors["Text"]))
               ),
               Container(height: 26,
                 alignment: Alignment.center,
@@ -1063,6 +1028,7 @@ class _AppState extends State<App> {
       themeColors.addAll(darkThemeColors);
       history.addAll(defaultHistory);
       historyParameters.addAll(defaultHistoryParameters);
+      totalCharacters = lowercase.length + uppercase.length + numbers.length + symbols.length;
       checkPassword("password");
     });
   }
