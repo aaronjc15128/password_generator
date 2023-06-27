@@ -134,23 +134,7 @@ class _AppState extends State<App> {
   List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
 
-  // checkPassword()  ~  pages() => Strength Checker
-  late String passwordTime;
-  late int passwordTimeInSeconds;
-  late int passwordTimeInUnits;
-  late String passwordTimeUnits;
-  late int totalCharacters;
-  int attemptsPerSecond = 100000;
-  Map<int, String> secondsToUnit = {
-    315360000 : "decades",
-    31536000 : "years",
-    2592000 : "months",
-    604800 : "weeks",
-    86400 : "days",
-    3600 : "hours",
-    60 : "minutes",
-    1 : "seconds",
-  };
+  
 
   // pages() => Generator
   double lengthSliderValue = 20;
@@ -341,22 +325,6 @@ class _AppState extends State<App> {
       if (passwordScore > 3) {passwordScore = 3;}
       passwordScore *= 33.33;
       roundedScore = passwordScore.toStringAsFixed(0);
-
-      
-      // totalCharacters (double) ^ userPasswordLength (double)  ~  converted to BigInt  ~  / attemptsPerSecond  ~  converted to int;
-      passwordTimeInSeconds = (BigInt.from(pow(totalCharacters.toDouble(), userpassword.length.toDouble())) ~/ BigInt.from(attemptsPerSecond)).toInt();
-      
-      for (var i = 0; i < secondsToUnit.keys.toList().length; i++) {
-        int key = secondsToUnit.keys.toList()[i];
-
-        if (passwordTimeInSeconds >= key) {
-          passwordTimeUnits = secondsToUnit.values.toList()[i];
-          passwordTimeInUnits = passwordTimeInSeconds ~/ secondsToUnit.keys.toList()[i];
-          break;
-        }
-      }
-
-      passwordTime = "$passwordTimeInUnits $passwordTimeUnits";
     });
   }
 
@@ -609,7 +577,7 @@ class _AppState extends State<App> {
               ),
               Container(height: 36,
                 alignment: Alignment.center,
-                child: Text(passwordTime, style: TextStyle(fontSize: 23, color: themeColors["Text"]))
+                child: Text("time", style: TextStyle(fontSize: 23, color: themeColors["Text"]))
               ),
               Container(height: 26,
                 alignment: Alignment.center,
@@ -1051,7 +1019,6 @@ class _AppState extends State<App> {
       themeColors.addAll(darkThemeColors);
       history.addAll(defaultHistory);
       historyParameters.addAll(defaultHistoryParameters);
-      totalCharacters = lowercase.length + uppercase.length + numbers.length + symbols.length;
       checkPassword("password");
     });
   }
