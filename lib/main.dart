@@ -134,7 +134,25 @@ class _AppState extends State<App> {
   List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
 
-  
+  // getPasswordTime()
+  String passwordTimeFull = "no time at all";
+  late double passwordTimeInSeconds;
+  late double passwordTimeInUnits;
+  late String passwordTimeUnits;
+  Map<double, String> secondsToUnits = {
+    3153600000 : "centuries",
+    315360000 : "decades",
+    31536000 : "years",
+    2592000 : "months",
+    604800 : "weeks",
+    86400 : "days",
+    3600 : "hours",
+    60 : "minutes",
+    1 : "seconds",
+    0.001 : "milliseconds",
+    0.000001 : "nanoseconds",
+  };
+
 
   // pages() => Generator
   double lengthSliderValue = 20;
@@ -326,6 +344,22 @@ class _AppState extends State<App> {
       passwordScore *= 33.33;
       roundedScore = passwordScore.toStringAsFixed(0);
     });
+  }
+
+  void getPasswordTime(double score) {
+    passwordTimeInSeconds = pow(1.22, score).toDouble();
+    
+    for (var i = 0; i < secondsToUnits.keys.toList().length; i++) {
+      double key = secondsToUnits.keys.toList()[i];
+
+      if (passwordTimeInSeconds >= key) {
+        passwordTimeUnits = secondsToUnits.values.toList()[i].toString();
+        passwordTimeInUnits = passwordTimeInSeconds.round() / key;
+        break;
+      }
+    }
+
+    passwordTimeFull = "${passwordTimeInUnits.round()} $passwordTimeUnits";
   }
 
   void clearHistory() {
@@ -557,6 +591,7 @@ class _AppState extends State<App> {
             onChanged: (text) {
               passwordInput = text;
               checkPassword(passwordInput);
+              getPasswordTime(passwordScore);
             },
           )
         ),
@@ -577,7 +612,7 @@ class _AppState extends State<App> {
               ),
               Container(height: 36,
                 alignment: Alignment.center,
-                child: Text("time", style: TextStyle(fontSize: 23, color: themeColors["Text"]))
+                child: Text(passwordTimeFull, style: TextStyle(fontSize: 23, color: themeColors["Text"]))
               ),
               Container(height: 26,
                 alignment: Alignment.center,
