@@ -134,7 +134,7 @@ class _AppState extends State<App> {
   List numbersList = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   List symbolsList = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
 
-  // getPasswordTime()
+  // passwordTime()
   String passwordTimeFull = "no time at all";
   late double passwordTimeInSeconds;
   late double passwordTimeInUnits;
@@ -345,7 +345,7 @@ class _AppState extends State<App> {
     });
   }
 
-  void getPasswordTime(double score) {
+  void passwordTime(double score) {
     passwordTimeInSeconds = pow(1.22, score).toDouble();
     
     for (var i = 0; i < secondsToUnits.keys.toList().length; i++) {
@@ -590,7 +590,7 @@ class _AppState extends State<App> {
             onChanged: (text) {
               passwordInput = text;
               checkPassword(passwordInput);
-              getPasswordTime(passwordScoreNumber);
+              passwordTime(passwordScoreNumber);
             },
           )
         ),
