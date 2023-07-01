@@ -346,7 +346,7 @@ class _AppState extends State<App> {
   }
 
   void passwordTime(double score) {
-    passwordTimeInSeconds = pow(1.22, score).toDouble();
+    passwordTimeInSeconds = pow(1.21, score).toDouble();
     
     for (var i = 0; i < secondsToUnits.keys.toList().length; i++) {
       double key = secondsToUnits.keys.toList()[i];
