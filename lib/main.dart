@@ -115,18 +115,18 @@ class _AppState extends State<App> {
   
 
   // changeTheme()
-  Icon iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
-  String stringThemeMode = "Dark";
+  Icon themeIcon = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+  String themeString = "Dark";
 
   // navBarTap()
-  int navBarIndex = 0;
+  int navbarIndex = 0;
   
   // generatePassword()
   String password = "password will generate here";
-  String nCint = " 0";
-  String acIcon = "GreyedIcon";
-  String anIcon = "GreyedIcon";
-  String asIcon = "GreyedIcon";
+  String numberCharactersInt = " 0";
+  String allowedCapitalsIcon = "GreyedIcon";
+  String allowedNumbersIcon = "GreyedIcon";
+  String allowedSymbolsIcon = "GreyedIcon";
 
   // generatePassword()  ~  checkPassword()
   List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -162,13 +162,13 @@ class _AppState extends State<App> {
 
   // pages() => Strength Checker
   String passwordInput = "Password";
-  late double passwordScore;
-  late String roundedScore;
-  late String rankScore;
-  late Color colorScore;
-  late List<Color> glowColor;
-  late List<Color> indicatorColor;
-  double meterValue = 25;
+  late double passwordScoreNumber;
+  late String passwordScoreRounded;
+  late String passwordScoreRank;
+  late Color passwordScoreTextColor;
+  late List<Color> passwordScoreGlowColor;
+  late List<Color> passwordScoreIndicatorColor;
+  double passwordScoreMeterValue = 25;
 
   // pages() => History
   List history = [];
@@ -182,7 +182,7 @@ class _AppState extends State<App> {
   ];
 
   // build()
-  ThemeMode currentThemeMode = ThemeMode.dark;
+  ThemeMode currentTheme = ThemeMode.dark;
   ThemeData darkTheme = ThemeData(
     fontFamily: "Inter",
     scaffoldBackgroundColor: const Color(0xFF0B1817),
@@ -194,20 +194,20 @@ class _AppState extends State<App> {
 
 
   void changeTheme() {
-      if (currentThemeMode == ThemeMode.dark) {
+      if (currentTheme == ThemeMode.dark) {
         setState(() {
-          currentThemeMode = ThemeMode.light;
-          iconThemeMode = const Icon(Icons.wb_sunny_outlined, color: Color(0xFF000000));
-          stringThemeMode = "Light";
+          currentTheme = ThemeMode.light;
+          themeIcon = const Icon(Icons.wb_sunny_outlined, color: Color(0xFF000000));
+          themeString = "Light";
           themeColors.clear();
           themeColors.addAll(lightThemeColors);
         });
       }
-      else if (currentThemeMode == ThemeMode.light) {
+      else if (currentTheme == ThemeMode.light) {
         setState(() {
-          currentThemeMode = ThemeMode.dark;
-          iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
-          stringThemeMode = "Dark";
+          currentTheme = ThemeMode.dark;
+          themeIcon = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+          themeString = "Dark";
           themeColors.clear();
           themeColors.addAll(darkThemeColors);
         });
@@ -217,8 +217,7 @@ class _AppState extends State<App> {
   void navBarTap(int index) {
     setState(() {
       checkPassword("");
-      
-      navBarIndex = index;
+      navbarIndex = index;
     });
   }
 
@@ -228,33 +227,33 @@ class _AppState extends State<App> {
     
     if (allowedCapitals) {
       allowedCharacters += uppercase;
-      acIcon = "Text";
+      allowedCapitalsIcon = "Text";
     } 
     else {
-      acIcon = "GreyedIcon";
+      allowedCapitalsIcon = "GreyedIcon";
     }
    
     if (allowedNumbers) {
       allowedCharacters += numbers;
-      anIcon = "Text";
+      allowedNumbersIcon = "Text";
     }
     else {
-      anIcon = "GreyedIcon";
+      allowedNumbersIcon = "GreyedIcon";
     }
     
     if (allowedSymbols) {
       allowedCharacters += symbols;
-      asIcon = "Text";
+      allowedSymbolsIcon = "Text";
     } 
     else {
-      asIcon = "GreyedIcon";
+      allowedSymbolsIcon = "GreyedIcon";
     }
 
     if (numberCharacters.toString().length == 1) {
-      nCint = " ""$numberCharacters"" ";
+      numberCharactersInt = " ""$numberCharacters"" ";
     } 
     else {
-      nCint = "$numberCharacters";
+      numberCharactersInt = "$numberCharacters";
     }
 
     password = "";
@@ -268,7 +267,7 @@ class _AppState extends State<App> {
       history.insert(0, password);
       history.removeLast();
 
-      historyParameters.insert(0, [nCint, acIcon, anIcon, asIcon]);
+      historyParameters.insert(0, [numberCharactersInt, allowedCapitalsIcon, allowedNumbersIcon, allowedSymbolsIcon]);
       historyParameters.removeLast();
     });
   }
@@ -290,59 +289,59 @@ class _AppState extends State<App> {
       timeInSeconds = (possibleCharacters ^ passwordLength) / attemptsPerSecond
     */
     
-    passwordScore = 0;
+    passwordScoreNumber = 0;
 
-    passwordScore += (userpassword.length) / 10;    // Length
+    passwordScoreNumber += (userpassword.length) / 10;    // Length
 
     String prevChar = "";
     for (var i = 0; i < userpassword.length; i++) {
       String char = userpassword[i];
 
-      if (uppercase.contains(char)) {passwordScore += 0.15;}
-      else if (numbers.contains(char)) {passwordScore += 0.2;}
-      else if (symbols.contains(char)) {passwordScore += 0.25;}
+      if (uppercase.contains(char)) {passwordScoreNumber += 0.15;}
+      else if (numbers.contains(char)) {passwordScoreNumber += 0.2;}
+      else if (symbols.contains(char)) {passwordScoreNumber += 0.25;}
       
-      if (char == prevChar) {passwordScore -= 0.1;}
+      if (char == prevChar) {passwordScoreNumber -= 0.1;}
       else if ((uppercase.contains(char) & uppercase.contains(char)) | (numbers.contains(char) & numbers.contains(char)) | (symbols.contains(char) & symbols.contains(char))) {
-        passwordScore -= 0.05;
+        passwordScoreNumber -= 0.05;
       }
 
       prevChar = char;
     }
     
     setState(() {
-      if (passwordScore >= 3) {
-        rankScore = "Strong";
-        colorScore = themeColors["StrongText"];
-        glowColor = themeColors["StrongMeterGlow"];
-        indicatorColor = themeColors["StrongMeterFG"];
-        meterValue = 100;
+      if (passwordScoreNumber >= 3) {
+        passwordScoreRank = "Strong";
+        passwordScoreTextColor = themeColors["StrongText"];
+        passwordScoreGlowColor = themeColors["StrongMeterGlow"];
+        passwordScoreIndicatorColor = themeColors["StrongMeterFG"];
+        passwordScoreMeterValue = 100;
       }
-      else if (passwordScore >= 2) {
-        rankScore = "Good";
-        colorScore = themeColors["GoodText"];
-        glowColor = themeColors["GoodMeterGlow"];
-        indicatorColor = themeColors["GoodMeterFG"];
-        meterValue = 75;
+      else if (passwordScoreNumber >= 2) {
+        passwordScoreRank = "Good";
+        passwordScoreTextColor = themeColors["GoodText"];
+        passwordScoreGlowColor = themeColors["GoodMeterGlow"];
+        passwordScoreIndicatorColor = themeColors["GoodMeterFG"];
+        passwordScoreMeterValue = 75;
       }
-      else if (passwordScore >= 1) {
-        rankScore = "Fair";
-        colorScore = themeColors["FairText"];
-        glowColor = themeColors["FairMeterGlow"];
-        indicatorColor = themeColors["FairMeterFG"];
-        meterValue = 50;
+      else if (passwordScoreNumber >= 1) {
+        passwordScoreRank = "Fair";
+        passwordScoreTextColor = themeColors["FairText"];
+        passwordScoreGlowColor = themeColors["FairMeterGlow"];
+        passwordScoreIndicatorColor = themeColors["FairMeterFG"];
+        passwordScoreMeterValue = 50;
       }
-      else if (passwordScore >= 0) {
-        rankScore = "Poor";
-        colorScore = themeColors["PoorText"];
-        glowColor = themeColors["PoorMeterGlow"];
-        indicatorColor = themeColors["PoorMeterFG"];
-        meterValue = 25;
+      else if (passwordScoreNumber >= 0) {
+        passwordScoreRank = "Poor";
+        passwordScoreTextColor = themeColors["PoorText"];
+        passwordScoreGlowColor = themeColors["PoorMeterGlow"];
+        passwordScoreIndicatorColor = themeColors["PoorMeterFG"];
+        passwordScoreMeterValue = 25;
       }
 
-      if (passwordScore > 3) {passwordScore = 3;}
-      passwordScore *= 33.33;
-      roundedScore = passwordScore.toStringAsFixed(0);
+      if (passwordScoreNumber > 3) {passwordScoreNumber = 3;}
+      passwordScoreNumber *= 33.33;
+      passwordScoreRounded = passwordScoreNumber.toStringAsFixed(0);
     });
   }
 
@@ -538,18 +537,18 @@ class _AppState extends State<App> {
           child: Column(
             children: <SizedBox>[
               SizedBox(height: 35,
-                child: Text(rankScore, style: TextStyle(color: colorScore, fontSize: 28))
+                child: Text(passwordScoreRank, style: TextStyle(color: passwordScoreTextColor, fontSize: 28))
               ),
               const SizedBox(height: 10),
               SizedBox(height: 11,
                 width: 280,
                 child: AJCMeter(
-                  value: meterValue,
+                  value: passwordScoreMeterValue,
                   minValue: 0,
                   maxValue: 100,
                   themeColors: themeColors,
-                  glowColor: glowColor,
-                  indicatorColor: indicatorColor,
+                  passwordScoreGlowColor: passwordScoreGlowColor,
+                  passwordScoreIndicatorColor: passwordScoreIndicatorColor,
                 ),
               ),
               const SizedBox(height: 10),
@@ -558,7 +557,7 @@ class _AppState extends State<App> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(" Score: ", style: TextStyle(fontSize: 16, color: themeColors["Text"])),
-                    Text(roundedScore, style: TextStyle(fontSize: 16, color: themeColors["Text"]))
+                    Text(passwordScoreRounded, style: TextStyle(fontSize: 16, color: themeColors["Text"]))
                   ]
                 ),
               ),
@@ -591,7 +590,7 @@ class _AppState extends State<App> {
             onChanged: (text) {
               passwordInput = text;
               checkPassword(passwordInput);
-              getPasswordTime(passwordScore);
+              getPasswordTime(passwordScoreNumber);
             },
           )
         ),
@@ -1049,8 +1048,8 @@ class _AppState extends State<App> {
     );
     
     setState(() {
-      iconThemeMode = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
-      stringThemeMode = "Dark";
+      themeIcon = const Icon(Icons.nightlight_outlined, color: Color(0xFFFFFFFF));
+      themeString = "Dark";
       themeColors.addAll(darkThemeColors);
       history.addAll(defaultHistory);
       historyParameters.addAll(defaultHistoryParameters);
@@ -1064,7 +1063,7 @@ class _AppState extends State<App> {
       title: "Simple Password Utilities",
       darkTheme: darkTheme,
       theme: lightTheme,
-      themeMode: currentThemeMode,
+      themeMode: currentTheme,
       debugShowCheckedModeBanner: false,
       
       home: Scaffold(
@@ -1110,15 +1109,15 @@ class _AppState extends State<App> {
               ),
               const Spacer(),
               ListTile(
-                leading: iconThemeMode,
-                title: Text("$stringThemeMode Theme", style: TextStyle(color: themeColors["Text"])),
+                leading: themeIcon,
+                title: Text("$themeString Theme", style: TextStyle(color: themeColors["Text"])),
                 onTap: changeTheme,
               ),
               ListTile(
                 leading: Icon(Icons.info_outline_rounded, color: themeColors["Text"]),
                 title: Text("About", style: TextStyle(color: themeColors["Text"])),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentThemeMode: currentThemeMode, darkTheme: darkTheme, lightTheme: lightTheme, themeColors: themeColors)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(currentTheme: currentTheme, darkTheme: darkTheme, lightTheme: lightTheme, themeColors: themeColors)));
                 },
               ),
             ],
@@ -1151,7 +1150,7 @@ class _AppState extends State<App> {
               ),
             ],
 
-            currentIndex: navBarIndex,
+            currentIndex: navbarIndex,
             onTap: navBarTap,
           ),
         ),
@@ -1164,7 +1163,7 @@ class _AppState extends State<App> {
               end: Alignment.bottomCenter,
             )
           ),
-          child: pages()[navBarIndex]
+          child: pages()[navbarIndex]
         )
       ),
     );
@@ -1172,11 +1171,11 @@ class _AppState extends State<App> {
 }
 
 class AboutPage extends StatelessWidget {
-  final ThemeMode currentThemeMode;
+  final ThemeMode currentTheme;
   final ThemeData darkTheme;
   final ThemeData lightTheme;
   final Map themeColors;
-  const AboutPage({Key? key, required this.currentThemeMode, required this.darkTheme, required this.lightTheme, required this.themeColors}) : super(key: key);
+  const AboutPage({Key? key, required this.currentTheme, required this.darkTheme, required this.lightTheme, required this.themeColors}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -1184,7 +1183,7 @@ class AboutPage extends StatelessWidget {
       title: "Simple Password Utilities",
       darkTheme: darkTheme,
       theme: lightTheme,
-      themeMode: currentThemeMode,
+      themeMode: currentTheme,
       debugShowCheckedModeBanner: false,
       
       home: Scaffold(
@@ -1313,10 +1312,10 @@ class AJCMeter extends StatelessWidget {
   final double minValue;
   final double maxValue;
   final Map themeColors;
-  final List<Color> glowColor;
-  final List<Color> indicatorColor;  
+  final List<Color> passwordScoreGlowColor;
+  final List<Color> passwordScoreIndicatorColor;  
 
-  const AJCMeter({super.key, required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.glowColor, required this.indicatorColor});
+  const AJCMeter({super.key, required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.passwordScoreGlowColor, required this.passwordScoreIndicatorColor});
 
   @override
   Widget build(BuildContext context) {
@@ -1324,7 +1323,7 @@ class AJCMeter extends StatelessWidget {
       width: 200,
       height: double.infinity,
       child: CustomPaint(
-        painter: AJCMeterPainter(value: value, minValue: minValue, maxValue: maxValue, themeColors: themeColors, glowColor: glowColor, indicatorColor: indicatorColor),
+        painter: AJCMeterPainter(value: value, minValue: minValue, maxValue: maxValue, themeColors: themeColors, passwordScoreGlowColor: passwordScoreGlowColor, passwordScoreIndicatorColor: passwordScoreIndicatorColor),
       ),
     );
   }
@@ -1335,10 +1334,10 @@ class AJCMeterPainter extends CustomPainter {
   final double minValue;
   final double maxValue;
   final Map themeColors;
-  final List<Color> glowColor;
-  final List<Color> indicatorColor; 
+  final List<Color> passwordScoreGlowColor;
+  final List<Color> passwordScoreIndicatorColor; 
 
-  AJCMeterPainter({required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.glowColor, required this.indicatorColor});
+  AJCMeterPainter({required this.value, required this.minValue, required this.maxValue, required this.themeColors, required this.passwordScoreGlowColor, required this.passwordScoreIndicatorColor});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -1349,14 +1348,14 @@ class AJCMeterPainter extends CustomPainter {
     final glowGradient = LinearGradient(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
-      colors: glowColor, // Adjust the colors as needed
+      colors: passwordScoreGlowColor, // Adjust the colors as needed
     );
 
     // Create the meter indicator gradient
     final indicatorGradient = LinearGradient(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
-      colors: indicatorColor, // Adjust the colors as needed
+      colors: passwordScoreIndicatorColor, // Adjust the colors as needed
     );
     
     // Calculate the percentage of the value within the range
