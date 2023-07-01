@@ -129,10 +129,10 @@ class _AppState extends State<App> {
   String allowedSymbolsIcon = "GreyedIcon";
 
   // generatePassword()  ~  checkPassword()
-  List lowercase = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-  List uppercase = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  List numbers = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  List symbols = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
+  List lowercaseList = const ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  List capitalsList = const ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+  List numbersList = const ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  List symbolsList = const ["!", "#", "%", "&", '"', "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "'", "{", "|", "}", "~"];
 
   // getPasswordTime()
   String passwordTimeFull = "no time at all";
@@ -223,10 +223,10 @@ class _AppState extends State<App> {
 
   void generatePassword(int numberCharacters, bool allowedCapitals, bool allowedNumbers, bool allowedSymbols){
     List allowedCharacters = [];
-    allowedCharacters += lowercase;
+    allowedCharacters += lowercaseList;
     
     if (allowedCapitals) {
-      allowedCharacters += uppercase;
+      allowedCharacters += capitalsList;
       allowedCapitalsIcon = "Text";
     } 
     else {
@@ -234,7 +234,7 @@ class _AppState extends State<App> {
     }
    
     if (allowedNumbers) {
-      allowedCharacters += numbers;
+      allowedCharacters += numbersList;
       allowedNumbersIcon = "Text";
     }
     else {
@@ -242,7 +242,7 @@ class _AppState extends State<App> {
     }
     
     if (allowedSymbols) {
-      allowedCharacters += symbols;
+      allowedCharacters += symbolsList;
       allowedSymbolsIcon = "Text";
     } 
     else {
@@ -297,12 +297,12 @@ class _AppState extends State<App> {
     for (var i = 0; i < userpassword.length; i++) {
       String char = userpassword[i];
 
-      if (uppercase.contains(char)) {passwordScoreNumber += 0.15;}
-      else if (numbers.contains(char)) {passwordScoreNumber += 0.2;}
-      else if (symbols.contains(char)) {passwordScoreNumber += 0.25;}
+      if (capitalsList.contains(char)) {passwordScoreNumber += 0.15;}
+      else if (numbersList.contains(char)) {passwordScoreNumber += 0.2;}
+      else if (symbolsList.contains(char)) {passwordScoreNumber += 0.25;}
       
       if (char == prevChar) {passwordScoreNumber -= 0.1;}
-      else if ((uppercase.contains(char) & uppercase.contains(char)) | (numbers.contains(char) & numbers.contains(char)) | (symbols.contains(char) & symbols.contains(char))) {
+      else if ((capitalsList.contains(char) & capitalsList.contains(char)) | (numbersList.contains(char) & numbersList.contains(char)) | (symbolsList.contains(char) & symbolsList.contains(char))) {
         passwordScoreNumber -= 0.05;
       }
 
@@ -1238,7 +1238,7 @@ class AboutPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
                 child: Text(
-                  "Simple Password Utilities offers a password generator with customizable parameters for length, capitals, numbers, and symbols",
+                  "Simple Password Utilities offers a password generator with customizable parameters for length, capitals, numbersList, and symbolsList",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15,  color: themeColors["Text"])
                 ),
