@@ -1219,7 +1219,7 @@ class DonatePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(height: 0),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 12),
                 child: Text(
@@ -1252,6 +1252,27 @@ class DonatePage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: themeColors["Text"])
                 ),
               ),
+              const SizedBox(height: 50),
+              Container(height: 80,
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.fromLTRB(95, 0, 95, 0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: themeColors["Button"],
+                      textStyle: const TextStyle(fontSize: 16)
+                    ),
+                    onPressed: () {
+                      
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.attach_money_rounded, color: themeColors["White"]),
+                        Text("  Donate", style: TextStyle(color: themeColors["White"]))
+                      ],
+                    )
+                  ),
+                ),
             ],
           ),
         ),
@@ -1395,8 +1416,6 @@ class AboutPage extends StatelessWidget {
     );
   }
 }
-
-
 
 
 class AJCMeter extends StatelessWidget {
