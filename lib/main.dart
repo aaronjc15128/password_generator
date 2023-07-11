@@ -1262,13 +1262,13 @@ class DonatePage extends StatelessWidget {
                       textStyle: const TextStyle(fontSize: 16)
                     ),
                     onPressed: () {
-                      
+                      Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.attach_money_rounded, color: themeColors["White"]),
-                        Text("  Donate", style: TextStyle(color: themeColors["White"]))
+                        Text("  Donate Link", style: TextStyle(color: themeColors["White"]))
                       ],
                     )
                   ),
