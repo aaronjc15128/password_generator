@@ -1392,6 +1392,7 @@ class AboutPage extends StatelessWidget {
                         icon: Icon(Icons.store_mall_directory_rounded,
                         color: themeColors["Text"])
                       ),
+
                       IconButton(
                         onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));},
                         tooltip: "Apple App Store",
@@ -1410,9 +1411,26 @@ class AboutPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));}, tooltip: "Email", icon: Icon(Icons.email_outlined, color: themeColors["Text"])),
-                      IconButton(onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));}, tooltip: "GitHub", icon: Icon(Icons.code_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));}, tooltip: "Donate", icon: Icon(Icons.attach_money_rounded, color: themeColors["Text"]))
+                      IconButton(
+                        onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));},
+                        tooltip: "Email",
+                        icon: Icon(Icons.email_outlined,
+                        color: themeColors["Text"])
+                      ),
+
+                      IconButton(
+                        onPressed: (){Clipboard.setData(const ClipboardData(text: "https://github.com/aaronjc15128/simple_password_utilities"));},
+                        tooltip: "GitHub",
+                        icon: Icon(Icons.code_rounded,
+                        color: themeColors["Text"])
+                      ),
+
+                      IconButton(
+                        onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));}, 
+                        tooltip: "Donate", 
+                        icon: Icon(Icons.attach_money_rounded, 
+                        color: themeColors["Text"])
+                      )
                     ],
                   )
                 ]
