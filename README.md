@@ -3,7 +3,7 @@
 
 # Simple Password Utilities
 
-Simple Password Utilities is a mobile app written in Dart with Flutter
+Simple Password Utilities is a mobile app that has the essential tools for creating strong, secure passwords.
 
 
 ## Features
@@ -24,6 +24,14 @@ Install Simple Password Utilites from these places:
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 
+## Donate
+
+As a young indie developer, who has created an app without any ads, I make no money from this app whatsoever.
+I would really appreciate it if you'd donate, as little as £1, to help support the development of this app, and my others apps too.
+Simply follow the link below and you can donate as little or as much as you want.
+All donations, no matter how big or small, are appreciated greatly :)
+
+
 ## Authors
 
 - [@aaronjc15128](https://www.github.com/aaronjc15128)
@@ -31,5 +39,5 @@ Install Simple Password Utilites from these places:
 
 ## Appendix
 
-Any additional information goes here
+~
 
