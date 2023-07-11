@@ -1386,8 +1386,18 @@ class AboutPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(onPressed: (){}, icon: Icon(Icons.store_mall_directory_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.store_mall_directory_rounded, color: themeColors["Text"]))
+                      IconButton(
+                        onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));},
+                        tooltip: "Google Play Store",
+                        icon: Icon(Icons.store_mall_directory_rounded,
+                        color: themeColors["Text"])
+                      ),
+                      IconButton(
+                        onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));},
+                        tooltip: "Apple App Store",
+                        icon: Icon(Icons.store_mall_directory_rounded,
+                        color: themeColors["Text"])
+                      )
                     ],
                   )
                 ]
@@ -1400,9 +1410,9 @@ class AboutPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(onPressed: (){}, tooltip: "Email", icon: Icon(Icons.email_outlined, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, tooltip: "GitHub", icon: Icon(Icons.code_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, tooltip: "Donate", icon: Icon(Icons.attach_money_rounded, color: themeColors["Text"]))
+                      IconButton(onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));}, tooltip: "Email", icon: Icon(Icons.email_outlined, color: themeColors["Text"])),
+                      IconButton(onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));}, tooltip: "GitHub", icon: Icon(Icons.code_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){Clipboard.setData(const ClipboardData(text: "https://www.flutter.dev"));}, tooltip: "Donate", icon: Icon(Icons.attach_money_rounded, color: themeColors["Text"]))
                     ],
                   )
                 ]
