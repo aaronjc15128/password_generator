@@ -1400,9 +1400,9 @@ class AboutPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(onPressed: (){}, icon: Icon(Icons.phone_android_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.phone_android_rounded, color: themeColors["Text"])),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.phone_android_rounded, color: themeColors["Text"]))
+                      IconButton(onPressed: (){}, tooltip: "Email", icon: Icon(Icons.email_outlined, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, tooltip: "GitHub", icon: Icon(Icons.code_rounded, color: themeColors["Text"])),
+                      IconButton(onPressed: (){}, tooltip: "Donate", icon: Icon(Icons.attach_money_rounded, color: themeColors["Text"]))
                     ],
                   )
                 ]
